@@ -1,0 +1,27 @@
+<router-outlet></router-outlet>
+<!-- Shopping Cart Pop-up -->
+<div class="shopping-cart-popup" *ngIf="isCartVisible">
+  <div class="popup-content">
+    <span class="close" (click)="closeCart()">&times;</span>
+
+    <div class="product-details" *ngFor="let shoes of this.shoes">
+      <!-- Product Image -->
+      <img [src]="shoes.img" alt="{{shoes.img}}" class="product-image" />
+
+      <!-- Product Name -->
+      <h2> {{shoes.nameproduct}} </h2>
+
+      <!-- Size Selection -->
+      <div class="size-options">
+        <label  *ngFor="let product of stock" 
+          [class.toggled]="selectedSize === product.productsize_id" 
+          (click)="selectSize(product.productsize_id)">
+            US {{ product.size }}
+        </label>
+      </div>
+
+      <!-- Add to Cart Button -->
+      <button (click)="addToCart()">Add to Cart</button>
+    </div>
+  </div>
+</div>

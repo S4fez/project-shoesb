@@ -1,0 +1,350 @@
+.navbar-nav {
+  display: flex;
+  justify-content: center;
+}
+.navbar-nav .nav-item {
+  margin-right: 25px; /* ปรับค่าตามต้องการ */
+}
+.dropdown-menu{
+  background-color: rgb(255, 255, 255);
+}
+
+.fa-cart-plus{
+  color: azure;
+}
+
+
+
+// .dropdown-menu{
+//   background-color: black;
+// }
+// .dropdown-menu li{
+//   position: relative;
+// }
+// .dropdown-item{
+//   color: #ffffff;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 100%;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// body {
+//   margin: 0;
+//   padding: 0;
+//   background: #ffffff;
+//   // border: 1px solid red;
+
+// }
+// #shoesbasketball {
+//   margin-top: 0px;
+//   margin-right: 0px;
+//   font-weight: bold;
+// }
+// .nav {
+//   width: 100%;
+// }
+// .nav ul {
+//   display: flex;
+//   justify-content: space-between;
+//   list-style: none;
+//   background-color: #343434;
+//   // padding: 25px;
+//   // margin: 0rem;
+// }
+// .nav li {
+//   font-size: 2em;
+//   line-height: 40px;
+//   text-align: left;
+//   // border: 1px solid red;
+
+// }
+// // .nav ul li {
+// //   // margin-right: 200px;
+// //   // margin: 0%;
+// // }
+
+// .nav a {
+//   text-decoration: none;
+//   color: #fff;
+//   display: block;
+//   padding-left: 15px;
+//   border-bottom: 1px solid #f61717;
+//   transition: .3s;
+// }
+// .nav a:hover,
+// .nav a.active {
+//   border-style: solid; /* กำหนดให้ border เป็นเส้น solid */
+//   border-width: 2px; /* กำหนดความกว้างของ border */
+//   border-color: #a0ffe7; /* กำหนดสีของ border */
+// }
+
+// .nav a:hover {
+//   border-style: solid; /* กำหนดให้ border เป็นเส้น solid */
+//   // border-width: 2px; /* กำหนดความกว้างของ border */
+//   // border-color: #a0ffe7; /* กำหนดสีของ border */
+// }
+// .nav a.active {
+//   background-color: #aaa;
+//   color: #ffffff;
+//   cursor :default;
+// }
+// .nav li li {
+//   font-size: .8em;
+// }
+
+// // style menu ของหน้าจอ
+
+// @media screen and (min-width:500px){
+//   .nav li {
+//     width: 370px;
+//     border-bottom: none;
+//     height: 50px;
+//     line-height: 50px;
+//     font-size: 1.4em;
+//     display: inline-block;
+//     // margin-right: -4px;
+//   }
+//   .nav a{
+//     border-bottom: none;
+//   }
+//   .nav > ul > li {
+//     text-align: center;
+//   }
+//   .nav > ul > li >a {
+//     padding-left: 0;
+//   }
+//   //sub menu
+//   .nav li ul {
+//     position: absolute;
+//     display: none;
+//     width: inherit;
+//     z-index: 1000; /* กำหนด z-index ให้สูงกว่าส่วนที่ไม่ต้องการให้ทับ */
+//   }
+//   .nav li:hover ul{
+//     display:block ;
+//   }
+//   .nav li ul li {
+//     display: block;
+//   }
+
+  
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // body {
+// //     margin: 0;
+// //     padding: 0;
+// //     display: grid;
+// //     background-color: white !important; /* กำหนดสีพื้นหลังเป็นสีขาวโดยไม่ใช้ค่า default ของเว็บไซต์ */
+   
+// // }
+// // .container {
+// //     max-width: 100%;
+// //     margin: 0 auto;
+// //     // background-color: #60b4cda5;
+// // }
+
+// // nav {
+// //     height: 60px;
+// //     border:  1px solid red;
+// //     display: flex;
+// //     padding: 1rem;
+    
+// // }
+// // nav ul {
+// //     display:flex;
+// //     list-style: none;
+// //     width: 100%;
+// //     padding: 1rem;
+// //     border:  1px solid red;
+// //     justify-content: center;
+// //     align-items: center;
+    
+// // }
+// // nav ul li {
+   
+// //     margin-right: 120px;
+// //     font-size: 22px;
+    
+// // }
+// // nav ul li a{
+// //     color: white;
+// //     text-decoration: none;
+// // }
+// // .container nav ul li ul {
+// //   display: none; /* ซ่อนเมนูย่อยของแต่ละแบรนด์ในที่นี้ */
+// //   position: absolute; /* ตำแหน่งเป็น absolute เพื่อให้เป็นเมนูแบบแสดงผลที่สอดคล้องกับเมนูหลัก */
+// //   top: 100%; /* ตำแหน่งเริ่มต้นจากด้านล่างของเมนูหลัก */
+// //   left: 0;
+// //   background-color: #fff; /* สีพื้นหลังของเมนูย่อย */
+// //   padding: 0; /* ขอบเขตของเมนูย่อย */
+// //   border: 1px solid #ddd; /* เส้นขอบของเมนูย่อย */
+// // }
+
+// // .container nav ul li:hover > ul {
+// //   display: block; /* แสดงเมนูย่อยเมื่อเมาส์ชี้ไปที่เมนูหลัก */
+// // }
+
+// // .container nav ul ul li {
+// //   width: 100%; /* ความกว้างของเมนูย่อยเท่ากับความกว้างของเมนูหลัก */
+// //   float: none; /* เพื่อปรับเมนูย่อยให้เรียงต่อกัน */
+// //   position: relative;
+// // }
+
+// // .container nav ul ul li a {
+// //   padding: 10px; /* ระยะห่างของข้อความภายในเมนูย่อย */
+// //   color: #1d12ec; /* สีข้อความภายในเมนูย่อย */
+// //   text-align: left; /* จัดตำแหน่งข้อความภายในเมนูย่อย */
+// // }
+
+// // .container nav ul ul li a:hover {
+// //   background-color: rgb(255, 252, 252); /* เมื่อเมาส์ชี้ไปที่ลิงก์เมนูย่อย */
+// // }
+
+// // .nav-btn {
+// //     position: absolute;
+// //     top: 50px;
+// //     right: 50px;
+// //   }
+  
+// //   .search {
+// //     display: inline-block; /* ทำให้เมนูอยู่ในแนวนอน */
+// //     margin-right: 15px; /* ระยะห่างระหว่างเมนู */
+// //     background-image: url('../../img/search\ 2.svg'); /* กำหนดรูปภาพไอคอน */
+// //     background-size: 20px 20px; /* กำหนดขนาดของรูปภาพ */
+// //     width: 20px; /* กำหนดความกว้างของรูปภาพ */
+// //     height: 20px; /* กำหนดความสูงของรูปภาพ */
+// //     vertical-align: middle; /* จัดตำแหน่งให้ไอคอนอยู่ตรงกลาง */
+    
+// //   }
+// //   .buynow {
+// //     display: inline-block; /* ทำให้เมนูอยู่ในแนวนอน */
+// //     margin-right: 15px; /* ระยะห่างระหว่างเมนู */
+// //     background-image: url('../../img/1413908\ 2.svg'); /* กำหนดรูปภาพไอคอน */
+// //     background-size: 20px 20px; /* กำหนดขนาดของรูปภาพ */
+// //     width: 20px; /* กำหนดความกว้างของรูปภาพ */
+// //     height: 20px; /* กำหนดความสูงของรูปภาพ */
+// //     vertical-align: middle; /* จัดตำแหน่งให้ไอคอนอยู่ตรงกลาง */
+// //   }
+// //   .account {
+// //     display: inline-block; /* ทำให้เมนูอยู่ในแนวนอน */
+// //     margin-right: 15px; /* ระยะห่างระหว่างเมนู */
+// //     background-image: url('../../img/user\ 2.svg'); /* กำหนดรูปภาพไอคอน */
+// //     background-size: 20px 20px; /* กำหนดขนาดของรูปภาพ */
+// //     width: 20px; /* กำหนดความกว้างของรูปภาพ */
+// //     height: 20px; /* กำหนดความสูงของรูปภาพ */
+// //     vertical-align: middle; /* จัดตำแหน่งให้ไอคอนอยู่ตรงกลาง */
+// //   }
+  
+
+// // .logo {
+// //     text-align: start;
+// //     border: 1px solid red;
+// //     width: 20%;
+// //     display: flex;
+// //     justify-content: center;
+// //     align-items: center;
+// // }
+// // .logo h1{
+// //     color: white;
+// //     font-size: 30px;
+// // }
+// // header {
+// //     height: 300px;
+// //     display: flex ;
+// //     align-items: center;
+// //     border: 1px solid red;
+// //     justify-content: center;
+    
+// // }
+// // .logobrand-container {
+// //     // max-width: auto;
+// //     // margin: 0 auto;
+// //     display: flex; /* ให้เป็น Flexbox */
+// //     justify-content: center; /* จัดให้เนื้อหาอยู่ตรงกลางของพื้นที่ */
+// //     align-items: center; /* จัดให้เนื้อหาอยู่ตรงกลางของพื้นที่ */
+// //     height: 200px; /* กำหนดความสูงของพื้นที่ */
+// //     border: 1px solid red;
+// // }
+// // .logobrand {
+// //     background-image: url('../../img/nike\ 1.svg') ; /* กำหนดรูปภาพไอคอน */
+// //     background-repeat: no-repeat;
+// //     background-size: contain; /* กำหนดให้ภาพแสดงอยู่ภายในพื้นที่ที่กำหนด */
+// //     width: 340px; /* กำหนดความกว้างของรูปภาพ */
+// //     height: 120px; /* กำหนดความสูงของรูปภาพ */
+   
+// // }
+// // .product-container {
+// //   display: grid;
+// //   grid-template-columns: repeat(4, 1fr);
+// //   gap: 20px;
+// //   justify-content: center;
+// //   align-items: center;
+// //   max-width: 1200px;
+// //   margin: 0 auto; /* จัดตำแหน่งตรงกลางของหน้าจอ */
+// //   border: 1px solid red;
+// // }
+
+// // .product-box {
+// //   border: 1px solid #ccc;
+// //   border-radius: 8px;
+// //   padding: 40px;
+// //   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+// //   max-width: 500px; /* กำหนดความกว้างสูงสุดของกล่องสินค้า */
+// //   text-align: center; /* จัดให้อยู่ตรงกลางของกล่อง */
+// //   max-height: 300px;
+  
+// // }
+
+// // .product-image {
+// //   max-width: 100%;
+// //   max-height: 260px;
+// //   border-radius: 8px;
+// //   margin-bottom: 10px;
+// //   object-fit: cover; /* ให้ภาพเต็มกรอบ โดยไม่เปลี่ยนแปลงสัดส่วน */
+// // }
+
+// // .product-title {
+// //   font-size: 18px;
+// //   font-weight: bold;
+// //   margin-bottom: 10px;
+// // }
+// // .product-description {
+// //   font-size: 14px;
+// //   color: #666;
+// //   margin-bottom: 10px;
+// // }
+// // .product-price {
+// //   font-size: 16px;
+// //   color: #009688;
+// //   font-weight: bold;
+// //}

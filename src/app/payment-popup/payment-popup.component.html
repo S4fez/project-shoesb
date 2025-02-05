@@ -1,0 +1,120 @@
+<router-outlet></router-outlet>
+<div class="popup-overlay" *ngIf="isVisible">
+    <div class="popup-content">
+      <div class="header-section">
+        <span class="close" (click)="closePopup()">&times;</span>
+        <h2>หน้าจ่ายเงิน</h2>
+      </div>
+
+      <div class="main-content">
+       <!-- div Cos ข้อมูลลูกค้า -->
+        <div class="Cos">
+          <div class="detail-costumer">
+              <h3>ป้อนชื่อและที่อยู่</h3>
+              <input type="text" name="" placeholder="ชื่อ" required="required">   
+              <input type="text" name="" placeholder="นามสกุล" required="required"> 
+              <input type="text" name="" placeholder="ที่อยู่บรรทัดที่ 1 " required="required">  
+              <input type="text" name="" placeholder="ที่อยู่บรรทัดที่ 2" required="required"> 
+
+              <div class="address">
+                <input type="text" name="" placeholder="เขต/อำเภอ" required="required" class="add">
+                <input type="text" name="" placeholder="จังหวัด" required="required" class="add">
+                <input type="text" name="" placeholder="รหัสไปรษณีย์" required="required" class="add"> 
+                <input type="" value="ไทย" readonly style="text-align: center;" class="add">
+              </div>
+          </div>              
+            
+          <div class="contact">
+              <input type="text" name="" placeholder="อีเมล" required="required">  
+              <input type="text" name="" placeholder="หมายเลขโทรศัพท์" required="required">  
+          </div>
+
+          <div class="payment">
+            <span class="promo">รหัสโปรโมชั่น</span>
+            <input type="text" name="" placeholder="รหัสโปรโมชั่น" required="required">
+            <div class="payment-options">
+              <h2>คุณต้องการชำระเงินอย่างไร</h2>
+              
+              <div class="payment-option selected">
+                <span>💳</span>
+                <p>บัตรเครดิตหรือเดบิต</p>
+              </div>
+            
+              <div class="payment-option">
+                <img src="https://cdn-icons-png.flaticon.com/512/196/196566.png" alt="PayPal">
+                <!-- <p>PayPal</p> -->
+              </div>
+            
+              <div class="payment-option">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROIppzLqCf0VqsxIo3tBzMe2OzdipG3iIMIg&s" alt="Google Pay">
+                <!-- <p>G Pay</p> -->
+              </div>
+            
+              <div class="payment-option">
+                <img src="https://www.narongrit.net/wp-content/uploads/2023/02/Logo-True-money-wallet-1.png" alt="TrueMoney">
+                <!-- <p>true money</p> -->
+              </div>
+            </div>            
+          </div>
+
+          <div class="detail-payment">
+            <p>ป้อนรายละเอียดการชำระเงินของคุณ:</p>
+            <input type="text" name="" placeholder="ชื่อบนบัตร" required="required" >
+            <input type="text" name="" placeholder="หมายเลขบัตร" required="required" >
+            <div class="detail-pay">
+              <input type="text" name="" placeholder="MM/YY" required="required" class="pay"> 
+              <input type="text" name="" placeholder="CVV" required="required" class="pay"> 
+            </div>
+          </div>
+        </div>
+      <!-- ในตะกร้าสินค้า -->
+         <div class="Cart">
+          <div class="order-summary">
+            <h2>สรุปคำสั่งซื้อ</h2>
+            
+            <div class="summary-item">
+              <span>ยอดรวมย่อย</span>
+              <span>฿{{Total}}</span>
+            </div>
+            
+            <div class="summary-item">
+              <span>การจัดส่ง/การส่งมอบ</span>
+              <span>ฟรี</span>
+            </div>
+          
+            <div class="free-shipping">
+              <p>คุณได้สิทธิ์จัดส่งสินค้าฟรี</p>
+              <div class="progress-bar">
+                <div class="progress"></div>
+              </div>
+            </div>
+          
+            <div class="summary-item total">
+              <span>ยอดรวม</span>
+              <span>฿{{Total}}</span>
+            </div>
+          
+            <hr>
+          
+            <div class="product-item" *ngFor="let productpayment of this.data">
+              <img src="{{ productpayment.img }}" alt=" ">
+              <div class="product-details">
+                <p><strong>{{ productpayment.nameproduct }}</strong></p>
+                <p>จำนวน: {{ productpayment.quantity }}</p>
+                <p>ไซส์ {{ productpayment.size }} US</p>
+                <p><strong>฿{{ productpayment.price }}</strong></p>
+              </div>
+            </div>
+          </div>
+          
+          
+         </div>
+      </div>    
+      
+      <div class="footer-section">
+        
+        <button (click)="payment()">ชำระเงิน</button>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,283 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container for the whole shop cart */
+.container-shop {
+  max-width: 1000px;
+  height: auto;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+.container-shop h1{
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.container-shop h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Cart item styles */
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.detail-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.product-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-left: 10px;
+  width: 20%;
+}
+
+.size {
+  display: flex;
+  align-items: center;
+  margin-left: 10%;
+  width: 5%;
+}
+
+.size-select {
+  font-size: 16px;
+  color: #000000;
+  margin-right: 20%;
+}
+
+.size-select-modal-button {
+  font-size: 16px;
+  padding: 5px 10px;
+  background-color: transparent; 
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+// ตัวเพิ่มลบสินค้า
+.addition{
+  margin-left: 9%;
+  padding: 3px;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+}
+
+.add, .delete {
+  background-color: #fff6f6;
+  color: rgb(0, 0, 0);
+  width: 30px;
+  margin: 1px;
+  font-size: 18px;
+  border: 0px solid #ccc;
+  border-radius: 120px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add:hover, .delete:hover {
+  background-color: #505250;
+}
+
+.add:active, .delete:active {
+  background-color: #505250;
+}
+
+.qua {
+  font-size: 18px;
+  margin: 0px;
+  border: 0px solid #ccc;
+  padding: 3px;
+}
+
+.add:disabled, .delete:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.bin {
+  margin: 10px;
+  border: none;
+  color: #000000;
+  transition: background-color 0.3s ease;
+  background: none; 
+  box-shadow: none; 
+  border: none; 
+  margin-left: 10px;
+
+}
+
+.bin:hover{
+  color:#c5c5c5;
+}
+
+
+
+.product-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-left: auto;
+  margin-right: 60px;
+}
+
+/* Summary section */
+.container-result {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  margin-top: 30px;
+  align-items: flex-end; 
+  gap: 10px; 
+}
+
+.cost, .total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.price-cost, .price-total {
+  font-weight: bold;
+}
+
+button.checkout{
+  margin-left: 820px;
+  margin-top: 20px;
+}
+
+.checkout {
+  font-size: 20px;
+  padding: 10px;
+  
+  width: 110px;
+
+
+	/* Color & Background */
+	background-attachment: scroll;
+	background-color: rgb(17, 17, 17);
+	background-image: none;
+	background-position: 0% 0%;
+	background-repeat: repeat;
+	color: rgb(255, 255, 255);
+
+// 	/* Effects */
+	transform: none;
+	transition: 0.2s;
+	outline: rgb(255, 255, 255) dashed 0px;
+	outline-offset: 0px;
+	box-sizing: border-box;
+	resize: none;
+	text-shadow: none;
+	text-overflow: clip;
+	word-wrap: normal;
+	box-shadow: none;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+}
+.checkout:hover {
+  background-color: rgb(255, 255, 255);
+  color: #000000;
+}
+
+.cross-icon {
+  width: 30px; 
+  height: 30px; 
+  position: relative;
+}
+
+.cross-icon::before,
+.cross-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 5px; 
+  background-color: black; 
+  transform-origin: center;
+}
+
+.cross-icon::before {
+  transform: translate(-50%, -50%) rotate(45deg); 
+}
+
+.cross-icon::after {
+  transform: translate(-50%, -50%) rotate(-45deg); 
+}
+
+
+
+
+/* กล่องสินค้าจางเมื่อหมดสต็อก */
+.out-of-stock {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+
+
+
+  opacity: 0.5;
+  background-color: #f1666679;
+  pointer-events: none; 
+}
+
+.out-of-stock img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: 20px;
+  opacity: 0.8;
+}
+
+.out-of-stock::after {
+  content: "Out of Stock"; 
+  position:absolute;
+  // top: 10px; 
+  left: 57%; 
+  color: white;
+  background-color: rgb(255, 0, 0);
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  // margin-right: 10%;
+  z-index: 1000;
+}
+
