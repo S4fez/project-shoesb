@@ -1,0 +1,39 @@
+
+@media (max-width: 768px) {
+    .logobrand-container {
+        height: 150px;
+    }
+
+    .logobrand {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        max-width: 100%;
+    }
+
+    .product-box {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .product-image {
+        max-height: 200px;
+    }
+
+    .product-title {
+        font-size: 16px;
+    }
+
+    .product-price {
+        font-size: 16px;
+    }
+
+    .btn-buy {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
