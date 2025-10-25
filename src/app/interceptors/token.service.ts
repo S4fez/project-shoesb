@@ -10,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private  router:Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(req.url)
+    // console.log(req.url)  สำหรับตรวจสอบ URL ที่ส่งมา
     if (req.url.includes('/login') || req.url.includes('/register')) {
       return next.handle(req);
     }

@@ -42,10 +42,18 @@
             <a class="nav-link" href="login">Login</a>
           </li> -->
         </ul>
-        <form class="d-flex ">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-item" onkeyup="search()">
-          <button class="btn btn-outline-success" type="submit" >Search</button>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-item" (input)="search($event)" />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+          <!-- dropdown ผลลัพธ์ -->
+          <ul *ngIf="searchResults.length > 0 && Onshow" class="search-dropdown">
+            <li *ngFor="let item of searchResults" (click)="goToDetail(item.product_id)" class="search-item">
+              <img [src]="item.img" alt="{{ item.nameproduct }}" class="item-img" />
+              <span class="item-name">{{ item.nameproduct }}</span>
+            </li> 
+          </ul>
         </form>
+
         <li class="nav-item">
           <a class="cart-link" href="cart"><i class="fa-solid fa-cart-plus"></i></a>
           

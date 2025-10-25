@@ -1,4 +1,6 @@
-import { Component,AfterViewInit, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
+import { SearchService } from '../service/search.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -6,30 +8,39 @@ import { Component,AfterViewInit, ElementRef } from '@angular/core';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  constructor(private elementRef: ElementRef) {}
+  SearchService: any;
+  searchResults: any[] = [];
+  Onshow = false;
+  constructor(private elementRef: ElementRef, private searchService: SearchService, private route: ActivatedRoute, private router: Router,) { }
 
   ngAfterViewInit() {
     // โค้ดอื่น ๆ ที่คุณมี
   }
 
-  search() {
-    const searchbox = this.elementRef.nativeElement.querySelector("#search-item").value.toUpperCase();
-    const storeitems = this.elementRef.nativeElement.querySelector("#item-product");
-    const product = this.elementRef.nativeElement.querySelectorAll(".product-box");
-    const pname = storeitems.getElementsByTagName("product-title");
+  search(event: Event) {
+    event.preventDefault(); // ป้องกัน form submit/refresh หน้า
 
-    for (let i = 0; i < pname.length; i++) {
-      let match = product[i].querySelector('product-title');
+    const inputElement = this.elementRef.nativeElement.querySelector('#search-item') as HTMLInputElement;
+    const name = inputElement.value.trim();
 
-      if (match) {
-        let textvalue = match.textContent || match.innerHTML;
+    if (!name){
+      this.Onshow = false;
+      return;
+    } 
 
-        if (textvalue.toUpperCase().indexOf(searchbox) > -1) {
-          product[i].style.display = "";
-        } else {
-          product[i].style.display = "none";
-        }
-      }
-    }
+    // console.log('Search query:', name);
+
+    this.searchService.getSearch(name).subscribe((data) => {
+      // console.log('Search results:', data);
+      this.searchResults = data; // แสดงผลลัพธ์ใต้ช่องค้นหา
+      this.Onshow = true;
+    });
   }
+  goToDetail(shoesId: number): void {
+    // บังคับ navigate ใหม่แม้เป็น URL เดิม
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/detailpd', shoesId]);
+    });
+  }
+
 }
