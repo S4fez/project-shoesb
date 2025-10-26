@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptors/token.service';
 import { ShoppingCartPopupComponent } from './shopping-cart-popup/shopping-cart-popup.component';
 import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
+import { UserProfileComponent } from './userprofile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
     DetailpdComponent,
     ConverseComponent,
     ShoppingCartPopupComponent,
-    PaymentPopupComponent
+    PaymentPopupComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

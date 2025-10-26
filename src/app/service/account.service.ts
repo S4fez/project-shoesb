@@ -54,6 +54,15 @@ export class AccountService {
     return this.http.post<any>(`${this.apiUrl}/register`, body);
   }
 
+  getProfile(id:number):Observable<any>{
+    const body={
+      userId:id
+    };
+    return this.http.post<any>(`${this.apiUrl}/userprofile`,body);
+  }
   
+  uploadImage(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/uploads`, formData);
+  }
 
 }

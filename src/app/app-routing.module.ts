@@ -13,6 +13,7 @@ import { DetailpdComponent } from './brand/detailpd/detailpd.component';
 import { NgModule } from '@angular/core';
 import { ConverseComponent } from './brand/converse/converse.component';
 import { AuthGuard } from './authGuard.service';
+import { UserProfileComponent } from './userprofile/user-profile.component';
 
 
 const routes: Routes = [
@@ -62,7 +63,11 @@ const routes: Routes = [
   {
     path:'detailpd/:id',
     component: DetailpdComponent,canActivate: [AuthGuard], 
-  }
+  },
+  {
+    path:'profile',
+    component: UserProfileComponent,canActivate: [AuthGuard], 
+  },
 ];
 
 @NgModule({

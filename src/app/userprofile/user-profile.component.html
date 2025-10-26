@@ -1,0 +1,54 @@
+<app-navbar></app-navbar>
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <img src="{{ baseApiUrl + profile?.user_img }}" alt="" class="profile-avatar" />
+            <h2 class="profile-name">{{ profile?.name }} {{ profile?.surname }}</h2>
+            <p class="profile-email">{{ profile?.email }}</p>
+            <!-- ปุ่มเปิด popup -->
+            <button class="show-btn" (click)="ShowUploadPopup()">Upload</button>
+
+            <!-- popup overlay -->
+            <div class="popup-overlay" *ngIf="ShowPopup">
+                <div class="popup-content">
+                    <span class="close" (click)="CloseUploadPopup()">&times;</span>
+
+                    <div class="upload-container">
+                        <div class="file-upload">
+                            <input type="file" id="fileInput" (change)="onFileSelected($event)" />
+                            <label for="fileInput" class="custom-file-btn">
+                                Choose File
+                            </label>
+                            <span class="file-name">{{ selectedFileName || 'No file chosen' }}</span>
+                        </div>
+
+
+                        <div *ngIf="previewUrl" class="preview">
+                            <img [src]="previewUrl" alt="preview" />
+                        </div>
+
+                        <button class="upload-btn" (click)="onUpload()">Upload</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="profile-details">
+            <div class="detail-item">
+                <span class="label">📍 Address:</span>
+                <span class="value">{{ profile?.address }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">🎂 Age:</span>
+                <span class="value">{{ profile?.user_age }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">🗓️ Birthdate:</span>
+                <span class="value">{{ profile?.user_birthdate | date }}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -41,6 +41,11 @@ export class LoginComponent implements AfterViewInit {
           console.log(data);
           if (data) {
             localStorage.setItem('token', data.token);
+            const profile = {
+              userId: data.userId,
+              email: data.email
+            };
+            localStorage.setItem('profile', JSON.stringify(profile));
             this.router.navigate(['/home']);
           }
         },

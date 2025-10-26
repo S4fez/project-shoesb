@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { CartComponent } from './cart/cart.component';
 import { DetailpdComponent } from './brand/detailpd/detailpd.component';
 import { NgModule } from '@angular/core';
+import { UserProfileComponent } from './userprofile/user-profile.component';
 
 
 
@@ -55,6 +56,10 @@ import { NgModule } from '@angular/core';
   {
     path:'detailpd/:id',
     component: DetailpdComponent,
+  },
+  {
+    path:'profile/:id',
+    component: UserProfileComponent,
   }
 ];
 
