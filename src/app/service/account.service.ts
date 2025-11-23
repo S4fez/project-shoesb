@@ -65,4 +65,14 @@ export class AccountService {
     return this.http.post<any>(`${this.apiUrl}/uploads`, formData);
   }
 
+  // Method ใหม่: ดึงข้อมูล user profile พร้อม sys_role
+  getCurrentUserProfile(): Observable<any> {
+    const userProfile = localStorage.getItem('userProfile');
+    if (userProfile) {
+      const user = JSON.parse(userProfile);
+      return this.http.post<any>(`${this.apiUrl}/userprofile`, { userId: user.userId });
+    }
+    throw new Error('No user logged in');
+  }
+
 }

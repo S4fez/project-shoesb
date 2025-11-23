@@ -14,6 +14,8 @@ import { NgModule } from '@angular/core';
 import { ConverseComponent } from './brand/converse/converse.component';
 import { AuthGuard } from './authGuard.service';
 import { UserProfileComponent } from './userprofile/user-profile.component';
+import { RoleGuard } from './guards/role.guard';
+import { UserRole } from './models/role.model';
 
 
 const routes: Routes = [
@@ -58,7 +60,9 @@ const routes: Routes = [
   },
   {
     path:'cart',
-    component: CartComponent,canActivate: [AuthGuard], 
+    component: CartComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [UserRole.CUSTOMER] }  // เฉพาะ Customer เท่านั้น
   },
   {
     path:'detailpd/:id',
@@ -66,8 +70,40 @@ const routes: Routes = [
   },
   {
     path:'profile',
-    component: UserProfileComponent,canActivate: [AuthGuard], 
+    component: UserProfileComponent,canActivate: [AuthGuard],
   },
+
+  // Admin & Staff Routes (เพิ่มไว้สำหรับอนาคต - ต้องสร้าง component ก่อนใช้งาน)
+  // {
+  //   path: 'admin/orders',
+  //   component: OrdersManagementComponent,
+  //   canActivate: [AuthGuard, RoleGuard],
+  //   data: { roles: [UserRole.STAFF, UserRole.ADMIN] }
+  // },
+  // {
+  //   path: 'admin/inventory',
+  //   component: InventoryComponent,
+  //   canActivate: [AuthGuard, RoleGuard],
+  //   data: { roles: [UserRole.STAFF, UserRole.ADMIN] }
+  // },
+  // {
+  //   path: 'admin/reports',
+  //   component: ReportsComponent,
+  //   canActivate: [AuthGuard, RoleGuard],
+  //   data: { roles: [UserRole.STAFF, UserRole.ADMIN] }
+  // },
+  // {
+  //   path: 'admin/products',
+  //   component: ProductManagementComponent,
+  //   canActivate: [AuthGuard, RoleGuard],
+  //   data: { roles: [UserRole.ADMIN] }
+  // },
+  // {
+  //   path: 'admin/users',
+  //   component: UserManagementComponent,
+  //   canActivate: [AuthGuard, RoleGuard],
+  //   data: { roles: [UserRole.ADMIN] }
+  // },
 ];
 
 @NgModule({

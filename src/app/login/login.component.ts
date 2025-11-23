@@ -43,9 +43,10 @@ export class LoginComponent implements AfterViewInit {
             localStorage.setItem('token', data.token);
             const profile = {
               userId: data.userId,
-              email: data.email
+              email: data.email,
+              sys_role: data.sys_role || 3  // เก็บ sys_role จาก API, default เป็น 3 (Customer)
             };
-            localStorage.setItem('profile', JSON.stringify(profile));
+            localStorage.setItem('userProfile', JSON.stringify(profile));  // เปลี่ยนจาก 'profile' เป็น 'userProfile'
             this.router.navigate(['/home']);
           }
         },

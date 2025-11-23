@@ -33,7 +33,7 @@ export class UserProfileComponent implements OnChanges {
   }
 
   ngOnInit(): void {
-    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
     const userId = profile.userId; // Replace with actual user ID
     // console.log(profile.userId, profile.email);
 
@@ -69,7 +69,7 @@ export class UserProfileComponent implements OnChanges {
 }
 
   onUpload() {
-    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
     const userId = profile.userId;
     const formData = new FormData();
     formData.append('image', this.selectedFile);

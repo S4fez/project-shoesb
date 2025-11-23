@@ -18,29 +18,38 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mx-auto ">
-          <li class="nav-item ">
-            <a class="nav-link active" aria-current="page" href="home">Home</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Brand
+        <ul class="navbar-nav mx-auto">
+          <!-- วนลูปแสดงเมนูตาม role -->
+          <li class="nav-item" *ngFor="let item of menuItems" [ngClass]="{'dropdown': item.children && item.children.length > 0}">
+
+            <!-- เมนูธรรมดา (ไม่มี children) -->
+            <a *ngIf="!item.children && item.route"
+               class="nav-link"
+               [href]="item.route">
+              <i [class]="'fas ' + item.icon" *ngIf="item.icon"></i>
+              {{ item.label }}
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="brand/adidas">Adidas</a></li>
-              <li><a class="dropdown-item" href="brand/anta">Anta</a></li>
-              <li><a class="dropdown-item" href="brand/lining">Li-Ning</a></li>
-              <li><a class="dropdown-item" href="brand/nike">Nike</a></li>
-              <li><a class="dropdown-item" href="brand/puma">Puma</a></li>
-              <li><a class="dropdown-item" href="brand/converse">Converse</a></li>
-            </ul>
+
+            <!-- เมนูแบบ dropdown (มี children) -->
+            <ng-container *ngIf="item.children && item.children.length > 0">
+              <a class="nav-link dropdown-toggle"
+                 href="#"
+                 [id]="'dropdown-' + item.label"
+                 role="button"
+                 data-bs-toggle="dropdown"
+                 aria-expanded="false">
+                <i [class]="'fas ' + item.icon" *ngIf="item.icon"></i>
+                {{ item.label }}
+              </a>
+              <ul class="dropdown-menu" [attr.aria-labelledby]="'dropdown-' + item.label">
+                <li *ngFor="let child of item.children">
+                  <a class="dropdown-item" [href]="child.route">
+                    {{ child.label }}
+                  </a>
+                </li>
+              </ul>
+            </ng-container>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact">Contact us</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="login">Login</a>
-          </li> -->
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-item" (input)="search($event)" />
@@ -54,13 +63,22 @@
           </ul>
         </form>
 
-        <li class="nav-item">
+        <!-- Cart Icon - แสดงเฉพาะ Customer -->
+        <li class="nav-item" *ngIf="isCustomer()">
           <a class="cart-link" href="cart"><i class="fa-solid fa-cart-plus"></i></a>
-          
         </li>
+
+        <!-- Profile Icon - แสดงทุก role -->
         <li class="nav-item ms-3">
-          <a class="user-link" href="profile"><i class="fa fa-user-circle" aria-hidden="true"></i></a>         
-        </li>v
+          <a class="user-link" href="profile"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
+        </li>
+
+        <!-- Role Badge - แสดงเฉพาะ Admin และ Staff -->
+        <li class="nav-item ms-2" *ngIf="isAdmin() || isStaff()">
+          <span class="badge" [ngClass]="{'bg-danger': isAdmin(), 'bg-primary': isStaff()}">
+            {{ roleName }}
+          </span>
+        </li>
       </div>
     </div>
   </nav>
