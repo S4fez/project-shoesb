@@ -5,6 +5,7 @@
   min-height: 100vh;
   background: #f6f7fb;
   padding: 20px;
+  gap: 50px;
 }
 
 .profile-card {
@@ -186,4 +187,31 @@
 
 .custom-file-btn:hover {
   background-color: #45a049;
+}
+
+.menu-group {
+  display: grid;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-button {
+  background-color: #ececec;
+  color: #000000;
+  border: none;
+  padding: 5px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.profile-sys {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  color:dodgerblue;
+}
+.profile-role {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  // color:dodgerblue;
 }
