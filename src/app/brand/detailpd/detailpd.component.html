@@ -1,25 +1,87 @@
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <div class="product-container" id="item-product" >
-        <app-shopping-cart-popup></app-shopping-cart-popup>
-        <!-- 12 กล่องสินค้า -->
-        <div *ngFor="let shoes of this.shoes" class="product-box">
-          <img src="{{shoes.img}}" height="" alt="Product 2" class="product-image">
-          <h1 class="product-title" style="white-space: nowrap;">{{shoes.nameproduct}}</h1>
-          <p>{{shoes.detail}}</p>
-          <div class="product-price">฿{{shoes.price}} </div>
-          <button class="cart-button" (click)='shoppingCart()'>เพิ่มลงในตะกร้า</button>
-        </div>
 
+<div class="product-detail-wrapper">
+  <app-shopping-cart-popup></app-shopping-cart-popup>
+
+  <div class="product-detail-container" *ngFor="let shoes of this.shoes">
+    <!-- Left Section - Product Image -->
+    <div class="product-image-section">
+      <div class="image-wrapper">
+        <img [src]="shoes.img" [alt]="shoes.nameproduct" class="product-main-image">
+      </div>
     </div>
-</body>
-</html>
+
+    <!-- Right Section - Product Info -->
+    <div class="product-info-section">
+      <!-- Product Title & Badge -->
+      <div class="product-header">
+        <span class="product-badge">
+          <i class="fas fa-basketball-ball"></i> Basketball Shoes
+        </span>
+        <h1 class="product-name">{{ shoes.nameproduct }}</h1>
+      </div>
+
+      <!-- Product Price -->
+      <div class="price-section">
+        <div class="current-price">฿{{ shoes.price | number:'1.2-2' }}</div>
+        <div class="price-label">ราคา</div>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Product Description -->
+      <div class="product-description">
+        <h3 class="section-title">
+          <i class="fas fa-info-circle"></i> รายละเอียดสินค้า
+        </h3>
+        <p class="description-text">{{ shoes.detail }}</p>
+      </div>
+
+      <!-- Product Features -->
+      <div class="product-features">
+        <h3 class="section-title">
+          <i class="fas fa-star"></i> คุณสมบัติเด่น
+        </h3>
+        <ul class="features-list">
+          <li><i class="fas fa-check-circle"></i> วัสดุคุณภาพสูง ทนทาน</li>
+          <li><i class="fas fa-check-circle"></i> รองรับการเคลื่อนไหวที่รวดเร็ว</li>
+          <li><i class="fas fa-check-circle"></i> พื้นรองเท้ากันลื่นเยี่ยม</li>
+          <li><i class="fas fa-check-circle"></i> ระบายอากาศดี สวมใส่สบาย</li>
+        </ul>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Action Buttons -->
+      <div class="action-section">
+        <button class="btn-add-cart" (click)='shoppingCart()'>
+          <i class="fas fa-cart-plus"></i>
+          <span>เพิ่มลงตะกร้า</span>
+        </button>
+        <button class="btn-buy-now">
+          <i class="fas fa-bolt"></i>
+          <span>สั่งซื้อเลย</span>
+        </button>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="additional-info">
+        <div class="info-item">
+          <i class="fas fa-truck"></i>
+          <span>จัดส่งฟรีทั่วประเทศ</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-shield-alt"></i>
+          <span>รับประกันสินค้าแท้ 100%</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-exchange-alt"></i>
+          <span>เปลี่ยนคืนได้ภายใน 7 วัน</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

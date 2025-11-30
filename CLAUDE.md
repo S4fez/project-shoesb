@@ -88,7 +88,7 @@ npm run watch      # Build with watch mode
 - JWT tokens are decoded using the `jwt-decode` library
 
 ## Image Handling
-
+ด
 The user profile component includes image upload functionality:
 - File selection with custom button styling
 - Image preview before upload

@@ -1,27 +1,54 @@
 <router-outlet></router-outlet>
-<!-- Shopping Cart Pop-up -->
-<div class="shopping-cart-popup" *ngIf="isCartVisible">
-  <div class="popup-content">
-    <span class="close" (click)="closeCart()">&times;</span>
+
+<!-- Shopping Cart Popup - Modern Design -->
+<div class="shopping-cart-popup" *ngIf="isCartVisible" (click)="closeCart()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <!-- Close Button -->
+    <button class="close-btn" (click)="closeCart()">
+      <i class="fas fa-times"></i>
+    </button>
 
     <div class="product-details" *ngFor="let shoes of this.shoes">
-      <!-- Product Image -->
-      <img [src]="shoes.img" alt="{{shoes.img}}" class="product-image" />
-
-      <!-- Product Name -->
-      <h2> {{shoes.nameproduct}} </h2>
-
-      <!-- Size Selection -->
-      <div class="size-options">
-        <label  *ngFor="let product of stock" 
-          [class.toggled]="selectedSize === product.productsize_id" 
-          (click)="selectSize(product.productsize_id)">
-            US {{ product.size }}
-        </label>
+      <!-- Popup Header -->
+      <div class="popup-header">
+        <div class="header-icon">
+          <i class="fas fa-cart-plus"></i>
+        </div>
+        <h2 class="popup-title">เพิ่มลงตะกร้าสินค้า</h2>
       </div>
 
-      <!-- Add to Cart Button -->
-      <button (click)="addToCart()">Add to Cart</button>
+      <!-- Product Image -->
+      <div class="image-container">
+        <img [src]="shoes.img" [alt]="shoes.nameproduct" class="product-image" />
+      </div>
+
+      <!-- Product Name -->
+      <h3 class="product-name">{{ shoes.nameproduct }}</h3>
+
+      <!-- Size Selection -->
+      <div class="size-section">
+        <label class="size-label">
+          <i class="fas fa-ruler"></i> เลือกไซส์
+        </label>
+        <div class="size-options">
+          <button
+            *ngFor="let product of stock"
+            class="size-btn"
+            [class.selected]="selectedSize === product.productsize_id"
+            (click)="selectSize(product.productsize_id)">
+            <span class="size-text">US</span>
+            <span class="size-number">{{ product.size }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn-add-cart" (click)="addToCart()">
+          <i class="fas fa-shopping-bag"></i>
+          <span>เพิ่มลงตะกร้า</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

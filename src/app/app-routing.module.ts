@@ -30,7 +30,7 @@ const routes: Routes = [
       { path: 'puma', component: PumaComponent,canActivate: [AuthGuard], 
 
        },
-      { path: 'lining', component: LiNingComponent,canActivate: [AuthGuard], 
+      { path: 'li-ning', component: LiNingComponent,canActivate: [AuthGuard],
 
        },
       { path: 'anta', component: AntaComponent,canActivate: [AuthGuard], 

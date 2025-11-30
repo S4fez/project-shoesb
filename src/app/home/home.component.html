@@ -1,28 +1,205 @@
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    
-</head>
-<body>
-    <h1>ShoesBasketball</h1>
-    <div class="contrainer">
-        <div class="box1">
-            <img src="https://ae01.alicdn.com/kf/Sc4a9b9c4cff84f94b5f743d063bb3c2fY.jpg_640x640Q90.jpg_.webp" alt="">
-            
-        </div>
-        <div class="box2">
-            <img src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2023%2F03%2Fnike-sabrina-1-release-date-007.jpg?cbr=1&q=90" alt="">
-        </div>
-        <div class="box3">
-            <img src="https://media.licdn.com/dms/image/D5612AQHXyORwO8a6Xw/article-cover_image-shrink_720_1280/0/1710943963707?e=2147483647&v=beta&t=d9rx3tDX0vEQ6FPaXZ12ZcYmRfqLzouPYQa7XX9caN4" alt="">
-            
-        </div>
-        
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="hero-badge">
+        <i class="fas fa-basketball-ball"></i>
+        Premium Basketball Shoes
+      </span>
+      <h1 class="hero-title">
+        <span class="title-main">ShoesBasketball</span>
+        <span class="title-sub">Elevate Your Game</span>
+      </h1>
+      <p class="hero-description">
+        ค้นพบคอลเลกชันรองเท้าบาสเกตบอลระดับพรีเมียม จากแบรนด์ชั้นนำทั่วโลก
+        <br>พร้อมส่งมอบประสบการณ์การเล่นที่ดีที่สุดให้กับคุณ
+      </p>
+      <div class="hero-buttons">
+        <a href="/brand/nike" class="btn-primary">
+          <i class="fas fa-shopping-bag"></i>
+          <span>เริ่มช้อปปิ้ง</span>
+        </a>
+        <a href="/contact" class="btn-secondary">
+          <i class="fas fa-info-circle"></i>
+          <span>เรียนรู้เพิ่มเติม</span>
+        </a>
+      </div>
     </div>
-</body>
-</html>
+    <div class="hero-image">
+      <div class="image-card">
+        <img src="https://ae01.alicdn.com/kf/Sc4a9b9c4cff84f94b5f743d063bb3c2fY.jpg_640x640Q90.jpg_.webp"
+             alt="Basketball Shoes"
+             class="floating-shoe">
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-basketball-ball"></i>
+        </div>
+        <h3 class="stat-number">500+</h3>
+        <p class="stat-label">รุ่นรองเท้า</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-store"></i>
+        </div>
+        <h3 class="stat-number">6</h3>
+        <p class="stat-label">แบรนด์ชั้นนำ</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3 class="stat-number">10K+</h3>
+        <p class="stat-label">ลูกค้าพึงพอใจ</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-truck"></i>
+        </div>
+        <h3 class="stat-number">24h</h3>
+        <p class="stat-label">จัดส่งรวดเร็ว</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Brands Section -->
+<section class="brands-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Our Partners</span>
+      <h2 class="section-title">แบรนด์ชั้นนำที่เราคัดสรร</h2>
+      <p class="section-description">
+        รองเท้าบาสเกตบอลคุณภาพสูงจากแบรนด์ที่คุณไว้วางใจ
+      </p>
+    </div>
+
+    <div class="brands-grid">
+      <a href="/brand/nike" class="brand-card">
+        <div class="brand-image">
+          <img src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2023%2F03%2Fnike-sabrina-1-release-date-007.jpg?cbr=1&q=90"
+               alt="Nike">
+        </div>
+        <div class="brand-info">
+          <h3>Nike</h3>
+          <p>Innovation & Performance</p>
+          <span class="brand-link">
+            สำรวจคอลเลกชัน <i class="fas fa-arrow-right"></i>
+          </span>
+        </div>
+      </a>
+
+      <a href="/brand/adidas" class="brand-card">
+        <div class="brand-image">
+          <img src="https://media.licdn.com/dms/image/D5612AQHXyORwO8a6Xw/article-cover_image-shrink_720_1280/0/1710943963707?e=2147483647&v=beta&t=d9rx3tDX0vEQ6FPaXZ12ZcYmRfqLzouPYQa7XX9caN4"
+               alt="Adidas">
+        </div>
+        <div class="brand-info">
+          <h3>Adidas</h3>
+          <p>Impossible is Nothing</p>
+          <span class="brand-link">
+            สำรวจคอลเลกชัน <i class="fas fa-arrow-right"></i>
+          </span>
+        </div>
+      </a>
+
+      <a href="/brand/puma" class="brand-card">
+        <div class="brand-image">
+          <img src="https://ae01.alicdn.com/kf/Sc4a9b9c4cff84f94b5f743d063bb3c2fY.jpg_640x640Q90.jpg_.webp"
+               alt="Puma">
+        </div>
+        <div class="brand-info">
+          <h3>Puma</h3>
+          <p>Forever Faster</p>
+          <span class="brand-link">
+            สำรวจคอลเลกชัน <i class="fas fa-arrow-right"></i>
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Why Choose Us</span>
+      <h2 class="section-title">ทำไมต้องเลือกเรา</h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3 class="feature-title">ของแท้ 100%</h3>
+        <p class="feature-description">
+          รับประกันสินค้าแท้ทุกชิ้น พร้อมใบรับรองจากแบรนด์
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-truck-fast"></i>
+        </div>
+        <h3 class="feature-title">จัดส่งรวดเร็ว</h3>
+        <p class="feature-description">
+          ส่งฟรีทั่วประเทศ รับของภายใน 24-48 ชั่วโมง
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        <h3 class="feature-title">เปลี่ยนคืนง่าย</h3>
+        <p class="feature-description">
+          เปลี่ยนสินค้าได้ภายใน 7 วัน หากไม่พอใจ
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-headset"></i>
+        </div>
+        <h3 class="feature-title">บริการ 24/7</h3>
+        <p class="feature-description">
+          ทีมงานพร้อมให้คำปรึกษาทุกวันตลอด 24 ชั่วโมง
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="cta-overlay"></div>
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">พร้อมยกระดับเกมของคุณแล้วหรือยัง?</h2>
+      <p class="cta-description">
+        เริ่มต้นค้นหารองเท้าในฝันของคุณวันนี้
+      </p>
+      <a href="/brand/nike" class="cta-button">
+        <i class="fas fa-basketball-ball"></i>
+        <span>เลือกซื้อเลย</span>
+      </a>
+    </div>
+  </div>
+</section>

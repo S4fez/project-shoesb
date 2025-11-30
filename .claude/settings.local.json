@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nupdate: Brand pages with luxury premium style\n\nImplement luxury premium design for 5 brand collections:\n- Adidas (Impossible is Nothing)\n- Puma (Forever Faster)\n- Anta (Keep Moving)\n- Li-Ning (Make the Change)\n- Converse (All Star)\n\nFeatures:\n- Professional brand header with logo and slogan\n- Luxury gold and black color scheme\n- Elegant product grid with hover effects\n- Breadcrumb navigation\n- Filter and sorting options\n- Responsive design with premium styling\n- Centralized shared brand styles for consistency\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

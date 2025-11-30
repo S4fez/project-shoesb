@@ -1,109 +1,466 @@
-/* Pop-up container */
+// ==================== Luxury Variables ====================
+$luxury-black: #1a1a1a;
+$luxury-gray: #2c2c2c;
+$luxury-gold: #c9a961;
+$luxury-cream: #f5f3ef;
+$luxury-white: #ffffff;
+$text-primary: #1a1a1a;
+$text-secondary: #6b6b6b;
+$text-tertiary: #9b9b9b;
+$accent-color: #70758a;
+$text-light: #888888;
+$text-dark:$luxury-black;
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+$subtle-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+$medium-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+$large-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+$transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+// ==================== Popup Container ====================
 .shopping-cart-popup {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Black background with opacity */
-  }
-  
-  /* Pop-up content */
-  .popup-content {
-    background-color: #fff;
-    padding: 30px 60px;
-    border-radius: 10px;
-    width: 600px;
-    max-width: 100%;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Close button */
-  .close {
-    float: right;
-    font-size: 28px;
-    color: #aaa;
-    cursor: pointer;
-  }
-  
-  /* Product Image */
-  .product-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 15px;
-  }
-  
-  /* Size options */
-  .size-options {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
-  
-  .size-options label {
-    cursor: pointer;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f3e9e4;
-    font-weight: bold;
-    width: 50px; // ตั้งค่าความกว้างที่แน่นอน
-    text-align: center; // จัดกึ่งกลางข้อความ
-    margin: 0 10px; // เพิ่ม margin ระหว่าง labe
-  }
-  
-  .size-options input {
-    display: none;
-    background-color: #007bff;
-  }
-  
-  .size-options label {
-    // cursor: pointer;
-    // padding: 10px;
-    // margin: 5px;
-    // display: inline-block;
-    // transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(26, 26, 26, 0.85);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease;
 
-    &:hover {
-        background-color: #4a2ba9;
-        color: white;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
-
-    &.toggled {
-        color: white;
-        background-color: #4a2ba9;
-        font-weight: bold;
+    to {
+      opacity: 1;
     }
+  }
 }
 
-  
-  
-  /* Add to Cart Button */
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 30px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  h2 {
-    height: 100px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
+// ==================== Popup Content ====================
+.popup-content {
+  background: $luxury-white;
+  padding: 0;
+  border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 550px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  // box-shadow: $shadow-lg;
+  position: relative;
+  animation: slideUp 0.4s ease;
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 
+  // Custom Scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $accent-color;
+    border-radius: 10px;
+
+    &:hover {
+      background: darken($accent-color, 10%);
+    }
+  }
+}
+
+// ==================== Close Button ====================
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.05);
+  color: $text-light;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: $transition;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: $text-dark;
+    transform: rotate(90deg);
+  }
+
+  &:active {
+    transform: rotate(90deg) scale(0.9);
+  }
+}
+
+// ==================== Product Details ====================
+.product-details {
+  padding: 40px 35px;
+}
+
+// Popup Header
+.popup-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+}
+
+.header-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  background: $luxury-black;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $subtle-shadow;
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  i {
+    font-size: 2rem;
+    color: white;
+  }
+}
+
+.popup-title {
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: $text-primary;
+  margin: 0;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+// ==================== Product Image ====================
+.image-container {
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+    animation: rotate 15s linear infinite;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
+  position: relative;
+  z-index: 1;
+  transition: $transition;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// ==================== Product Name ====================
+.product-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: $text-dark;
+  text-align: center;
+  margin: 0 0 30px 0;
+  line-height: 1.4;
+}
+
+// ==================== Size Section ====================
+.size-section {
+  margin-bottom: 30px;
+}
+
+.size-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $text-dark;
+  margin-bottom: 15px;
+
+  i {
+    color: $accent-color;
+    font-size: 0.95rem;
+  }
+}
+
+.size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.size-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: $transition;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $primary-gradient;
+    opacity: 0;
+    transition: $transition;
+  }
+
+  .size-text,
+  .size-number {
+    position: relative;
+    z-index: 1;
+    transition: $transition;
+  }
+
+  .size-text {
+    font-size: 0.7rem;
+    color: $text-light;
+    font-weight: 500;
+  }
+
+  .size-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  &:hover {
+    border-color: $accent-color;
+    transform: translateY(-3px);
+    box-shadow: $shadow-sm;
+
+    &::before {
+      opacity: 0.1;
+    }
+  }
+
+  &.selected {
+    border-color: $luxury-gold;
+    background: $luxury-gold;
+    box-shadow: $subtle-shadow;
+    transform: translateY(-2px);
+
+    .size-text,
+    .size-number {
+      color: $luxury-black;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+}
+
+// ==================== Action Buttons ====================
+.action-buttons {
+  margin-top: 30px;
+}
+
+.btn-add-cart {
+  width: 100%;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 0;
+  background: $luxury-black;
+  color: $luxury-white;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: $transition;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  i {
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    background: $luxury-gold;
+    color: $luxury-black;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+
+  &:disabled {
+    background: #dfe6e9;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ==================== Responsive Design ====================
+@media (max-width: 768px) {
+  .popup-content {
+    width: 95%;
+    border-radius: 20px;
+    max-height: 85vh;
+  }
+
+  .product-details {
+    padding: 35px 25px;
+  }
+
+  .popup-title {
+    font-size: 1.3rem;
+  }
+
+  .header-icon {
+    width: 60px;
+    height: 60px;
+
+    i {
+      font-size: 1.7rem;
+    }
+  }
+
+  .product-name {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+
+  .size-btn {
+    width: 65px;
+    height: 65px;
+
+    .size-number {
+      font-size: 1.1rem;
+    }
+  }
+
+  .image-container {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-content {
+    width: 95%;
+    border-radius: 18px;
+  }
+
+  .product-details {
+    padding: 30px 20px;
+  }
+
+  .popup-title {
+    font-size: 1.2rem;
+  }
+
+  .header-icon {
+    width: 55px;
+    height: 55px;
+
+    i {
+      font-size: 1.5rem;
+    }
+  }
+
+  .product-name {
+    font-size: 1rem;
+  }
+
+  .size-btn {
+    width: 60px;
+    height: 60px;
+
+    .size-text {
+      font-size: 0.65rem;
+    }
+
+    .size-number {
+      font-size: 1rem;
+    }
+  }
+
+  .btn-add-cart {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  .image-container {
+    padding: 20px;
+  }
+}
