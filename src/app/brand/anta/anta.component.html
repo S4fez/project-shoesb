@@ -1,33 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../mobile-version.scss">
-</head>
-<body>
-   
-    <header> 
-        <div class="logobrand-container">
-          <div class="logobrand">
-            <img src="../../../img/anta-logo.png" alt="">
-          </div>
-          
-          
+<!-- Brand Header Section -->
+<section class="brand-header">
+  <div class="brand-overlay"></div>
+  <div class="brand-content">
+    <div class="brand-logo">
+      <img src="assets/img/anta-logo.png" alt="Anta Logo">
+    </div>
+    <h1 class="brand-title">Anta Basketball</h1>
+    <p class="brand-subtitle">Keep Moving</p>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-container">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/home"><i class="fas fa-home"></i> หน้าแรก</a>
+      <span class="separator">/</span>
+      <a href="/brand">แบรนด์</a>
+      <span class="separator">/</span>
+      <span class="current">Anta</span>
+    </nav>
+  </div>
+</div>
+
+<!-- Products Section -->
+<section class="products-section">
+  <div class="container">
+    <div class="section-info">
+      <div class="info-left">
+        <h2 class="products-title">คอลเลกชัน Anta</h2>
+        <p class="products-count">{{ shoes.length }} รายการ</p>
       </div>
-      </header>
-      <div class="product-container" id="item-product">
-        <!-- 12 กล่องสินค้า -->
-        <div *ngFor="let shoes of this.shoes" class="product-box" (click)="goToDetail(shoes.product_id)">
-          <img src="{{shoes.img}}"  alt="Product 2" class="product-image">
-          <div class="product-title" style="white-space: nowrap;">{{shoes.nameproduct}}</div>
-          <div class="product-price">{{shoes.price}} ฿</div>
-          <button class="btn-buy">Add to cart</button>
+      <div class="info-right">
+        <div class="filter-group">
+          <label>เรียงตาม:</label>
+          <select class="filter-select">
+            <option>ใหม่ล่าสุด</option>
+            <option>ราคาต่ำสุด</option>
+            <option>ราคาสูงสุด</option>
+            <option>ความนิยม</option>
+          </select>
         </div>
-
-
-
       </div>
-    </body>
-    </html>
+    </div>
+
+    <div class="product-grid">
+      <div *ngFor="let shoes of this.shoes" class="product-card" (click)="goToDetail(shoes.product_id)">
+        <div class="product-image-wrapper">
+          <img [src]="shoes.img" [alt]="shoes.nameproduct" class="product-image">
+          <div class="product-badge">New</div>
+          <div class="product-overlay">
+            <button class="quick-view-btn">
+              <i class="fas fa-eye"></i>
+              ดูรายละเอียด
+            </button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">{{ shoes.nameproduct }}</h3>
+          <div class="product-pricing">
+            <span class="product-price">฿{{ shoes.price | number:'1.2-2' }}</span>
+          </div>
+          <button class="btn-add-cart" (click)="goToDetail(shoes.product_id); $event.stopPropagation()">
+            <i class="fas fa-shopping-bag"></i>
+            <span>เพิ่มลงตะกร้า</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="shoes.length === 0" class="empty-state">
+      <i class="fas fa-box-open"></i>
+      <h3>ไม่พบสินค้า</h3>
+      <p>ขออภัย ขณะนี้ยังไม่มีสินค้าในหมวดนี้</p>
+    </div>
+  </div>
+</section>
