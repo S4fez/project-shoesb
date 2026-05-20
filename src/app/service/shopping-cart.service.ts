@@ -11,12 +11,25 @@ export class ShoppingCartService {
   private cartVisibleSource = new BehaviorSubject<boolean>(false);
   cartVisible$ = this.cartVisibleSource.asObservable();
 
-  // private paymentVisibleSource = new BehaviorSubject<boolean>(false);
-  // paymentVisible$ = this.paymentVisibleSource.asObservable();
+  private cartCountSource = new BehaviorSubject<number>(this.readCartCount());
+  cartCount$ = this.cartCountSource.asObservable();
 
   private apiUrl = 'http://localhost:3000/api/';
 
   constructor(private http: HttpClient) { }
+
+  private readCartCount(): number {
+    try {
+      const stored = localStorage.getItem('SelectProduct');
+      return stored ? JSON.parse(stored).length : 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  refreshCartCount(): void {
+    this.cartCountSource.next(this.readCartCount());
+  }
 
   getStock(productid:number): Observable<Stock[]> {
     const url = `${this.apiUrl}productstore/${productid}`;

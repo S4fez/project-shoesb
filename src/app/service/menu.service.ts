@@ -5,7 +5,8 @@ export interface MenuItem {
   label: string;
   route?: string;
   icon?: string;
-  roles: UserRole[];  // role ไหนบ้างที่เห็นเมนูนี้
+  roles: UserRole[];
+  available?: boolean;  // false = ซ่อนจนกว่า page จะพร้อม
   children?: MenuItem[];
 }
 
@@ -66,24 +67,27 @@ export class MenuService {
       roles: [UserRole.CUSTOMER, UserRole.STAFF, UserRole.ADMIN]
     },
 
-    // เมนูสำหรับ Staff และ Admin
+    // เมนูสำหรับ Staff และ Admin (available: false = ซ่อนจนกว่าจะสร้าง component)
     {
       label: 'Orders Management',
       route: '/admin/orders',
       icon: 'fa-shopping-bag',
-      roles: [UserRole.STAFF, UserRole.ADMIN]
+      roles: [UserRole.STAFF, UserRole.ADMIN],
+      available: false
     },
     {
       label: 'Inventory',
       route: '/admin/inventory',
       icon: 'fa-box',
-      roles: [UserRole.STAFF, UserRole.ADMIN]
+      roles: [UserRole.STAFF, UserRole.ADMIN],
+      available: false
     },
     {
       label: 'Reports',
       route: '/admin/reports',
       icon: 'fa-chart-bar',
-      roles: [UserRole.STAFF, UserRole.ADMIN]
+      roles: [UserRole.STAFF, UserRole.ADMIN],
+      available: false
     },
 
     // เมนูสำหรับ Admin เท่านั้น
@@ -91,28 +95,29 @@ export class MenuService {
       label: 'Product Management',
       route: '/admin/products',
       icon: 'fa-tags',
-      roles: [UserRole.ADMIN]
+      roles: [UserRole.ADMIN],
+      available: false
     },
     {
       label: 'User Management',
       route: '/admin/users',
       icon: 'fa-users',
-      roles: [UserRole.ADMIN]
+      roles: [UserRole.ADMIN],
+      available: false
     }
   ];
 
   constructor() {}
 
-  // ดึงเมนูตาม role ของ user
+  // ดึงเมนูตาม role ของ user (กรองเฉพาะที่ available !== false)
   getMenuItems(userRole: UserRole): MenuItem[] {
     return this.menuConfig
-      .filter(item => item.roles.includes(userRole))
+      .filter(item => item.roles.includes(userRole) && item.available !== false)
       .map(item => {
-        // ถ้ามี children ให้ filter children ตาม role ด้วย
         if (item.children) {
           return {
             ...item,
-            children: item.children.filter(child => child.roles.includes(userRole))
+            children: item.children.filter(child => child.roles.includes(userRole) && child.available !== false)
           };
         }
         return item;

@@ -1,8 +1,10 @@
-import { Component, AfterViewInit, ElementRef, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { SearchService } from '../service/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { MenuService, MenuItem } from '../service/menu.service';
+import { ShoppingCartService } from '../service/shopping-cart.service';
 import { UserRole, getRoleName } from '../models/role.model';
 
 @Component({
@@ -10,15 +12,17 @@ import { UserRole, getRoleName } from '../models/role.model';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   SearchService: any;
   searchResults: any[] = [];
   Onshow = false;
 
-  // Properties สำหรับ role-based menu
   menuItems: MenuItem[] = [];
   userRole: UserRole | null = null;
   roleName: string = '';
+  cartCount: number = 0;
+
+  private cartSub!: Subscription;
 
   constructor(
     private elementRef: ElementRef,
@@ -26,23 +30,28 @@ export class NavbarComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private cartService: ShoppingCartService
   ) { }
 
   ngOnInit(): void {
-    // ดึง role ของ user
     this.userRole = this.authService.getUserRole();
 
-    // ถ้ามี role ให้ดึง menu items ที่เหมาะสม
     if (this.userRole) {
       this.menuItems = this.menuService.getMenuItems(this.userRole);
       this.roleName = getRoleName(this.userRole);
     }
+
+    this.cartSub = this.cartService.cartCount$.subscribe(count => {
+      this.cartCount = count;
+    });
   }
 
-  ngAfterViewInit() {
-    // โค้ดอื่น ๆ ที่คุณมี
+  ngOnDestroy(): void {
+    this.cartSub?.unsubscribe();
   }
+
+  ngAfterViewInit() { }
 
   search(event: Event) {
     event.preventDefault(); // ป้องกัน form submit/refresh หน้า
