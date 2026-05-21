@@ -1,22 +1,18 @@
-import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { ShoppingCartService } from '../service/shopping-cart.service';
-import { Stock } from '../stock';
+import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { AccountService } from '../service/account.service';
+import { AuthService } from '../auth.service';
 import { environment } from '../environment/environment';
+import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-payment-popup',
+  selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
-export class UserProfileComponent implements OnChanges {
-  @Input() isVisible: boolean = false;
-  @Input() ShowPopup: boolean = false;
-  @Input() data!: Stock[];
-  @Input() Total!: number;
-  @Output() popupClosed: EventEmitter<boolean> = new EventEmitter();
+export class UserProfileComponent implements OnInit {
+  ShowPopup: boolean = false;
 
   profile: any;
   selectedFile!: File;
@@ -25,12 +21,10 @@ export class UserProfileComponent implements OnChanges {
   selectedFileName: string | null = null;
 
   constructor(
-    private shoppingCartService: ShoppingCartService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private authService: AuthService,
+    private router: Router
   ) { }
-  ngOnChanges(): void {
-    // console.log("daTA",this.data)
-  }
 
   ngOnInit(): void {
     const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
@@ -93,11 +87,14 @@ export class UserProfileComponent implements OnChanges {
     this.ShowPopup = false;
   }
   convertPath(path: string): string {
-    // แปลง backslash เป็น slash
-    const fixedPath = path.replace(/\\/g, '/');
-    // คืนค่าเป็น URL เต็ม
-    return fixedPath;
+    return path.replace(/\\/g, '/');
   }
 
+  isAdmin(): boolean { return this.authService.isAdmin(); }
+  isStaff(): boolean { return this.authService.isStaff(); }
 
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

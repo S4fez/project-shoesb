@@ -323,3 +323,38 @@ button.checkout{
   }
 }
 
+
+.out-of-stock-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #fff5f5;
+  border: 1px solid #ffcccc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  gap: 8px;
+}
+
+.out-of-stock-label {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  i { margin-right: 4px; }
+}
+
+.out-of-stock-remove {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #e53e3e;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover { background: #c53030; }
+}

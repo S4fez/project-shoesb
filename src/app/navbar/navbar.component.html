@@ -81,11 +81,32 @@
           </a>
         </li>
 
-        <!-- Profile Icon - แสดงทุก role -->
-        <li class="nav-item">
-          <a class="nav-link icon-link user-icon" href="profile" title="โปรไฟล์">
+        <!-- Profile Dropdown - แสดงทุก role -->
+        <li class="nav-item dropdown">
+          <a class="nav-link icon-link user-icon dropdown-toggle"
+             href="#"
+             id="profileDropdown"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false"
+             title="โปรไฟล์">
             <i class="fas fa-user-circle"></i>
           </a>
+          <ul class="dropdown-menu modern-dropdown dropdown-menu-end" aria-labelledby="profileDropdown">
+            <li>
+              <a class="dropdown-item" href="profile">
+                <i class="fas fa-user me-2"></i>
+                <span>โปรไฟล์</span>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item logout-item" href="#" (click)="logout($event)">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                <span>ออกจากระบบ</span>
+              </a>
+            </li>
+          </ul>
         </li>
 
         <!-- Role Badge - แสดงเฉพาะ Admin และ Staff -->

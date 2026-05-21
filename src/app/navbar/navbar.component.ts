@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchService } from '../service/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -23,6 +24,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   cartCount: number = 0;
 
   private cartSub!: Subscription;
+  private searchSubject = new Subject<string>();
+  private searchSub!: Subscription;
 
   constructor(
     private elementRef: ElementRef,
@@ -45,32 +48,37 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.cartSub = this.cartService.cartCount$.subscribe(count => {
       this.cartCount = count;
     });
+
+    this.searchSub = this.searchSubject.pipe(
+      debounceTime(350),
+      distinctUntilChanged()
+    ).subscribe(query => {
+      if (!query) { this.Onshow = false; return; }
+      this.searchService.getSearch(query).subscribe((data) => {
+        this.searchResults = data;
+        this.Onshow = true;
+      });
+    });
   }
 
   ngOnDestroy(): void {
     this.cartSub?.unsubscribe();
+    this.searchSub?.unsubscribe();
   }
 
   ngAfterViewInit() { }
 
   search(event: Event) {
-    event.preventDefault(); // ป้องกัน form submit/refresh หน้า
-
+    event.preventDefault();
     const inputElement = this.elementRef.nativeElement.querySelector('#search-item') as HTMLInputElement;
     const name = inputElement.value.trim();
+    this.searchSubject.next(name);
+  }
 
-    if (!name){
-      this.Onshow = false;
-      return;
-    } 
-
-    // console.log('Search query:', name);
-
-    this.searchService.getSearch(name).subscribe((data) => {
-      // console.log('Search results:', data);
-      this.searchResults = data; // แสดงผลลัพธ์ใต้ช่องค้นหา
-      this.Onshow = true;
-    });
+  logout(event: Event) {
+    event.preventDefault();
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
   goToDetail(shoesId: number): void {
     // บังคับ navigate ใหม่แม้เป็น URL เดิม

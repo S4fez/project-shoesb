@@ -536,3 +536,13 @@ a, button {
     outline-offset: 2px;
   }
 }
+
+// ==================== Logout Item ====================
+.logout-item {
+  color: #e53e3e !important;
+  font-weight: 600;
+  &:hover {
+    background: #fff5f5 !important;
+    color: #c53030 !important;
+  }
+}

@@ -1,1 +1,137 @@
-<p>promotion works!</p>
+<app-navbar></app-navbar>
+
+<div class="promotion-page">
+  <!-- Hero Banner -->
+  <section class="promo-hero">
+    <div class="promo-hero-overlay"></div>
+    <div class="promo-hero-content">
+      <span class="promo-hero-badge">
+        <i class="fas fa-fire"></i> Hot Deals
+      </span>
+      <h1>โปรโมชั่นพิเศษ</h1>
+      <p>รับส่วนลดสุดพิเศษจากเรา เฉพาะช่วงเวลาจำกัด</p>
+    </div>
+  </section>
+
+  <div class="container promo-container">
+
+    <!-- Active Promotions -->
+    <div class="section-header">
+      <h2><i class="fas fa-tag me-2"></i>โปรโมชั่นที่ใช้ได้</h2>
+      <span class="promo-count">{{ activePromotions.length }} โปรโมชั่น</span>
+    </div>
+
+    <div class="promo-grid">
+      <div class="promo-card"
+           *ngFor="let promo of activePromotions"
+           [style.--accent]="promo.color">
+
+        <!-- Top badge -->
+        <div class="promo-badge-top" [class.expiring]="isExpiringSoon(promo.expiryDate)">
+          <i class="fas" [class]="'fas ' + promo.icon"></i>
+          <span *ngIf="isExpiringSoon(promo.expiryDate)">
+            ใกล้หมดอายุ!
+          </span>
+        </div>
+
+        <div class="promo-body">
+          <!-- Discount Display -->
+          <div class="discount-badge">
+            <span class="discount-value">{{ promo.discount }}%</span>
+            <span class="discount-label">OFF</span>
+          </div>
+
+          <h3 class="promo-title">{{ promo.title }}</h3>
+          <p class="promo-desc">{{ promo.description }}</p>
+
+          <!-- Brand tag -->
+          <span class="brand-tag" *ngIf="promo.brand">
+            <i class="fas fa-store me-1"></i>{{ promo.brand }}
+          </span>
+
+          <!-- Conditions -->
+          <div class="promo-conditions">
+            <div class="condition" *ngIf="promo.minOrder > 0">
+              <i class="fas fa-shopping-cart"></i>
+              <span>ขั้นต่ำ ฿{{ promo.minOrder | number }}</span>
+            </div>
+            <div class="condition" [class.urgent]="isExpiringSoon(promo.expiryDate)">
+              <i class="fas fa-clock"></i>
+              <span>
+                หมดอายุ {{ promo.expiryDate | date:'dd MMM yyyy' }}
+                <strong *ngIf="isExpiringSoon(promo.expiryDate)">
+                  ({{ getDaysLeft(promo.expiryDate) }} วัน)
+                </strong>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Promo Code -->
+        <div class="promo-footer">
+          <div class="promo-code-box">
+            <span class="code-label">รหัส:</span>
+            <span class="code-value">{{ promo.code }}</span>
+          </div>
+          <button class="copy-btn"
+                  (click)="copyCode(promo.code)"
+                  [class.copied]="copiedCode === promo.code">
+            <i class="fas" [class.fa-copy]="copiedCode !== promo.code" [class.fa-check]="copiedCode === promo.code"></i>
+            {{ copiedCode === promo.code ? 'คัดลอกแล้ว!' : 'คัดลอก' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expired Promotions -->
+    <div class="section-header mt-5" *ngIf="expiredPromotions.length > 0">
+      <h2 class="expired-header"><i class="fas fa-history me-2"></i>โปรโมชั่นที่หมดอายุ</h2>
+    </div>
+
+    <div class="promo-grid expired-grid" *ngIf="expiredPromotions.length > 0">
+      <div class="promo-card expired" *ngFor="let promo of expiredPromotions">
+        <div class="expired-overlay">
+          <span>หมดอายุแล้ว</span>
+        </div>
+        <div class="promo-body">
+          <div class="discount-badge muted">
+            <span class="discount-value">{{ promo.discount }}%</span>
+            <span class="discount-label">OFF</span>
+          </div>
+          <h3 class="promo-title">{{ promo.title }}</h3>
+          <div class="promo-code-box muted">
+            <span class="code-label">รหัส:</span>
+            <span class="code-value">{{ promo.code }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to use -->
+    <div class="how-to-use">
+      <h3><i class="fas fa-info-circle me-2"></i>วิธีใช้รหัสโปรโมชั่น</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <p>คัดลอกรหัสโปรโมชั่นที่ต้องการ</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <p>เลือกสินค้าและกดชำระเงิน</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <p>วางรหัสในช่อง "รหัสโปรโมชั่น"</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <p>กด "ใช้" เพื่อรับส่วนลดทันที</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

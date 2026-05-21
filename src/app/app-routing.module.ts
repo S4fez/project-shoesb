@@ -14,6 +14,7 @@ import { NgModule } from '@angular/core';
 import { ConverseComponent } from './brand/converse/converse.component';
 import { AuthGuard } from './authGuard.service';
 import { UserProfileComponent } from './userprofile/user-profile.component';
+import { PromotionComponent } from './promotion/promotion.component';
 import { RoleGuard } from './guards/role.guard';
 import { UserRole } from './models/role.model';
 
@@ -71,6 +72,10 @@ const routes: Routes = [
   {
     path:'profile',
     component: UserProfileComponent,canActivate: [AuthGuard],
+  },
+  {
+    path:'promotion',
+    component: PromotionComponent, canActivate: [AuthGuard],
   },
 
   // Admin & Staff Routes (เพิ่มไว้สำหรับอนาคต - ต้องสร้าง component ก่อนใช้งาน)

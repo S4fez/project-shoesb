@@ -61,6 +61,12 @@ export class MenuService {
       ]
     },
     {
+      label: 'โปรโมชั่น',
+      route: '/promotion',
+      icon: 'fa-tag',
+      roles: [UserRole.CUSTOMER, UserRole.STAFF, UserRole.ADMIN]
+    },
+    {
       label: 'Contact Us',
       route: '/contact',
       icon: 'fa-envelope',

@@ -215,3 +215,9 @@
   font-weight: 700;
   // color:dodgerblue;
 }
+.logout-btn {
+  background: linear-gradient(135deg, #e53e3e, #c53030) !important;
+  color: white !important;
+  font-weight: 600;
+  &:hover { opacity: 0.9; }
+}

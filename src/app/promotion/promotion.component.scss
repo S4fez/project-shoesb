@@ -1,0 +1,360 @@
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$dark-bg: #1a1a2e;
+$shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+$transition: all 0.3s ease;
+
+.promotion-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+// ==================== Hero ====================
+.promo-hero {
+  background: $primary-gradient;
+  position: relative;
+  padding: 80px 20px 60px;
+  text-align: center;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
+  }
+}
+
+.promo-hero-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+}
+
+.promo-hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+
+  i { margin-right: 6px; color: #ffd700; }
+}
+
+// ==================== Container ====================
+.promo-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin: 0;
+  }
+}
+
+.expired-header { color: #636e72; }
+
+.promo-count {
+  background: $primary-gradient;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+// ==================== Promo Grid ====================
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.expired-grid {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+
+// ==================== Promo Card ====================
+.promo-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  position: relative;
+  transition: $transition;
+  border-top: 4px solid var(--accent, #667eea);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+
+  &.expired {
+    pointer-events: none;
+  }
+}
+
+.promo-badge-top {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent, #667eea);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  z-index: 1;
+
+  &.expiring {
+    width: auto;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #e17055;
+    gap: 4px;
+
+    i { font-size: 0.7rem; }
+  }
+}
+
+.promo-body {
+  padding: 24px;
+}
+
+.discount-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  background: var(--accent, #667eea);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+
+  &.muted { background: #b2bec3; }
+
+  .discount-value {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .discount-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+}
+
+.promo-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin-bottom: 8px;
+}
+
+.promo-desc {
+  font-size: 0.9rem;
+  color: #636e72;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.brand-tag {
+  display: inline-block;
+  background: #f1f3f4;
+  color: #495057;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.promo-conditions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.condition {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #636e72;
+
+  i { color: var(--accent, #667eea); width: 14px; }
+
+  &.urgent { color: #e17055; i { color: #e17055; } }
+}
+
+// ==================== Promo Footer ====================
+.promo-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #f8f9fa;
+  border-top: 1px dashed #dee2e6;
+}
+
+.promo-code-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &.muted .code-value { color: #b2bec3; }
+
+  .code-label {
+    font-size: 0.8rem;
+    color: #636e72;
+  }
+
+  .code-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent, #667eea);
+    font-family: monospace;
+    letter-spacing: 1px;
+  }
+}
+
+.copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent, #667eea);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover { opacity: 0.85; transform: scale(1.03); }
+
+  &.copied {
+    background: #00b894;
+  }
+}
+
+// ==================== Expired Overlay ====================
+.expired-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+
+  span {
+    background: #b2bec3;
+    color: white;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    transform: rotate(-10deg);
+  }
+}
+
+// ==================== How to use ====================
+.how-to-use {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 40px;
+  box-shadow: $shadow-md;
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 24px;
+  }
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  max-width: 140px;
+
+  p {
+    font-size: 0.85rem;
+    color: #636e72;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.step-num {
+  width: 44px;
+  height: 44px;
+  background: $primary-gradient;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.step-arrow {
+  color: #b2bec3;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .promo-hero h1 { font-size: 1.8rem; }
+  .promo-grid { grid-template-columns: 1fr; }
+  .steps { gap: 8px; }
+  .step-arrow { display: none; }
+}

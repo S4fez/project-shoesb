@@ -31,39 +31,72 @@
 
           <div class="payment">
             <span class="promo">รหัสโปรโมชั่น</span>
-            <input type="text" name="" placeholder="รหัสโปรโมชั่น" required="required">
+            <div class="promo-row">
+              <input type="text" [(ngModel)]="promoCode" placeholder="รหัสโปรโมชั่น" class="promo-input">
+              <button class="promo-btn" (click)="applyPromoCode()">ใช้</button>
+            </div>
+            <span class="promo-success" *ngIf="promoApplied">
+              <i class="fas fa-check-circle"></i> ลดราคาสำเร็จ!
+            </span>
+            <span class="promo-error" *ngIf="promoError">{{ promoError }}</span>
+
             <div class="payment-options">
               <h2>คุณต้องการชำระเงินอย่างไร</h2>
-              
-              <div class="payment-option selected">
+
+              <div class="payment-option"
+                   [class.selected]="selectedPaymentMethod === 'card'"
+                   (click)="selectPaymentMethod('card')">
                 <span>💳</span>
                 <p>บัตรเครดิตหรือเดบิต</p>
               </div>
-            
-              <div class="payment-option">
+
+              <div class="payment-option"
+                   [class.selected]="selectedPaymentMethod === 'paypal'"
+                   (click)="selectPaymentMethod('paypal')">
                 <img src="https://cdn-icons-png.flaticon.com/512/196/196566.png" alt="PayPal">
-                <!-- <p>PayPal</p> -->
+                <p>PayPal</p>
               </div>
-            
-              <div class="payment-option">
+
+              <div class="payment-option"
+                   [class.selected]="selectedPaymentMethod === 'gpay'"
+                   (click)="selectPaymentMethod('gpay')">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROIppzLqCf0VqsxIo3tBzMe2OzdipG3iIMIg&s" alt="Google Pay">
-                <!-- <p>G Pay</p> -->
+                <p>G Pay</p>
               </div>
-            
-              <div class="payment-option">
+
+              <div class="payment-option"
+                   [class.selected]="selectedPaymentMethod === 'truemoney'"
+                   (click)="selectPaymentMethod('truemoney')">
                 <img src="https://www.narongrit.net/wp-content/uploads/2023/02/Logo-True-money-wallet-1.png" alt="TrueMoney">
-                <!-- <p>true money</p> -->
+                <p>TrueMoney</p>
               </div>
-            </div>            
+            </div>
           </div>
 
-          <div class="detail-payment">
+          <!-- แสดงเฉพาะบัตรเครดิต -->
+          <div class="detail-payment" *ngIf="selectedPaymentMethod === 'card'">
             <p>ป้อนรายละเอียดการชำระเงินของคุณ:</p>
-            <input type="text" name="" placeholder="ชื่อบนบัตร" required="required" >
-            <input type="text" name="" placeholder="หมายเลขบัตร" required="required" >
+            <input type="text" name="" placeholder="ชื่อบนบัตร" required="required">
+            <input type="text" name="" placeholder="หมายเลขบัตร (xxxx xxxx xxxx xxxx)" maxlength="19" required="required">
             <div class="detail-pay">
-              <input type="text" name="" placeholder="MM/YY" required="required" class="pay"> 
-              <input type="text" name="" placeholder="CVV" required="required" class="pay"> 
+              <input type="text" name="" placeholder="MM/YY" maxlength="5" required="required" class="pay">
+              <input type="text" name="" placeholder="CVV" maxlength="3" required="required" class="pay">
+            </div>
+          </div>
+
+          <!-- QR / แจ้งชำระอื่นๆ -->
+          <div class="detail-payment qr-payment" *ngIf="selectedPaymentMethod !== 'card'">
+            <p>สแกน QR หรือเข้าสู่ระบบผ่าน
+              <strong>
+                <span *ngIf="selectedPaymentMethod === 'paypal'">PayPal</span>
+                <span *ngIf="selectedPaymentMethod === 'gpay'">Google Pay</span>
+                <span *ngIf="selectedPaymentMethod === 'truemoney'">TrueMoney Wallet</span>
+              </strong>
+              เพื่อชำระเงิน
+            </p>
+            <div class="qr-placeholder">
+              <i class="fas fa-qrcode"></i>
+              <span>QR Code จะแสดงเมื่อกด "ชำระเงิน"</span>
             </div>
           </div>
         </div>
@@ -76,22 +109,27 @@
               <span>ยอดรวมย่อย</span>
               <span>฿{{Total}}</span>
             </div>
-            
+
+            <div class="summary-item" *ngIf="promoApplied">
+              <span class="discount-label">ส่วนลดโปรโมชั่น</span>
+              <span class="discount-value">-฿{{ Total - discountedTotal | number:'1.0-0' }}</span>
+            </div>
+
             <div class="summary-item">
               <span>การจัดส่ง/การส่งมอบ</span>
               <span>ฟรี</span>
             </div>
-          
+
             <div class="free-shipping">
               <p>คุณได้สิทธิ์จัดส่งสินค้าฟรี</p>
               <div class="progress-bar">
                 <div class="progress"></div>
               </div>
             </div>
-          
+
             <div class="summary-item total">
               <span>ยอดรวม</span>
-              <span>฿{{Total}}</span>
+              <span>฿{{ discountedTotal | number:'1.0-0' }}</span>
             </div>
           
             <hr>
