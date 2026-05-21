@@ -1,113 +1,127 @@
-<div class="home-page">
+<div class="home">
 
-  <!-- HERO -->
-  <section class="hero-section">
-    <!-- Court lines SVG background -->
-    <svg class="court-lines-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="100" y="50" width="1000" height="500" stroke="#E84610" stroke-width="3"/>
-      <line x1="600" y1="50" x2="600" y2="550" stroke="#E84610" stroke-width="2"/>
-      <circle cx="600" cy="300" r="80" stroke="#E84610" stroke-width="2"/>
-      <circle cx="600" cy="300" r="8" fill="#E84610"/>
-      <rect x="100" y="150" width="160" height="200" stroke="#E84610" stroke-width="2"/>
-      <rect x="940" y="150" width="160" height="200" stroke="#E84610" stroke-width="2"/>
-      <path d="M100 200 Q260 300 100 400" stroke="#E84610" stroke-width="2" fill="none"/>
-      <path d="M1100 200 Q940 300 1100 400" stroke="#E84610" stroke-width="2" fill="none"/>
+  <!-- Hero -->
+  <section class="hero">
+    <svg class="court-lines" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+      <g fill="none" stroke="#FF5C1A" stroke-width="1.5">
+        <rect x="40" y="40" width="720" height="370"/>
+        <line x1="400" y1="40" x2="400" y2="410"/>
+        <circle cx="400" cy="225" r="60"/>
+        <circle cx="400" cy="225" r="2" fill="#FF5C1A"/>
+        <path d="M40 100 A 80 125 0 0 1 40 350"/>
+        <path d="M760 100 A 80 125 0 0 0 760 350"/>
+        <rect x="40" y="155" width="120" height="140"/>
+        <rect x="640" y="155" width="120" height="140"/>
+      </g>
     </svg>
+    <span class="watermark">23</span>
 
-    <!-- #23 watermark -->
-    <div class="hero-watermark">23</div>
-
-    <div class="hero-grid">
-      <!-- Left col -->
-      <div class="hero-left">
-        <div class="hero-eyebrow">
-          <span class="eyebrow-line"></span>
-          FW25 / DROP 04 — LIVE NOW
+    <div class="hero__grid">
+      <div class="hero__text">
+        <div class="eyebrow"><span class="eyebrow__line"></span> FW25 / DROP 04 — LIVE NOW</div>
+        <h1 class="hero__h1">ELEVATE<br><span class="orange">YOUR</span> GAME<span class="orange">.</span></h1>
+        <p class="hero__sub">คอลเลกชันรองเท้าบาสเกตบอลพรีเมียม คัดสรรจาก 6 แบรนด์ชั้นนำทั่วโลก ของแท้ 100% — ส่งฟรีทั่วประเทศ.</p>
+        <div class="hero__cta">
+          <button class="btn-primary" (click)="goShop()">เริ่มช้อปปิ้ง →</button>
+          <button class="btn-ghost" (click)="goDetail(featured[0].id)">Sabrina 1 / Drop 04</button>
         </div>
-        <h1 class="hero-headline">
-          ELEVATE<br>
-          <span class="orange">YOUR</span><br>
-          GAME<span class="orange">.</span>
-        </h1>
-        <p class="hero-body">
-          ค้นหารองเท้าบาสเกตบอลที่ดีที่สุด จากแบรนด์ชั้นนำระดับโลก คัดเลือกสรรหาด้วย ตัวเลือกกว่า 500 รุ่น
-        </p>
-        <div class="hero-btns">
-          <button class="btn-court-primary" (click)="goToShop()">เริ่มช้อปปิ้ง →</button>
-          <button class="btn-court-ghost" (click)="goToDetail('n01')">Sabrina 1 / Drop 04</button>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item" *ngFor="let s of stats">
-            <span class="stat-value">{{ s.value }}</span>
-            <span class="stat-label">{{ s.label }}</span>
+        <div class="hero__stats">
+          <div class="stat" *ngFor="let s of stats; let i = index" [class.last]="i===3">
+            <div class="stat__num">{{s[0]}}</div>
+            <div class="stat__lbl">{{s[1]}}</div>
           </div>
         </div>
       </div>
 
-      <!-- Right col -->
-      <div class="hero-right">
-        <div class="hero-img-card">
-          <img [src]="heroImg" alt="Featured shoe">
-          <div class="featured-sticker">FEATURED DROP</div>
-          <div class="spec-card">
-            <span class="spec-label">SABRINA 1</span>
-            <span class="spec-model">DZ4470-002</span>
+      <div class="hero__img-wrap">
+        <img [src]="featured[0]?.img" [alt]="featured[0]?.name" class="hero__img" />
+        <div class="hero__gradient"></div>
+        <div class="hero__sticker">★ FEATURED DROP</div>
+        <div class="hero__spec-card">
+          <div class="spec-top">
+            <div>
+              <div class="spec-brand">NIKE / WNBA</div>
+              <div class="spec-name">SABRINA 1 — MAGNETIC</div>
+            </div>
+            <div class="spec-price">฿4,290</div>
           </div>
-          <div class="corner-bracket tl"></div>
-          <div class="corner-bracket tr"></div>
-          <div class="corner-bracket bl"></div>
-          <div class="corner-bracket br"></div>
         </div>
+        <span class="bracket tl"></span><span class="bracket tr"></span>
+        <span class="bracket bl"></span><span class="bracket br"></span>
       </div>
     </div>
   </section>
 
-  <!-- TICKER -->
-  <div class="ticker-wrap">
-    <div class="ticker-inner">
-      <span class="ticker-item" *ngFor="let item of tickerItems">{{ item }}</span>
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker__inner">
+      <span *ngFor="let t of tickerItems" class="ticker__item">★ {{t}}</span>
     </div>
   </div>
 
-  <!-- BRANDS STRIP -->
-  <section class="brands-strip">
-    <div class="brands-grid">
-      <div class="brand-cell" *ngFor="let b of brands" (click)="router.navigate(['/shop'])">  
-        <span class="brand-name">{{ b.name }}</span>
-        <span class="brand-count">{{ b.count }} styles</span>
+  <!-- Brands -->
+  <section class="brands">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow-sm">OUR PARTNERS / 06</div>
+        <h2 class="section-title">แบรนด์ที่เราคัดสรร</h2>
       </div>
+    </div>
+    <div class="brands__grid">
+      <button *ngFor="let b of brands; let i=index" class="brand-cell" (click)="goShop()"
+              [class.last]="i===5">
+        <div class="brand-cell__name">{{b.name.toUpperCase()}}</div>
+        <div class="brand-cell__count">{{b.count}} MODELS</div>
+      </button>
     </div>
   </section>
 
-  <!-- FEATURED PRODUCTS -->
-  <section class="featured-section">
+  <!-- Featured -->
+  <section class="featured">
     <div class="section-header">
-      <div class="eyebrow">/ FEATURED DROP</div>
-      <h2 class="section-title">THIS WEEK'S HEAT.</h2>
-    </div>
-    <div class="featured-grid">
-      <div class="court-product-card" *ngFor="let p of featured" (click)="goToDetail(p.id)">
-        <div class="card-img-wrap">
-          <img [src]="p.img" [alt]="p.name">
-          <span class="card-badge" *ngIf="p.tags.length">{{ getBadge(p.tags) }}</span>
-          <button class="wishlist-heart" (click)="$event.stopPropagation(); toggleWishlist(p)">
-            <i [class]="isWishlisted(p.id) ? 'fas fa-heart' : 'far fa-heart'"></i>
-          </button>
-        </div>
-        <div class="card-body">
-          <div class="card-brand">{{ p.brand }} / {{ p.model }}</div>
-          <div class="card-name">{{ p.name }}</div>
-          <div class="card-price-row">
-            <span class="price-main">{{ formatPrice(p.price) }}</span>
-            <span class="price-old" *ngIf="p.oldPrice">{{ formatPrice(p.oldPrice) }}</span>
-          </div>
-          <div class="card-arrow">→</div>
-        </div>
+      <div>
+        <div class="eyebrow-sm">FEATURED / WEEK 47</div>
+        <h2 class="section-title">กำลังมาแรง</h2>
       </div>
+      <button class="btn-link" (click)="goShop()">ดูทั้งหมด →</button>
     </div>
-    <div class="view-all-row">
-      <button class="btn-court-ghost" (click)="goToShop()">VIEW ALL DROPS →</button>
+    <div class="products-grid">
+      <article *ngFor="let p of featured" class="prod-card" (click)="goDetail(p.id)">
+        <div class="prod-card__img-wrap">
+          <img [src]="p.img" [alt]="p.name" class="prod-card__img" />
+          <span *ngIf="p.tags.includes('Sale')" class="prod-badge sale">SALE</span>
+          <span *ngIf="p.tags.includes('New')" class="prod-badge new">NEW</span>
+        </div>
+        <div class="prod-card__info">
+          <div class="prod-card__brand">{{p.brand.toUpperCase()}} / {{p.model}}</div>
+          <div class="prod-card__name">{{p.name.toUpperCase()}}</div>
+          <div class="prod-card__price-row">
+            <div>
+              <span class="prod-card__price">฿{{p.price.toLocaleString()}}</span>
+              <span *ngIf="p.oldPrice" class="prod-card__old">฿{{p.oldPrice!.toLocaleString()}}</span>
+            </div>
+            <span class="prod-card__arrow">→</span>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="c-footer">
+    <div class="footer__cols">
+      <div class="footer__about">
+        <div class="footer__logo"><span class="footer__mark">SB</span> SHOESBASKETBALL</div>
+        <p class="footer__desc">ร้านรองเท้าบาสเกตบอลพรีเมียม รวมแบรนด์ชั้นนำทั่วโลก ของแท้ 100% ส่งฟรีทั่วประเทศ</p>
+      </div>
+      <div><div class="footer__col-head">SHOP</div><ul><li *ngFor="let n of ['Nike','Adidas','Puma','Converse','Li-Ning','Anta']">{{n}}</li></ul></div>
+      <div><div class="footer__col-head">HELP</div><ul><li *ngFor="let n of ['Size Guide','Shipping','Returns','FAQ']">{{n}}</li></ul></div>
+      <div><div class="footer__col-head">LEGAL</div><ul><li *ngFor="let n of ['Terms','Privacy','Contact','About']">{{n}}</li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2025 SHOESBASKETBALL® · ALL RIGHTS RESERVED</span>
+      <span>BANGKOK · TH</span>
+    </div>
+  </footer>
 
 </div>

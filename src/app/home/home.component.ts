@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService, Product, Brand } from '../service/product.service';
-import { CartService } from '../service/cart.service';
-import { WishlistService } from '../service/wishlist.service';
 
 @Component({
   selector: 'app-home',
@@ -12,67 +10,17 @@ import { WishlistService } from '../service/wishlist.service';
 export class HomeComponent implements OnInit {
   featured: Product[] = [];
   brands: Brand[] = [];
-  heroImg: string = '';
+  ticker = ['FREE SHIPPING OVER ฿2,000','NEW DROP — SABRINA 1','BIRTHDAY BONUS 10% OFF','100% AUTHENTIC','NEXT DAY DELIVERY BKK'];
+  get tickerItems() { return [...this.ticker,...this.ticker,...this.ticker]; }
+  stats = [['500+','รุ่นรองเท้า'],['06','แบรนด์'],['10K+','ลูกค้า'],['24h','จัดส่ง']];
 
-  tickerItems = [
-    '★ FW25 DROP 04 — LIVE NOW',
-    '★ SABRINA 1 MAGNETIC',
-    '★ FREE SHIPPING OVER 3,000฿',
-    '★ KD 17 PENNY',
-    '★ NEW ARRIVALS WEEKLY',
-    '★ MB.03 TOXIC IN STOCK',
-    '★ FW25 DROP 04 — LIVE NOW',
-    '★ SABRINA 1 MAGNETIC',
-    '★ FREE SHIPPING OVER 3,000฿',
-    '★ KD 17 PENNY',
-    '★ NEW ARRIVALS WEEKLY',
-    '★ MB.03 TOXIC IN STOCK',
-  ];
+  constructor(public svc: ProductService, private router: Router) {}
 
-  stats = [
-    { value: '500+', label: 'รุ่นรองเท้า' },
-    { value: '06',   label: 'แบรนด์' },
-    { value: '10K+', label: 'ลูกค้า' },
-    { value: '24h',  label: 'จัดส่ง' },
-  ];
-
-  constructor(
-    private productService: ProductService,
-    private cartService: CartService,
-    private wishlistService: WishlistService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.featured = this.productService.getFeatured();
-    this.brands = this.productService.brands;
-    this.heroImg = this.productService.heroImg;
+  ngOnInit() {
+    this.featured = this.svc.products.slice(0, 4);
+    this.brands = this.svc.brands;
   }
 
-  goToShop(): void { this.router.navigate(['/shop']); }
-
-  goToDetail(id: string): void { this.router.navigate(['/detailpd', id]); }
-
-  addToCart(product: Product): void {
-    this.cartService.addItem(product, '9', 1);
-  }
-
-  toggleWishlist(product: Product): void {
-    this.wishlistService.toggle(product);
-  }
-
-  isWishlisted(id: string): boolean {
-    return this.wishlistService.isInWishlist(id);
-  }
-
-  getBadge(tags: string[]): string {
-    if (tags.includes('Sale')) return 'SALE';
-    if (tags.includes('New')) return 'NEW';
-    if (tags.includes('Hot')) return 'HOT';
-    return tags[0] || '';
-  }
-
-  formatPrice(p: number): string {
-    return p.toLocaleString('th-TH') + '฿';
-  }
+  goDetail(id: string) { this.router.navigate(['/detailpd', id]); }
+  goShop() { this.router.navigate(['/shop']); }
 }
