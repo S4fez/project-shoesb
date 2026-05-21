@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrandComponent } from './brand/brand.component';
@@ -18,53 +20,24 @@ import { LoginComponent } from './login/login.component';
 import { CartComponent } from './cart/cart.component';
 import { DetailpdComponent } from './brand/detailpd/detailpd.component';
 import { ConverseComponent } from './brand/converse/converse.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AuthInterceptor } from './interceptors/token.service';
 import { ShoppingCartPopupComponent } from './shopping-cart-popup/shopping-cart-popup.component';
 import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 import { UserProfileComponent } from './userprofile/user-profile.component';
 import { ShopComponent } from './shop/shop.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { TrackingComponent } from './tracking/tracking.component';
+import { AuthInterceptor } from './interceptors/token.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    BrandComponent,
-    PromotionComponent,
-    ContactComponent,
-    NikeComponent,
-    AdidasComponent,
-    PumaComponent,
-    LiNingComponent,
-    AntaComponent,
-    NavbarComponent,
-    LoginComponent,
-    CartComponent,
-    DetailpdComponent,
-    ConverseComponent,
-    ShoppingCartPopupComponent,
-    PaymentPopupComponent,
-    UserProfileComponent,
-    ShopComponent,
-    WishlistComponent,
-    TrackingComponent
+    AppComponent, HomeComponent, BrandComponent, PromotionComponent, ContactComponent,
+    NikeComponent, AdidasComponent, PumaComponent, LiNingComponent, AntaComponent,
+    NavbarComponent, LoginComponent, CartComponent, DetailpdComponent, ConverseComponent,
+    ShoppingCartPopupComponent, PaymentPopupComponent, UserProfileComponent,
+    ShopComponent, WishlistComponent, TrackingComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

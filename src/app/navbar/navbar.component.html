@@ -1,50 +1,31 @@
-<nav class="court-nav" [class.hidden]="!isLoggedIn()">
-  <div class="nav-inner">
-    <!-- Logo -->
-    <a routerLink="/home" class="nav-logo">
-      <div class="logo-circle">SB</div>
-      <div class="logo-text">
-        <span class="logo-main">SHOESBASKETBALL</span>
-        <span class="logo-reg">®</span>
-      </div>
-    </a>
+<header class="c-nav">
+  <a routerLink="/home" class="c-brand">
+    <span class="c-brand__mark">SB</span>
+    SHOESBASKETBALL
+    <sup class="c-brand__sup">®</sup>
+  </a>
 
-    <!-- Nav tabs -->
-    <ul class="nav-tabs-list">
-      <li *ngFor="let item of navItems">
-        <a [routerLink]="item.route" class="nav-tab" [class.active]="isActive(item.route)">{{ item.label }}</a>
-      </li>
-    </ul>
+  <nav class="c-nav__links">
+    <a routerLink="/home"     class="c-tab" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">หน้าแรก</a>
+    <a routerLink="/shop"     class="c-tab" [class.active]="isShopActive()">Shop</a>
+    <a routerLink="/wishlist" class="c-tab" routerLinkActive="active">Wishlist</a>
+    <a routerLink="/tracking" class="c-tab" routerLinkActive="active">Tracking</a>
+  </nav>
 
-    <!-- Right side -->
-    <div class="nav-right">
-      <!-- Search -->
-      <div class="search-bar">
-        <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Search shoes...">
-        <button (click)="onSearch()" class="search-btn"><i class="fas fa-search"></i></button>
-      </div>
-
-      <!-- Wishlist -->
-      <a routerLink="/wishlist" class="icon-btn">
-        <i class="fas fa-heart"></i>
-        <span class="icon-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
-      </a>
-
-      <!-- Cart -->
-      <a routerLink="/cart" class="icon-btn">
-        <i class="fas fa-shopping-bag"></i>
-        <span class="icon-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
-      </a>
-
-      <!-- Profile -->
-      <a routerLink="/profile" class="icon-btn">
-        <i class="fas fa-user-circle"></i>
-      </a>
-
-      <!-- Logout -->
-      <button class="logout-btn" (click)="logout()" *ngIf="isLoggedIn()">
-        <i class="fas fa-sign-out-alt"></i>
-      </button>
+  <div class="c-nav__actions">
+    <div class="c-search">
+      <span class="c-search__icon">⌕</span>
+      <input [(ngModel)]="searchQuery" placeholder="ค้นหารองเท้า..." class="c-search__input" />
+      <kbd class="c-search__kbd">⌘K</kbd>
     </div>
+    <a routerLink="/wishlist" class="c-icon-btn">
+      ♡
+      <em class="c-badge" *ngIf="wishlist.count > 0">{{ wishlist.count }}</em>
+    </a>
+    <a routerLink="/cart" class="c-icon-btn">
+      ⊞
+      <em class="c-badge" *ngIf="cart.count > 0">{{ cart.count }}</em>
+    </a>
+    <a routerLink="/profile" class="c-icon-btn">◉</a>
   </div>
-</nav>
+</header>
