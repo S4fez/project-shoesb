@@ -1,1 +1,199 @@
-/* You can add global styles to this file, and also import other style files */
+/* COURT Design System */
+@import 'bootstrap/scss/bootstrap';
+
+:root {
+  --court-bg: #F4F1E8;
+  --court-surf: #FBF8EF;
+  --court-surf2: #EAE5D5;
+  --court-line: #D6CFBC;
+  --court-ink: #1A1A1A;
+  --court-mute: #6F665A;
+  --court-orange: #E84610;
+  --court-orange-deep: #B83400;
+  --court-yellow: #F2B100;
+  --font-display: 'Anton', Impact, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-thai: 'IBM Plex Sans Thai', 'Anuphan', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--court-bg);
+  color: var(--court-ink);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes court-ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-wrap {
+  background: var(--court-orange);
+  overflow: hidden;
+  padding: 10px 0;
+  .ticker-inner {
+    display: flex;
+    width: max-content;
+    animation: court-ticker 40s linear infinite;
+    .ticker-item {
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      padding: 0 32px;
+    }
+  }
+}
+
+.btn-court-primary {
+  background: var(--court-orange);
+  color: #fff;
+  border: none;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover { background: var(--court-orange-deep); color: #fff; }
+}
+
+.btn-court-ghost {
+  background: transparent;
+  color: var(--court-ink);
+  border: 1.5px solid var(--court-line);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  &:hover { border-color: var(--court-orange); color: var(--court-orange); }
+}
+
+.court-product-card {
+  background: var(--court-surf);
+  border: 1.5px solid var(--court-line);
+  transition: border-color 0.2s;
+  cursor: pointer;
+  &:hover { border-color: var(--court-orange); }
+  .card-img-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--court-surf2);
+    img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    &:hover img { transform: scale(1.04); }
+    .card-badge {
+      position: absolute;
+      top: 12px; left: 12px;
+      background: var(--court-orange);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      text-transform: uppercase;
+    }
+  }
+  .card-body {
+    padding: 16px;
+    .card-brand {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--court-mute);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .card-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: var(--court-ink);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .card-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      .price-main {
+        font-family: var(--font-mono);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--court-orange);
+      }
+      .price-old {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--court-mute);
+        text-decoration: line-through;
+      }
+    }
+    .card-arrow {
+      margin-top: 12px;
+      font-size: 18px;
+      color: var(--court-orange);
+    }
+  }
+}
+
+.court-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--court-orange);
+  }
+  input, select {
+    background: var(--court-surf);
+    border: 1.5px solid var(--court-line);
+    color: var(--court-ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    &:focus { border-color: var(--court-orange); }
+    &::placeholder { color: var(--court-mute); }
+  }
+}
+
+.court-page-header {
+  padding: 60px 40px 40px;
+  border-bottom: 1.5px solid var(--court-line);
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--court-orange);
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: 96px;
+    line-height: 0.95;
+    color: var(--court-ink);
+    margin: 0;
+  }
+}
