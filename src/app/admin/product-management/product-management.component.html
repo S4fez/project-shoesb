@@ -1,0 +1,268 @@
+<div class="admin-container">
+
+  <!-- ─── Header ─────────────────────────────────────────────────────────────── -->
+  <div class="admin-header">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div>
+        <span class="superadmin-badge">
+          <i class="fas fa-shield-alt me-2"></i>{{ getRoleBadgeLabel() }} Panel
+        </span>
+        <h2 class="page-title mt-2">จัดการสินค้า</h2>
+        <p class="page-subtitle">เพิ่ม แก้ไข หรือลบสินค้าในระบบร้านค้า</p>
+      </div>
+      <button class="btn btn-add-product" (click)="showAddForm = !showAddForm">
+        <i class="fas me-2" [class.fa-plus]="!showAddForm" [class.fa-times]="showAddForm"></i>
+        {{ showAddForm ? 'ซ่อนฟอร์ม' : 'เพิ่มสินค้าใหม่' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- ─── Add Product Form ────────────────────────────────────────────────────── -->
+  <div class="add-product-panel" *ngIf="showAddForm">
+    <div class="panel-header">
+      <h4><i class="fas fa-box-open me-2"></i>เพิ่มสินค้าใหม่</h4>
+    </div>
+    <div class="panel-body">
+      <form [formGroup]="addProductForm" (ngSubmit)="submitAddProduct()">
+        <div class="row g-4">
+
+          <!-- Image Upload -->
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">รูปภาพสินค้า</label>
+            <div class="image-upload-zone" (click)="fileInput.click()">
+              <img *ngIf="previewUrl" [src]="previewUrl" class="preview-img" alt="preview" />
+              <div *ngIf="!previewUrl" class="upload-placeholder">
+                <i class="fas fa-camera fa-3x mb-2"></i>
+                <p>คลิกเพื่ออัปโหลดรูปภาพ</p>
+                <small>PNG, JPG (แนะนำ 500×500 px)</small>
+              </div>
+              <input #fileInput type="file" accept="image/*" class="d-none"
+                     (change)="onFileSelected($event, 'add')" />
+            </div>
+          </div>
+
+          <!-- Fields -->
+          <div class="col-md-8">
+            <div class="row g-3">
+
+              <!-- Brand -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">แบรนด์ <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="brand_id"
+                        [class.is-invalid]="addProductForm.get('brand_id')?.invalid && addProductForm.get('brand_id')?.touched">
+                  <option value="">-- เลือกแบรนด์ --</option>
+                  <option *ngFor="let brand of brands" [value]="brand.brand_id">
+                    {{ brand.namebrand || 'Brand ' + brand.brand_id }}
+                  </option>
+                </select>
+                <div class="invalid-feedback">กรุณาเลือกแบรนด์</div>
+              </div>
+
+              <!-- Price -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">ราคา (บาท) <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text">฿</span>
+                  <input type="number" class="form-control" formControlName="price"
+                         placeholder="0.00" min="1"
+                         [class.is-invalid]="addProductForm.get('price')?.invalid && addProductForm.get('price')?.touched" />
+                  <div class="invalid-feedback">กรุณาใส่ราคาสินค้า</div>
+                </div>
+              </div>
+
+              <!-- Product Name -->
+              <div class="col-12">
+                <label class="form-label fw-semibold">ชื่อสินค้า <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="nameproduct"
+                       placeholder="เช่น Nike Air Max 2024"
+                       [class.is-invalid]="addProductForm.get('nameproduct')?.invalid && addProductForm.get('nameproduct')?.touched" />
+                <div class="invalid-feedback">กรุณาใส่ชื่อสินค้า (อย่างน้อย 2 ตัวอักษร)</div>
+              </div>
+
+              <!-- Sizes -->
+              <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <label class="form-label fw-semibold mb-0">ไซส์และสต็อก</label>
+                  <button type="button" class="btn btn-sm btn-outline-primary" (click)="addSizeRow()">
+                    <i class="fas fa-plus me-1"></i>เพิ่มไซส์
+                  </button>
+                </div>
+                <div class="sizes-table">
+                  <div class="size-header-row">
+                    <span>ไซส์</span>
+                    <span>สต็อก (คู่)</span>
+                    <span></span>
+                  </div>
+                  <div formArrayName="sizes">
+                    <div *ngFor="let sizeGroup of sizesArray.controls; let i = index"
+                         [formGroupName]="i" class="size-row">
+                      <input type="text" class="form-control form-control-sm"
+                             formControlName="size" placeholder="เช่น 42" />
+                      <input type="number" class="form-control form-control-sm"
+                             formControlName="stock" placeholder="0" min="0" />
+                      <button type="button" class="btn btn-sm btn-danger-outline"
+                              (click)="removeSizeRow(i)" [disabled]="sizesArray.length === 1">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions mt-4">
+          <button type="submit" class="btn btn-primary-action">
+            <i class="fas fa-save me-2"></i>บันทึกสินค้า
+          </button>
+          <button type="button" class="btn btn-secondary-action ms-2" (click)="showAddForm = false">
+            ยกเลิก
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ─── Products Table ──────────────────────────────────────────────────────── -->
+  <div class="products-panel">
+    <div class="panel-header d-flex align-items-center justify-content-between">
+      <h4><i class="fas fa-list me-2"></i>รายการสินค้าทั้งหมด</h4>
+      <span class="product-count">{{ products.length }} รายการ</span>
+    </div>
+    <div class="panel-body p-0">
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-3 text-muted">กำลังโหลดข้อมูล...</p>
+      </div>
+
+      <!-- Table -->
+      <div *ngIf="!loading" class="table-responsive">
+        <table class="table admin-table mb-0">
+          <thead>
+            <tr>
+              <th>รูปภาพ</th>
+              <th>ชื่อสินค้า</th>
+              <th>แบรนด์</th>
+              <th>ราคา</th>
+              <th>สถานะ</th>
+              <th class="text-center">จัดการ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <td>
+                <img [src]="imgUrl + product.img" class="product-thumb"
+                     alt="{{ product.nameproduct }}"
+                     onerror="this.src='https://placehold.co/56x56/f8f9fa/adb5bd?text=N/A'" />
+              </td>
+              <td>
+                <div class="product-name">{{ product.nameproduct }}</div>
+                <small class="text-muted">ID: {{ product.product_id }}</small>
+              </td>
+              <td>
+                <span class="brand-chip">{{ product.namebrand || getBrandName(product.brand_id) }}</span>
+              </td>
+              <td>
+                <span class="price-text">฿{{ product.price | number:'1.0-0' }}</span>
+              </td>
+              <td>
+                <span class="status-badge"
+                      [ngClass]="product.record_status === 'A' ? 'status-active' : 'status-inactive'">
+                  {{ product.record_status === 'A' ? 'ใช้งาน' : 'ปิดใช้งาน' }}
+                </span>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-edit-sm me-1"
+                        data-bs-toggle="modal" data-bs-target="#editProductModal"
+                        (click)="openEditModal(product)"
+                        title="แก้ไข">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-delete-sm"
+                        (click)="confirmDelete(product)"
+                        title="ลบ">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Empty State -->
+        <div *ngIf="products.length === 0" class="empty-state">
+          <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+          <h5 class="text-muted">ยังไม่มีสินค้าในระบบ</h5>
+          <p class="text-muted">กดปุ่ม "เพิ่มสินค้าใหม่" เพื่อเริ่มต้น</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── Edit Product Modal ──────────────────────────────────────────────────── -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content edit-modal">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-edit me-2"></i>แก้ไขสินค้า
+          <small *ngIf="editingProduct" class="ms-2 opacity-75">— {{ editingProduct.nameproduct }}</small>
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" *ngIf="editingProduct">
+        <form [formGroup]="editProductForm">
+          <div class="row g-3">
+            <div class="col-md-4 text-center">
+              <label class="form-label fw-semibold">รูปภาพ</label>
+              <div class="image-upload-zone small-zone" (click)="editFileInput.click()">
+                <img *ngIf="editPreviewUrl" [src]="editPreviewUrl" class="preview-img" alt="preview" />
+                <div *ngIf="!editPreviewUrl" class="upload-placeholder">
+                  <i class="fas fa-camera fa-2x mb-2"></i>
+                  <p class="small">คลิกเพื่อเปลี่ยนรูป</p>
+                </div>
+                <input #editFileInput type="file" accept="image/*" class="d-none"
+                       (change)="onFileSelected($event, 'edit')" />
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label fw-semibold">ชื่อสินค้า</label>
+                  <input type="text" class="form-control" formControlName="nameproduct" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">ราคา (บาท)</label>
+                  <div class="input-group">
+                    <span class="input-group-text">฿</span>
+                    <input type="number" class="form-control" formControlName="price" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">สถานะ</label>
+                  <select class="form-select" formControlName="record_status">
+                    <option value="A">ใช้งาน</option>
+                    <option value="D">ปิดใช้งาน</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary-action" data-bs-dismiss="modal">ยกเลิก</button>
+        <button type="button" class="btn btn-primary-action"
+                (click)="submitEditProduct()" data-bs-dismiss="modal">
+          <i class="fas fa-save me-2"></i>บันทึกการแก้ไข
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

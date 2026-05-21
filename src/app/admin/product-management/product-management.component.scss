@@ -1,0 +1,344 @@
+.admin-container {
+  padding: 24px;
+  background: #f4f6fb;
+  min-height: 100vh;
+}
+
+// ─── Header ────────────────────────────────────────────────────────────────────
+.admin-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+
+  .superadmin-badge {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #1a1a2e;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+  }
+
+  .page-subtitle {
+    color: rgba(255, 255, 255, 0.55);
+    margin: 4px 0 0;
+    font-size: 0.88rem;
+  }
+
+  .btn-add-product {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #1a1a2e;
+    font-weight: 700;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    white-space: nowrap;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(253, 160, 133, 0.45);
+      color: #1a1a2e;
+    }
+  }
+}
+
+// ─── Panels ────────────────────────────────────────────────────────────────────
+.add-product-panel,
+.products-panel {
+  background: white;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+
+  .panel-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 16px 24px;
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin: 0;
+    }
+
+    .product-count {
+      background: #e8f0ff;
+      color: #2563eb;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+  }
+
+  .panel-body {
+    padding: 24px;
+  }
+}
+
+// ─── Image Upload ──────────────────────────────────────────────────────────────
+.image-upload-zone {
+  border: 2px dashed #dee2e6;
+  border-radius: 12px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+
+  &:hover {
+    border-color: #fda085;
+    background: #fff8f5;
+  }
+
+  &.small-zone {
+    height: 160px;
+  }
+
+  .preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .upload-placeholder {
+    text-align: center;
+    color: #adb5bd;
+    padding: 16px;
+
+    p { margin: 8px 0 4px; font-size: 0.88rem; }
+    small { font-size: 0.75rem; }
+  }
+}
+
+// ─── Sizes Table ──────────────────────────────────────────────────────────────
+.sizes-table {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .size-header-row,
+  .size-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 40px;
+    gap: 8px;
+    padding: 8px 12px;
+    align-items: center;
+  }
+
+  .size-header-row {
+    background: #f8f9fa;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .size-row {
+    border-top: 1px solid #f0f2f5;
+
+    &:hover { background: #fafafa; }
+  }
+}
+
+.btn-danger-outline {
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  background: transparent;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover:not(:disabled) {
+    background: #dc3545;
+    color: white;
+  }
+
+  &:disabled { opacity: 0.3; }
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+.btn-primary-action {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(26, 26, 46, 0.28);
+    color: white;
+  }
+}
+
+.btn-secondary-action {
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: background 0.2s;
+
+  &:hover { background: #e0e0e0; color: #333; }
+}
+
+.form-actions {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+}
+
+// ─── Table ─────────────────────────────────────────────────────────────────────
+.admin-table {
+  thead tr {
+    background: #f8f9fa;
+
+    th {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #6c757d;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e9ecef;
+      border-top: none;
+    }
+  }
+
+  tbody tr {
+    transition: background 0.15s;
+
+    &:hover { background: #f8f9fa; }
+
+    td {
+      padding: 14px 16px;
+      vertical-align: middle;
+      border-color: #f0f2f5;
+    }
+  }
+}
+
+.product-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+}
+
+.product-name {
+  font-weight: 600;
+  color: #1a1a2e;
+  font-size: 0.9rem;
+}
+
+.brand-chip {
+  background: #e8f0ff;
+  color: #2563eb;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.price-text {
+  font-weight: 700;
+  color: #1a1a2e;
+  font-size: 0.92rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &.status-active {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  &.status-inactive {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+}
+
+.btn-edit-sm {
+  background: #e8f0ff;
+  color: #2563eb;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  padding: 0;
+
+  &:hover { background: #2563eb; color: white; }
+}
+
+.btn-delete-sm {
+  background: #fee2e2;
+  color: #dc3545;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  padding: 0;
+
+  &:hover { background: #dc3545; color: white; }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// ─── Edit Modal ────────────────────────────────────────────────────────────────
+.edit-modal {
+  border-radius: 16px;
+  overflow: hidden;
+
+  .modal-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    border: none;
+    padding: 20px 24px;
+  }
+
+  .modal-body { padding: 24px; }
+
+  .modal-footer {
+    border-top: 1px solid #f0f0f0;
+    padding: 16px 24px;
+  }
+}

@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrandComponent } from './brand/brand.component';
 import { PromotionComponent } from './promotion/promotion.component';
 import { ContactComponent } from './contact/contact.component';
-// import { RegisterComponent } from './login/register/register.component';
 import { NikeComponent } from './brand/nike/nike.component';
 import { AdidasComponent } from './brand/adidas/adidas.component';
 import { PumaComponent } from './brand/puma/puma.component';
@@ -24,6 +23,7 @@ import { AuthInterceptor } from './interceptors/token.service';
 import { ShoppingCartPopupComponent } from './shopping-cart-popup/shopping-cart-popup.component';
 import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 import { UserProfileComponent } from './userprofile/user-profile.component';
+import { ProductManagementComponent } from './admin/product-management/product-management.component';
 
 @NgModule({
   declarations: [
@@ -32,9 +32,7 @@ import { UserProfileComponent } from './userprofile/user-profile.component';
     BrandComponent,
     PromotionComponent,
     ContactComponent,
-    // RegisterComponent,
     NikeComponent,
-
     AdidasComponent,
     PumaComponent,
     LiNingComponent,
@@ -46,13 +44,14 @@ import { UserProfileComponent } from './userprofile/user-profile.component';
     ConverseComponent,
     ShoppingCartPopupComponent,
     PaymentPopupComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ProductManagementComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule
   ],
   providers: [
