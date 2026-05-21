@@ -1,28 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Product } from './product.service';
 
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
-  private items: Product[] = [];
-  private countSubject = new BehaviorSubject<number>(0);
-  count$ = this.countSubject.asObservable();
+  private _ids$ = new BehaviorSubject<string[]>([]);
+  ids$ = this._ids$.asObservable();
 
-  getItems(): Product[] { return this.items; }
+  get ids()   { return this._ids$.value; }
+  get count() { return this.ids.length; }
 
-  toggle(product: Product): void {
-    const idx = this.items.findIndex(p => p.id === product.id);
-    if (idx >= 0) {
-      this.items.splice(idx, 1);
-    } else {
-      this.items.push(product);
-    }
-    this.countSubject.next(this.items.length);
+  has(id: string) { return this.ids.includes(id); }
+  toggle(id: string) {
+    this._ids$.next(this.has(id) ? this.ids.filter(x => x !== id) : [...this.ids, id]);
   }
-
-  isInWishlist(productId: string): boolean {
-    return this.items.some(p => p.id === productId);
-  }
-
-  getCount(): number { return this.items.length; }
 }

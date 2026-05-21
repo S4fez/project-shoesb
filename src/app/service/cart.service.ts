@@ -2,55 +2,40 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Product } from './product.service';
 
-export interface CartItem {
-  product: Product;
-  qty: number;
-  size: string;
-}
+export interface CartItem extends Product { qty: number; size: string; }
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private items: CartItem[] = [];
-  private countSubject = new BehaviorSubject<number>(0);
-  count$ = this.countSubject.asObservable();
+  private _items$ = new BehaviorSubject<CartItem[]>([]);
+  items$ = this._items$.asObservable();
 
-  getItems(): CartItem[] { return this.items; }
+  get items()    { return this._items$.value; }
+  get count()    { return this.items.length; }
+  get subtotal() { return this.items.reduce((s,i) => s + i.price * i.qty, 0); }
+  get shipping() { return this.subtotal > 2000 ? 0 : 80; }
+  get total()    { return this.subtotal + this.shipping; }
 
-  addItem(product: Product, size: string, qty: number = 1): void {
-    const existing = this.items.find(i => i.product.id === product.id && i.size === size);
-    if (existing) {
-      existing.qty += qty;
+  add(product: Product, size: string, qty: number) {
+    const cur = this._items$.value;
+    const idx = cur.findIndex(i => i.id === product.id && i.size === size);
+    if (idx >= 0) {
+      const updated = [...cur];
+      updated[idx] = { ...updated[idx], qty: updated[idx].qty + qty };
+      this._items$.next(updated);
     } else {
-      this.items.push({ product, qty, size });
+      this._items$.next([...cur, { ...product, size, qty }]);
     }
-    this.updateCount();
   }
 
-  removeItem(productId: string, size: string): void {
-    this.items = this.items.filter(i => !(i.product.id === productId && i.size === size));
-    this.updateCount();
+  updateQty(index: number, delta: number) {
+    const items = [...this._items$.value];
+    const nq = items[index].qty + delta;
+    if (nq < 1) return;
+    items[index] = { ...items[index], qty: nq };
+    this._items$.next(items);
   }
 
-  updateQty(productId: string, size: string, qty: number): void {
-    const item = this.items.find(i => i.product.id === productId && i.size === size);
-    if (item) { item.qty = qty; }
-    this.updateCount();
-  }
-
-  getSubtotal(): number {
-    return this.items.reduce((sum, i) => sum + i.product.price * i.qty, 0);
-  }
-
-  getCount(): number {
-    return this.items.reduce((sum, i) => sum + i.qty, 0);
-  }
-
-  clear(): void {
-    this.items = [];
-    this.updateCount();
-  }
-
-  private updateCount(): void {
-    this.countSubject.next(this.getCount());
+  remove(index: number) {
+    this._items$.next(this._items$.value.filter((_,i) => i !== index));
   }
 }
