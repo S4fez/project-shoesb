@@ -1,155 +1,205 @@
-# Claude Code Instructions for project-shoesb
+# CLAUDE.md — project-shoesb (Angular Frontend)
 
 ## Project Overview
-This is an Angular 17 e-commerce application for a shoe business. The project uses Bootstrap for styling, JWT for authentication, and SweetAlert2 for alerts.
 
-**Project Name:** my-finallproject
-**Framework:** Angular 17.1.0
-**Language:** TypeScript 5.2.2
-**Primary Language:** Thai (UI text and some variable names)
+Angular 17 e-commerce frontend for a shoe store. Communicates with the `s4fez/-node.js-backend` Express API. Users browse products by brand, manage a shopping cart, and checkout. Supports role-based access control (Customer / Staff / Admin).
 
-## Project Structure
+- **Framework:** Angular 17.1.0 (NgModule-based — not standalone components)
+- **Language:** TypeScript 5.2.2
+- **Styling:** SCSS + Bootstrap 5.3.3
+- **UI libraries:** SweetAlert2 (alerts/confirmations), jwt-decode (token decoding)
+- **Dev server port:** 4200 (proxies `/api` → `http://localhost:3000`)
+- **UI language:** Thai (ภาษาไทย) — preserve existing Thai text
+- **Branch:** `main`
+
+## Repository Structure
 
 ```
-src/app/
-├── api.service.ts          # Main API service for HTTP requests
-├── auth.service.ts         # Authentication service (JWT handling)
-├── authGuard.service.ts    # Route guards for protected routes
-├── app-routing.module.ts   # Main routing configuration
-├── brand/                  # Brand management component
-├── cart/                   # Shopping cart component
-├── contact/                # Contact page component
-├── home/                   # Home page component
-├── login/                  # Login/authentication component
-├── navbar/                 # Navigation bar component
-├── payment-popup/          # Payment popup component
-├── product.ts              # Product model/interface
-├── promotion/              # Promotion management component
-├── service/                # Additional services
-├── shopping-cart-popup/    # Shopping cart popup component
-├── stock.ts                # Stock model/interface
-└── userprofile/           # User profile component (with image upload)
+project-shoesb/
+├── src/
+│   ├── main.ts                         # Angular bootstrap
+│   ├── index.html
+│   ├── styles.scss                     # Global styles
+│   ├── proxy.conf.json                 # Dev proxy: /api → localhost:3000
+│   └── app/
+│       ├── app.module.ts               # Root NgModule — all component declarations
+│       ├── app-routing.module.ts       # Active routing configuration (with guards)
+│       ├── routes.ts                   # Legacy routing file — NOT used by app.module.ts
+│       ├── app.component.ts/html/scss
+│       │
+│       ├── models/
+│       │   └── role.model.ts           # UserRole enum: CUSTOMER | STAFF | ADMIN
+│       │
+│       ├── interceptors/
+│       │   └── token.service.ts        # AuthInterceptor — attaches Bearer JWT to requests
+│       │
+│       ├── guards/
+│       │   └── role.guard.ts           # RoleGuard — role-based route protection
+│       │
+│       ├── auth.service.ts             # Auth state: isAuthenticated, getUserRole, logout
+│       ├── authGuard.service.ts        # AuthGuard — redirects to /login if not authenticated
+│       ├── api.service.ts              # Base API service (baseApiUrl)
+│       │
+│       ├── product.ts                  # Product interface/model
+│       ├── stock.ts                    # Stock interface/model
+│       │
+│       ├── home/                       # Home page
+│       ├── navbar/                     # Navigation bar
+│       ├── login/                      # Login form
+│       ├── contact/                    # Contact page
+│       ├── brand/                      # Brand listing + sub-brand components
+│       │   ├── brand.component.*
+│       │   ├── nike/
+│       │   ├── puma/
+│       │   ├── adidas/
+│       │   ├── li-ning/
+│       │   ├── anta/
+│       │   ├── converse/
+│       │   └── detailpd/               # Product detail page (/detailpd/:id)
+│       ├── cart/                       # Shopping cart
+│       ├── shopping-cart-popup/        # Cart popup overlay
+│       ├── payment-popup/             # Payment confirmation popup
+│       ├── promotion/                  # Promotions page
+│       ├── userprofile/                # User profile with image upload
+│       ├── environment/               # Environment config
+│       └── service/                   # Additional services
+├── src/scss/                          # Shared SCSS partials
+├── src/assets/
+├── src/img/
+├── angular.json
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.spec.json
+├── databasepg.js                      # Standalone PG connection file (root-level, not used by Angular)
+└── package.json
 ```
-
-## Key Features
-
-1. **User Authentication**
-   - JWT-based authentication
-   - Auth guard for protected routes
-   - User profile management with image upload
-
-2. **E-commerce Functionality**
-   - Product catalog
-   - Shopping cart
-   - Brand management
-   - Stock management
-   - Payment processing
-   - Promotion system
-
-3. **UI/UX**
-   - Bootstrap 5.3.3 for responsive design
-   - SweetAlert2 for user-friendly alerts
-   - Image upload with preview functionality
 
 ## Development Commands
 
 ```bash
-npm run dev        # Start development server (ng serve)
-npm run build      # Build for production
-npm run test       # Run unit tests
-npm run watch      # Build with watch mode
+npm run dev        # ng serve — dev server at http://localhost:4200
+npm run build      # ng build — production build
+npm run test       # ng test — Karma/Jasmine unit tests
+npm run watch      # ng build --watch (dev config)
 ```
 
-## Coding Conventions
+The dev server is configured with `src/proxy.conf.json` to forward `/api/*` requests to `http://localhost:3000`, so the backend must be running locally.
 
-### File Naming
-- Components: kebab-case (e.g., `user-profile.component.ts`)
-- Services: camelCase with `.service.ts` suffix
-- Models: camelCase (e.g., `product.ts`, `stock.ts`)
+## Authentication & Authorization
 
-### Language Mixing
-- **Backend/API communication:** Uses Thai variable names in some cases
-- **UI text:** Primarily Thai language
-- **Code comments:** Mix of Thai and English
-- When working on this codebase, maintain consistency with existing naming patterns
+### Token Storage
+- JWT token: `localStorage.getItem('token')`
+- User profile: `localStorage.getItem('userProfile')` (JSON object with `sys_role` field)
 
-### Component Structure
-- Components follow standard Angular structure:
-  - `.component.ts` - Component logic
-  - `.component.html` - Template
-  - `.component.scss` - Styles
-  - `.component.spec.ts` - Tests
+### Services & Guards
+| File | Purpose |
+|------|---------|
+| `auth.service.ts` | `isAuthenticated()`, `getUserRole()`, `hasRole()`, `isAdmin()`, `isStaff()`, `isCustomer()`, `logout()` |
+| `authGuard.service.ts` | Redirects unauthenticated users to `/login` |
+| `guards/role.guard.ts` | Blocks routes based on `UserRole`; uses `route.data.roles` |
+| `interceptors/token.service.ts` | `AuthInterceptor` — adds `Authorization: Bearer <token>` to every outgoing request |
+
+### UserRole Enum (`models/role.model.ts`)
+```typescript
+enum UserRole {
+  CUSTOMER = 'customer',
+  STAFF    = 'staff',
+  ADMIN    = 'admin',
+}
+```
+
+## Routing (`app-routing.module.ts`)
+
+> **Important:** `routes.ts` is a legacy file. The active routing is in `app-routing.module.ts`.
+
+| Path | Component | Guard(s) |
+|------|-----------|----------|
+| `/` | → redirects to `/login` | — |
+| `/login` | `LoginComponent` | — |
+| `/home` | `HomeComponent` | `AuthGuard` |
+| `/brand` | `BrandComponent` | `AuthGuard` |
+| `/brand/nike` | `NikeComponent` | `AuthGuard` |
+| `/brand/puma` | `PumaComponent` | `AuthGuard` |
+| `/brand/adidas` | `AdidasComponent` | `AuthGuard` |
+| `/brand/li-ning` | `LiNingComponent` | `AuthGuard` |
+| `/brand/anta` | `AntaComponent` | `AuthGuard` |
+| `/brand/converse` | `ConverseComponent` | `AuthGuard` |
+| `/detailpd/:id` | `DetailpdComponent` | `AuthGuard` |
+| `/cart` | `CartComponent` | `AuthGuard` + `RoleGuard` (CUSTOMER only) |
+| `/contact` | `ContactComponent` | `AuthGuard` |
+| `/profile` | `UserProfileComponent` | `AuthGuard` |
+
+Future admin routes (`/admin/orders`, `/admin/inventory`, etc.) are already outlined as commented-out stubs in the routing file.
 
 ## API Integration
 
-- Base API URL is configured and accessed via `baseApiUrl` in components
-- API calls are handled through `api.service.ts`
-- Authentication tokens are managed by `auth.service.ts`
-- JWT tokens are decoded using the `jwt-decode` library
+- Dev proxy: `src/proxy.conf.json` routes `/api` to `http://localhost:3000`.
+- `api.service.ts` exposes `baseApiUrl` used by components for constructing image URLs.
+- HTTP calls use Angular's `HttpClient`. The `AuthInterceptor` automatically attaches the JWT.
+- Backend login response includes `{ token, userId }` — the token is stored to `localStorage`.
+
+## Module Structure (NgModule)
+
+This project uses the **NgModule pattern** — all components must be declared in `app.module.ts`.
+- **Do not** use Angular standalone components without converting the project first.
+- Always add new components to the `declarations` array in `app.module.ts`.
+- `AppRoutingModule` is imported in `AppModule`; it uses `RouterModule.forRoot(routes)`.
+
+## Coding Conventions
+
+### Language
+- UI-facing text is in **Thai**. Do not translate or change existing Thai text unless explicitly asked.
+- Code (variable names, function names, TypeScript interfaces) is in English.
+- Comments may be in Thai or English — maintain consistency with the surrounding code.
+
+### File Naming
+- Components: `kebab-case.component.{ts,html,scss,spec.ts}`
+- Services: `camelCase.service.ts` (but guard files use `camelCase.service.ts` or `role.guard.ts`)
+- Models: `kebab-case.model.ts`
+
+### Styling
+- Use Bootstrap 5 classes for layout and utilities wherever possible.
+- Component-level styles go in the `.component.scss` file.
+- Shared SCSS partials live in `src/scss/`.
+
+### Alerts / Notifications
+- Use **SweetAlert2** (`sweetalert2`) for all user-facing alerts, confirmations, and toasts.
+- Do not use `window.alert()` or `window.confirm()`.
+
+### No State Management Library
+- There is no NgRx or other state management library. State is kept in services and passed between components via `@Input`/`@Output` or shared services.
 
 ## Image Handling
-ด
-The user profile component includes image upload functionality:
-- File selection with custom button styling
-- Image preview before upload
-- Popup-based upload interface
-- Images are stored on the backend and referenced via `baseApiUrl + user_img`
 
-## Authentication Flow
-
-1. User logs in through login component
-2. JWT token is received and stored
-3. `authGuard.service.ts` protects routes that require authentication
-4. `auth.service.ts` handles token validation and refresh
-
-## Current Status (from git status)
-
-Modified files:
-- `package-lock.json` - Dependency updates
-- `package.json` - Package configuration changes
-- `src/app/userprofile/user-profile.component.html` - User profile template
-- `src/app/userprofile/user-profile.component.scss` - User profile styles
-
-Recent work focus: User profile improvements and upload functionality
-
-## Important Notes for Claude
-
-1. **Language Context:** This project uses Thai language for UI and some variables. Don't translate or change existing Thai text unless specifically requested.
-
-2. **Image Uploads:** When working with image upload features, note that the system uses:
-   - File input with custom styling
-   - Preview functionality before upload
-   - Backend API endpoint for file storage
-
-3. **Angular Version:** This is Angular 17, which uses standalone components capability but this project uses NgModule approach. Maintain consistency with the existing module structure.
-
-4. **Bootstrap Integration:** The project uses Bootstrap 5.3.3. When adding new components or styling, use Bootstrap classes where appropriate.
-
-5. **State Management:** No dedicated state management library (NgRx/Akita) is used. State is managed through services and component communication.
-
-6. **Routing:** Route configuration is in `app-routing.module.ts` with additional routes defined in `routes.ts`.
-
-7. **Database:** There's a `databasepg.js` file in the root, suggesting PostgreSQL database usage on the backend.
-
-## When Making Changes
-
-- Always check existing patterns in similar components before implementing new features
-- Maintain consistency with Thai language usage in UI
-- Use Bootstrap classes for styling when possible
-- Follow Angular 17 best practices
-- Test authentication flows if modifying auth-related code
-- Ensure responsive design with Bootstrap grid system
-- Use SweetAlert2 for user notifications and confirmations
+- Profile images are uploaded via `POST /api/uploads` (multipart `image` field).
+- Images are stored on the backend and referenced as `baseApiUrl + user_img`.
+- The user profile component provides file selection, preview, and upload UI.
 
 ## Testing
 
-- Run `npm test` before committing changes
-- Ensure all existing functionality works after modifications
-- Test authentication flows if auth-related changes are made
-- Verify responsive design on different screen sizes
+- Framework: Karma + Jasmine.
+- Run: `npm test`.
+- Spec files live alongside source files (`.component.spec.ts`).
+- Always run tests before committing changes that touch auth, routing, or shared services.
 
 ## Git Workflow
 
-Main branch: `main`
-- Commit messages have been in Thai
-- Recent focus: User profile features and upload functionality
+- Main branch: `main`
+- Commit messages have historically been in Thai.
+- The `.claude/` directory contains Claude Code project settings.
+
+## Important Notes for Claude
+
+1. **Do not use standalone components.** The project is NgModule-based. Always declare new components in `app.module.ts`.
+
+2. **`routes.ts` is legacy.** All routing changes go in `app-routing.module.ts`.
+
+3. **Preserve Thai language.** Never modify existing Thai UI strings unless explicitly asked.
+
+4. **RBAC is in place.** When adding new protected routes, apply `AuthGuard`. If the route should be role-restricted, also apply `RoleGuard` and pass `data: { roles: [UserRole.XXX] }`.
+
+5. **The `databasepg.js` file in the root** is a standalone PostgreSQL connection helper — it belongs to the backend, not Angular. It is not imported by any Angular code.
+
+6. **Two routing files exist** — `app-routing.module.ts` (active) and `routes.ts` (legacy duplicate). Changes should only go into `app-routing.module.ts`.
+
+7. **Backend connection** — The frontend assumes the backend runs at `http://localhost:3000` in development. In production, the `baseApiUrl` in `api.service.ts` must point to the deployed backend.
