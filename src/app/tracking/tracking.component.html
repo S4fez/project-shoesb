@@ -1,0 +1,65 @@
+<div class="track">
+  <section class="track__header">
+    <div class="eyebrow-sm">ORDER #SB-2025-04217</div>
+    <h1 class="track__title">TRACKING <span class="orange">LIVE</span>.</h1>
+  </section>
+
+  <section class="track__body">
+    <div class="track__main">
+      <!-- Steps -->
+      <div class="steps">
+        <div *ngFor="let s of steps; let i=index" class="step">
+          <div *ngIf="i < steps.length-1" class="step__line" [style.background]="stepLineColor(i)"></div>
+          <span class="step__dot" [class.done]="s.done">
+            {{s.id}}
+          </span>
+          <div class="step__label" [class.active]="s.active" [class.done]="s.done && !s.active">{{s.label}}</div>
+          <div class="step__time">{{s.time}}</div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="track__map">
+        <svg viewBox="0 0 800 450" width="100%">
+          <defs>
+            <pattern id="grid-t" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#D6CFBC" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="450" fill="url(#grid-t)"/>
+          <path d="M 80 360 Q 250 200 400 250 T 720 100" fill="none" stroke="#E84610" stroke-width="3" stroke-dasharray="8 6"/>
+          <circle cx="80" cy="360" r="8" fill="#E84610"/>
+          <text x="100" y="365" fill="#1A1A1A" font-family="JetBrains Mono, monospace" font-size="11">WAREHOUSE · LAT KRABANG</text>
+          <circle cx="400" cy="250" r="10" fill="#E84610">
+            <animate attributeName="r" values="10;16;10" dur="1.5s" repeatCount="indefinite"/>
+          </circle>
+          <text x="420" y="245" fill="#E84610" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700">DRIVER · 4.2 KM AWAY</text>
+          <circle cx="720" cy="100" r="8" fill="none" stroke="#1A1A1A" stroke-width="2"/>
+          <text x="600" y="90" fill="#1A1A1A" font-family="JetBrains Mono, monospace" font-size="11">YOUR ADDRESS · SUKHUMVIT</text>
+        </svg>
+      </div>
+    </div>
+
+    <aside class="track__sidebar">
+      <div class="arrival-card">
+        <div class="arrival-eyebrow">EST. ARRIVAL</div>
+        <div class="arrival-time">17:00</div>
+        <div class="arrival-date">WED · 16 MAY · 2025</div>
+        <div class="items-section">
+          <div class="items-label">ITEMS IN BOX (2)</div>
+          <div *ngFor="let p of svc.products.slice(0,2)" class="track-item">
+            <div class="track-item__img"><img [src]="p.img" [alt]="p.name" /></div>
+            <div class="track-item__info">
+              <div class="track-item__name">{{p.name.toUpperCase()}}</div>
+              <div class="track-item__meta">SIZE 10 · ฿{{p.price.toLocaleString()}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="arrival-actions">
+          <button class="btn-ghost small">CALL DRIVER</button>
+          <button class="btn-ghost small">LIVE CHAT</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+</div>

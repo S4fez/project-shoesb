@@ -1,67 +1,62 @@
-<app-navbar></app-navbar>
-<div class="profile-container">
-    <div class="profile-card">
-        <div class="profile-header">
-            <img src="{{ baseApiUrl + profile?.user_img }}" alt="" class="profile-avatar" />
-            <h2 class="profile-name">{{ profile?.name }} {{ profile?.surname }}</h2>
-            <p class="profile-email">{{ profile?.email }}</p>
-            <!-- ปุ่มเปิด popup -->
-            <button class="show-btn" (click)="ShowUploadPopup()">Upload</button>
-
-            <!-- popup overlay -->
-            <div class="popup-overlay" *ngIf="ShowPopup">
-                <div class="popup-content">
-                    <span class="close" (click)="CloseUploadPopup()">&times;</span>
-
-                    <div class="upload-container">
-                        <div class="file-upload">
-                            <input type="file" id="fileInput" (change)="onFileSelected($event)" />
-                            <label for="fileInput" class="custom-file-btn">
-                                Choose File
-                            </label>
-                            <span class="file-name">{{ selectedFileName || 'No file chosen' }}</span>
-                        </div>
-
-
-                        <div *ngIf="previewUrl" class="preview">
-                            <img [src]="previewUrl" alt="preview" />
-                        </div>
-
-                        <button class="upload-btn" (click)="onUpload()">Upload</button>
-                    </div>
-                </div>
-            </div>
-
+<div class="profile">
+  <section class="profile__body">
+    <!-- Sidebar -->
+    <aside class="profile__sidebar">
+      <div class="user-card">
+        <div class="user-avatar">23</div>
+        <div>
+          <div class="user-name">SUPACHAI K.</div>
+          <div class="user-email">supachai@court.com</div>
         </div>
-
-        <div class="profile-details">
-            <div class="detail-item">
-                <span class="label">📍 Address:</span>
-                <span class="value">{{ profile?.address }}</span>
-            </div>
-
-            <div class="detail-item">
-                <span class="label">🎂 Age:</span>
-                <span class="value">{{ profile?.user_age }}</span>
-            </div>
-
-            <div class="detail-item">
-                <span class="label">🗓️ Birthdate:</span>
-                <span class="value">{{ profile?.user_birthdate | date }}</span>
-            </div>
+      </div>
+      <div class="user-stats">
+        <div *ngFor="let s of stats" class="stat-cell">
+          <div class="stat-label">{{s[0]}}</div>
+          <div class="stat-val">{{s[1]}}</div>
         </div>
-    </div>
-    <div class="profile-card">
-        <div class="profile-header">
-            <h2 class="profile-sys">{{ profile?.sysname }}</h2>
-            <p class="profile-Role">{{ profile?.rolename }}</p>
-  
-        </div>
+      </div>
+      <nav class="profile__nav">
+        <button *ngFor="let n of navItems" class="profile__nav-item" [class.active]="n[2]">
+          <span class="nav-icon">{{n[1]}}</span> {{n[0]}}
+        </button>
+        <button class="profile__nav-item signout" (click)="logout()">← SIGN OUT</button>
+      </nav>
+    </aside>
 
-        <div class="menu-group">
-                <button class="menu-button">เพิ่มเมนู</button>
-                <button class="menu-button">บทบาท</button>
-                <button class="menu-button">เพิ่มสินค้า</button>
+    <!-- Main -->
+    <main class="profile__main">
+      <div class="eyebrow-sm">ACCOUNT / DETAILS</div>
+      <h1 class="profile__title">MY ACCOUNT.</h1>
+
+      <div class="orders-section">
+        <div class="orders-header">
+          <h3 class="orders-title">RECENT ORDERS</h3>
+          <button class="btn-link" (click)="goTracking()">ดูทั้งหมด →</button>
         </div>
-    </div>
+        <div class="orders-table">
+          <div *ngFor="let o of orders; let i=index" class="order-row" [class.first]="i===0" (click)="goTracking()">
+            <span class="order-no">{{o.no}}</span>
+            <span class="order-qty">{{o.qty}}</span>
+            <span class="order-total">{{o.total}}</span>
+            <span class="order-status" [style.color]="o.color">● {{o.status}}</span>
+            <span class="order-arrow">&#x2192;</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-heading">PERSONAL DETAILS</h3>
+      <div class="form-grid">
+        <div class="field"><label class="field__label">FIRST NAME</label><input [(ngModel)]="firstName" placeholder="Supachai" class="field__input" /></div>
+        <div class="field"><label class="field__label">LAST NAME</label><input [(ngModel)]="lastName" placeholder="Kanchanasut" class="field__input" /></div>
+        <div class="field"><label class="field__label">EMAIL</label><input [(ngModel)]="email" placeholder="supachai@court.com" class="field__input" /></div>
+        <div class="field"><label class="field__label">PHONE</label><input [(ngModel)]="phone" placeholder="+66 81 234 5678" class="field__input" /></div>
+        <div class="field"><label class="field__label">DEFAULT SHOE SIZE</label><input [(ngModel)]="size" placeholder="US 10" class="field__input" /></div>
+        <div class="field"><label class="field__label">BIRTHDAY</label><input [(ngModel)]="birthday" placeholder="MM / DD / YYYY" class="field__input" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" (click)="saveChanges()">SAVE CHANGES</button>
+        <button class="btn-ghost">CANCEL</button>
+      </div>
+    </main>
+  </section>
 </div>

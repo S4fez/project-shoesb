@@ -1,0 +1,22 @@
+.wish { background: var(--court-bg); }
+.wish__header { padding: 40px 28px 24px; border-bottom: 1px solid var(--court-line); }
+.wish__title { font-family: var(--font-display); font-size: 88px; color: var(--court-ink); margin: 8px 0 0; letter-spacing: -.01em; }
+.orange { color: var(--court-orange); }
+.eyebrow-sm { font-family: var(--font-mono); font-size: 11px; color: var(--court-orange); letter-spacing: .18em; }
+.wish__body { padding: 32px 28px; }
+.wish__empty { padding: 80px; border: 1px dashed var(--court-line); text-align: center; }
+.empty-heart { font-size: 56px; color: var(--court-line); }
+.empty-title { font-family: var(--font-display); font-size: 32px; color: var(--court-ink); margin-top: 16px; }
+.empty-sub { color: var(--court-mute); font-family: var(--font-thai); margin-top: 8px; }
+.products-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.prod-card { background: var(--court-surf); border: 1px solid var(--court-line); cursor: pointer; transition: border-color .15s; &:hover { border-color: var(--court-orange); } }
+.prod-card__img-wrap { position: relative; aspect-ratio: 1; background: var(--court-surf2); overflow: hidden; }
+.prod-card__img { width: 100%; height: 100%; object-fit: cover; }
+.prod-badge { position: absolute; top: 10px; left: 10px; font-family: var(--font-mono); font-size: 10px; font-weight: 700; padding: 3px 8px; letter-spacing: .1em; &.sale { background: var(--court-orange); color: #000; } &.new { background: var(--court-ink); color: var(--court-bg); } }
+.wish-btn { all: unset; cursor: pointer; position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; background: rgba(0,0,0,.5); font-size: 14px; &.active { color: var(--court-orange); } }
+.prod-card__info { padding: 16px; }
+.prod-card__brand { font-family: var(--font-mono); font-size: 10px; color: var(--court-mute); letter-spacing: .12em; margin-bottom: 6px; }
+.prod-card__name { font-family: var(--font-display); font-size: 19px; color: var(--court-ink); line-height: 1.05; }
+.prod-card__price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 14px; }
+.prod-card__price { font-family: var(--font-display); font-size: 22px; color: var(--court-orange); }
+.prod-card__old { font-family: var(--font-mono); font-size: 12px; color: var(--court-mute); text-decoration: line-through; }

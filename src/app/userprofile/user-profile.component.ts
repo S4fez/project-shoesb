@@ -1,103 +1,46 @@
-import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
-import { ShoppingCartService } from '../service/shopping-cart.service';
-import { Stock } from '../stock';
-import Swal from 'sweetalert2';
-import { AccountService } from '../service/account.service';
-import { environment } from '../environment/environment';
-
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-payment-popup',
+  selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.scss'
+  styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent implements OnChanges {
-  @Input() isVisible: boolean = false;
-  @Input() ShowPopup: boolean = false;
-  @Input() data!: Stock[];
-  @Input() Total!: number;
-  @Output() popupClosed: EventEmitter<boolean> = new EventEmitter();
+export class UserProfileComponent implements OnInit {
+  firstName = '';
+  lastName = '';
+  email = '';
+  phone = '';
+  size = '';
+  birthday = '';
 
-  profile: any;
-  selectedFile!: File;
-  previewUrl: string | ArrayBuffer | null = null;
-  baseApiUrl = environment.imgUrl;
-  selectedFileName: string | null = null;
+  stats = [['ORDERS','12'],['POINTS','2,840'],['LEVEL','STARTER 5'],['SAVED','7']];
+  navItems: [string, string, boolean?][] = [
+    ['ACCOUNT',  '◉', true], ['ORDERS', '⊞'], ['WISHLIST', '♡'],
+    ['ADDRESSES', '⌂'], ['PAYMENT', '◐'], ['SETTINGS', '⚙'],
+  ];
+  orders = [
+    { no:'SB-2025-04217', qty:'2 items', total:'฿9,580',  status:'OUT FOR DELIVERY', color:'var(--court-orange)' },
+    { no:'SB-2025-04102', qty:'1 item',  total:'฿4,290',  status:'DELIVERED',        color:'var(--court-mute)' },
+    { no:'SB-2025-03889', qty:'3 items', total:'฿11,290', status:'DELIVERED',        color:'var(--court-mute)' },
+  ];
 
-  constructor(
-    private shoppingCartService: ShoppingCartService,
-    private accountService: AccountService
-  ) { }
-  ngOnChanges(): void {
-    // console.log("daTA",this.data)
-  }
+  constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
-    const userId = profile.userId; // Replace with actual user ID
-    // console.log(profile.userId, profile.email);
-
-    if (userId) {
-      this.userProfile(+userId);
+  ngOnInit() {
+    const profile = localStorage.getItem('userProfile');
+    if (profile) {
+      const p = JSON.parse(profile);
+      this.email = p.email || '';
     }
   }
 
-  userProfile(id: number) {
-    this.accountService.getProfile(id).subscribe(
-      (response) => {
-        // console.log('User Profile:', response);
-        var image = this.convertPath(response.user_img);
-        response.user_img = image;
-        this.profile = response; // ✅ เก็บข้อมูลไว้ใน data
-        // Handle the user profile data as needed
-      },
-      (error) => {
-        console.error('Error fetching user profile:', error);
-      }
-    );
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login']);
   }
 
-  onFileSelected(event: any) {
-  const file = event.target.files[0];
-  if (file) {
-    this.selectedFileName = file.name;
-
-    const reader = new FileReader();
-    reader.onload = e => this.previewUrl = reader.result;
-    reader.readAsDataURL(file);
-  }
-}
-
-  onUpload() {
-    const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
-    const userId = profile.userId;
-    const formData = new FormData();
-    formData.append('image', this.selectedFile);
-    formData.append('account_id', userId!);
-
-    this.accountService.uploadImage(formData).subscribe(
-      (response) => {
-        console.log('Upload success:', response);
-        Swal.fire({
-          icon: 'success',
-          title: 'Upload Successful',
-          text: 'Your profile picture has been updated.',
-          confirmButtonText: 'OK'
-        });
-      });
-  }
-  ShowUploadPopup() {
-    this.ShowPopup = true;
-  }
-  CloseUploadPopup() {
-    this.ShowPopup = false;
-  }
-  convertPath(path: string): string {
-    // แปลง backslash เป็น slash
-    const fixedPath = path.replace(/\\/g, '/');
-    // คืนค่าเป็น URL เต็ม
-    return fixedPath;
-  }
-
-
+  saveChanges() { alert('Demo: changes saved'); }
+  goTracking() { this.router.navigate(['/tracking']); }
 }
