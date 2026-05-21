@@ -1,87 +1,98 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
-
-<div class="product-detail-wrapper">
-  <app-shopping-cart-popup></app-shopping-cart-popup>
-
-  <div class="product-detail-container" *ngFor="let shoes of this.shoes">
-    <!-- Left Section - Product Image -->
-    <div class="product-image-section">
-      <div class="image-wrapper">
-        <img [src]="shoes.img" [alt]="shoes.nameproduct" class="product-main-image">
-      </div>
-    </div>
-
-    <!-- Right Section - Product Info -->
-    <div class="product-info-section">
-      <!-- Product Title & Badge -->
-      <div class="product-header">
-        <span class="product-badge">
-          <i class="fas fa-basketball-ball"></i> Basketball Shoes
-        </span>
-        <h1 class="product-name">{{ shoes.nameproduct }}</h1>
-      </div>
-
-      <!-- Product Price -->
-      <div class="price-section">
-        <div class="current-price">฿{{ shoes.price | number:'1.2-2' }}</div>
-        <div class="price-label">ราคา</div>
-      </div>
-
-      <!-- Divider -->
-      <div class="divider"></div>
-
-      <!-- Product Description -->
-      <div class="product-description">
-        <h3 class="section-title">
-          <i class="fas fa-info-circle"></i> รายละเอียดสินค้า
-        </h3>
-        <p class="description-text">{{ shoes.detail }}</p>
-      </div>
-
-      <!-- Product Features -->
-      <div class="product-features">
-        <h3 class="section-title">
-          <i class="fas fa-star"></i> คุณสมบัติเด่น
-        </h3>
-        <ul class="features-list">
-          <li><i class="fas fa-check-circle"></i> วัสดุคุณภาพสูง ทนทาน</li>
-          <li><i class="fas fa-check-circle"></i> รองรับการเคลื่อนไหวที่รวดเร็ว</li>
-          <li><i class="fas fa-check-circle"></i> พื้นรองเท้ากันลื่นเยี่ยม</li>
-          <li><i class="fas fa-check-circle"></i> ระบายอากาศดี สวมใส่สบาย</li>
-        </ul>
-      </div>
-
-      <!-- Divider -->
-      <div class="divider"></div>
-
-      <!-- Action Buttons -->
-      <div class="action-section">
-        <button class="btn-add-cart" (click)='shoppingCart()'>
-          <i class="fas fa-cart-plus"></i>
-          <span>เพิ่มลงตะกร้า</span>
-        </button>
-        <button class="btn-buy-now">
-          <i class="fas fa-bolt"></i>
-          <span>สั่งซื้อเลย</span>
-        </button>
-      </div>
-
-      <!-- Additional Info -->
-      <div class="additional-info">
-        <div class="info-item">
-          <i class="fas fa-truck"></i>
-          <span>จัดส่งฟรีทั่วประเทศ</span>
-        </div>
-        <div class="info-item">
-          <i class="fas fa-shield-alt"></i>
-          <span>รับประกันสินค้าแท้ 100%</span>
-        </div>
-        <div class="info-item">
-          <i class="fas fa-exchange-alt"></i>
-          <span>เปลี่ยนคืนได้ภายใน 7 วัน</span>
-        </div>
-      </div>
-    </div>
+<div class="detail" *ngIf="product">
+  <div class="breadcrumb">
+    <a routerLink="/home" class="bc-link">HOME</a> /
+    <a routerLink="/shop" class="bc-link">SHOP</a> /
+    <span class="bc-active">{{product.brand.toUpperCase()}}</span> / {{product.model}}
   </div>
+
+  <section class="detail__body">
+    <!-- Gallery -->
+    <div class="gallery">
+      <div class="gallery__thumbs">
+        <button *ngFor="let g of gallery; let i=index" class="gallery__thumb"
+                [class.active]="activeImg === i" (click)="activeImg = i">
+          <img [src]="g" alt="" />
+        </button>
+      </div>
+      <div class="gallery__main">
+        <svg class="court-lines" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+          <g fill="none" stroke="#FF5C1A" stroke-width="1" opacity=".04">
+            <circle cx="400" cy="225" r="60"/><line x1="400" y1="40" x2="400" y2="410"/>
+          </g>
+        </svg>
+        <img [src]="gallery[activeImg]" [alt]="product.name" class="gallery__img" />
+        <span class="gallery__badge">{{product.tags[0]?.toUpperCase()}}</span>
+        <span class="gallery__counter">{{activeImg+1}} / {{gallery.length}}</span>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="detail__info">
+      <div class="eyebrow-sm">{{product.brand.toUpperCase()}} BASKETBALL / {{product.model}}</div>
+      <h1 class="detail__name">{{product.name.toUpperCase()}}</h1>
+      <div class="detail__meta">
+        <span class="stars">★★★★★</span> {{product.rating}} ({{product.reviews}} reviews)
+        <span class="dot">•</span> IN STOCK: {{product.stock}}
+      </div>
+
+      <div class="detail__price-row">
+        <span class="price">฿{{product.price.toLocaleString()}}</span>
+        <span *ngIf="product.oldPrice" class="old-price">฿{{product.oldPrice!.toLocaleString()}}</span>
+        <span class="color-label">COLOR: {{product.color.toUpperCase()}}</span>
+      </div>
+
+      <!-- Size selector -->
+      <div class="size-section">
+        <div class="size-header">
+          <span class="eyebrow-sm">SIZE (US)</span>
+          <span class="size-guide">SIZE GUIDE →</span>
+        </div>
+        <div class="size-grid">
+          <button *ngFor="let s of svc.sizes" class="size-btn"
+                  [class.active]="selSize === s"
+                  [class.unavail]="!isAvailable(s)"
+                  [disabled]="!isAvailable(s)"
+                  (click)="selSize = s">{{s}}</button>
+        </div>
+      </div>
+
+      <!-- Qty + Actions -->
+      <div class="detail__actions">
+        <div class="qty-row">
+          <button class="qty-btn" (click)="incQty(-1)">-</button>
+          <span class="qty-val">{{qty}}</span>
+          <button class="qty-btn" (click)="incQty(1)">+</button>
+        </div>
+        <button class="btn-primary add-btn" (click)="addToCart()">เพิ่มลงตะกร้า · ADD TO CART</button>
+        <button class="wish-toggle" (click)="wishlist.toggle(product.id)">
+          {{ wishlist.has(product.id) ? '♥' : '♡' }}
+        </button>
+      </div>
+
+      <div class="detail__features">
+        <div *ngFor="let f of features" class="feature-cell">
+          <div class="feature-icon">{{f[0]}}</div>
+          <div class="feature-lbl">{{f[1]}}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs + Desc -->
+  <section class="detail__specs">
+    <div>
+      <div class="eyebrow-sm">OVERVIEW / 01</div>
+      <h3 class="spec-heading">BUILT FOR THE COURT</h3>
+      <p class="spec-desc">รองเท้าบาสเกตบอลรุ่น {{product.name}} จาก {{product.brand}} ออกแบบมาเพื่อรองรับการเคลื่อนไหวที่รวดเร็ว พื้นยางกันลื่น Herringbone Pattern ปลอดภัยและมั่นคงทุกการเคลื่อนไหว</p>
+    </div>
+    <div>
+      <div class="eyebrow-sm">SPECS / 02</div>
+      <ul class="specs-list">
+        <li *ngFor="let s of specs" class="specs-row">
+          <span class="specs-key">{{s[0].toUpperCase()}}</span>
+          <span class="specs-val">{{s[1]}}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
 </div>

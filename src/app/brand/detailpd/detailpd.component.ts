@@ -1,9 +1,8 @@
-import { Component,OnInit  } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Products,Shoes } from '../../product'
-import { AccountService } from '../../service/account.service';
-import { ShoppingCartService } from '../../service/shopping-cart.service';
-
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService, Product } from '../../service/product.service';
+import { CartService } from '../../service/cart.service';
+import { WishlistService } from '../../service/wishlist.service';
 
 @Component({
   selector: 'app-detailpd',
@@ -11,45 +10,46 @@ import { ShoppingCartService } from '../../service/shopping-cart.service';
   styleUrls: ['./detailpd.component.scss']
 })
 export class DetailpdComponent implements OnInit {
+  product: Product | undefined;
+  selSize = '9.5';
+  qty = 1;
+  activeImg = 0;
+  gallery: string[] = [];
 
-  public shoes :Shoes[] = [];
-  public product?: Products;
-  public products: Products[] = [];
-  public brandid = 0
-  public productid! : number;
+  specs = [
+    ['Upper',   'Engineered Mesh + TPU Overlay'],
+    ['Midsole', 'Full-length Zoom Air'],
+    ['Outsole', 'Solid Rubber Herringbone'],
+    ['Drop',    '10 mm'],
+    ['Weight',  '385g (US 9)'],
+    ['Made in', 'Vietnam'],
+  ];
 
+  features = [['◎','100% AUTHENTIC'],['→','FREE SHIPPING'],['↺','7-DAY RETURN']];
 
   constructor(
-    private accountService:AccountService,
     private route: ActivatedRoute,
-    private shoppingCartService: ShoppingCartService
-   ) { }
+    private router: Router,
+    public svc: ProductService,
+    public cart: CartService,
+    public wishlist: WishlistService
+  ) {}
 
-  ngOnInit():void {
-    this.productid = +this.route.snapshot.paramMap.get('id')!;
-    console.log('Product ID: ',this.productid);
-    // console.log('brand ID: ',this.brandid);
-    this.accountService.getShoeById(this.productid).subscribe(
-      (data: Shoes[]) => {
-        this.shoes = data;
-        console.log(this.shoes)
-    })
-
-    this.route.queryParams.subscribe(params => {
-      this.productid = +params['id'] || 0;
-      console.log('Product ID: ',this.productid);
-    })
-
-    this.accountService.getDetail(this.productid.toString()).subscribe(
-      (data: Products) =>{
-      this.product = data;
-      console.log('Product Detail:',this.product);
-    })
-
-  }
-  shoppingCart(){
-    this.shoppingCartService.openCart();
+  ngOnInit() {
+    this.route.params.subscribe(p => {
+      this.product = this.svc.getById(p['id']) || this.svc.products[0];
+      this.gallery = [this.product.img, ...this.svc.extraImgs];
+      this.activeImg = 0;
+    });
   }
 
+  addToCart() {
+    if (this.product) {
+      this.cart.add(this.product, this.selSize, this.qty);
+      this.router.navigate(['/cart']);
+    }
+  }
 
+  isAvailable(s: string) { return this.svc.availableSizes.includes(s); }
+  incQty(d: number) { this.qty = Math.max(1, this.qty + d); }
 }

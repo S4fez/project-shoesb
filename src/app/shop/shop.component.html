@@ -1,106 +1,74 @@
-<div class="shop-page">
-  <!-- Page Header -->
-  <div class="court-page-header">
-    <div class="eyebrow">SHOP / ALL BRANDS</div>
-    <h1>ALL THE HEAT.</h1>
-  </div>
+<div class="shop">
+  <section class="shop__header">
+    <div class="eyebrow-sm">SHOP / ALL BRANDS</div>
+    <h1 class="shop__title">ALL THE <span class="orange">HEAT</span>.</h1>
+  </section>
 
-  <div class="shop-layout">
+  <div class="shop__layout">
     <!-- Sidebar -->
-    <aside class="shop-sidebar">
-      <!-- Brand filter -->
+    <aside class="shop__sidebar">
       <div class="filter-group">
         <div class="filter-label">BRAND</div>
-        <div class="filter-options">
-          <label class="filter-radio" [class.active]="selectedBrand === 'all'">
-            <span class="radio-sq"></span>
-            <input type="radio" name="brand" value="all" [(ngModel)]="selectedBrand" (change)="applyFilters()" hidden>
-            All Brands
-          </label>
-          <label class="filter-radio" *ngFor="let b of brands" [class.active]="selectedBrand === b.id">
-            <span class="radio-sq"></span>
-            <input type="radio" name="brand" [value]="b.id" [(ngModel)]="selectedBrand" (change)="applyFilters()" hidden>
-            {{ b.name }} <span class="filter-count">({{ b.count }})</span>
-          </label>
-        </div>
+        <button *ngFor="let b of brands" class="filter-radio" [class.active]="brand === b[0]" (click)="setBrand(b[0])">
+          <span class="filter-radio__dot" [class.active]="brand === b[0]"></span>
+          {{ b[1] }}
+        </button>
       </div>
-
-      <!-- Size filter -->
       <div class="filter-group">
         <div class="filter-label">SIZE (US)</div>
         <div class="size-grid">
-          <button class="size-btn" *ngFor="let s of sizes"
-            [class.active]="selectedSize === s"
-            (click)="selectSize(s)">{{ s }}</button>
+          <button class="size-btn" [class.active]="size === 'all'" (click)="setSize('all')">ALL</button>
+          <button *ngFor="let s of svc.sizes" class="size-btn" [class.active]="size === s" (click)="setSize(s)">{{s}}</button>
         </div>
       </div>
-
-      <!-- Price filter -->
       <div class="filter-group">
-        <div class="filter-label">PRICE RANGE</div>
-        <div class="price-range">
-          <div class="price-vals">
-            <span>{{ formatPrice(minPrice) }}</span>
-            <span>{{ formatPrice(maxPrice) }}</span>
-          </div>
-          <input type="range" min="0" max="10000" step="100" [(ngModel)]="maxPrice" (input)="applyFilters()" class="price-slider">
-        </div>
+        <div class="filter-label">PRICE — UP TO ฿{{priceMax.toLocaleString()}}</div>
+        <input type="range" min="1000" max="6000" step="100" [value]="priceMax"
+               (input)="setPriceMax(+$any($event.target).value)" />
       </div>
-
-      <!-- Color filter -->
       <div class="filter-group">
         <div class="filter-label">COLOR</div>
         <div class="color-dots">
-          <button class="color-dot" *ngFor="let c of colors"
-            [style.background]="c.hex"
-            [class.active]="selectedColor === c.name"
-            [title]="c.name"
-            (click)="selectedColor = selectedColor === c.name ? '' : c.name; applyFilters()"></button>
+          <button *ngFor="let c of colors" class="color-dot" [style.background]="c"></button>
         </div>
       </div>
     </aside>
 
-    <!-- Content -->
-    <div class="shop-content">
-      <!-- Sort row -->
-      <div class="sort-row">
-        <span class="results-count">{{ filtered.length }} PRODUCTS</span>
-        <div class="sort-btns">
-          <button class="sort-btn" *ngFor="let s of sortOptions"
-            [class.active]="selectedSort === s.value"
-            (click)="setSort(s.value)">{{ s.label }}</button>
+    <!-- Grid -->
+    <div class="shop__content">
+      <div class="shop__toolbar">
+        <div class="shop__count">SHOWING {{filtered.length}} / {{svc.products.length}}</div>
+        <div class="shop__sorts">
+          <button *ngFor="let s of sorts" class="sort-btn" [class.active]="sortBy === s[0]" (click)="setSort(s[0])">{{s[1]}}</button>
         </div>
       </div>
-
-      <!-- Product grid -->
-      <div class="product-grid">
-        <div class="court-product-card" *ngFor="let p of filtered" (click)="goToDetail(p.id)">
-          <div class="card-img-wrap">
-            <img [src]="p.img" [alt]="p.name">
-            <span class="card-badge" *ngIf="p.tags.length">{{ getBadge(p.tags) }}</span>
-            <button class="wl-btn" (click)="$event.stopPropagation(); toggleWishlist(p)">
-              <i [class]="isWishlisted(p.id) ? 'fas fa-heart' : 'far fa-heart'"></i>
+      <div class="products-grid">
+        <article *ngFor="let p of filtered" class="prod-card" (click)="goDetail(p.id)">
+          <div class="prod-card__img-wrap">
+            <img [src]="p.img" [alt]="p.name" class="prod-card__img" />
+            <span *ngIf="p.tags.includes('Sale')" class="prod-badge sale">SALE</span>
+            <span *ngIf="!p.tags.includes('Sale') && p.tags.includes('New')" class="prod-badge new">NEW</span>
+            <button class="wish-btn" (click)="$event.stopPropagation(); wishlist.toggle(p.id)">
+              {{ wishlist.has(p.id) ? '♥' : '♡' }}
             </button>
           </div>
-          <div class="card-body">
-            <div class="card-brand">{{ p.brand }} / {{ p.model }}</div>
-            <div class="card-name">{{ p.name }}</div>
-            <div class="card-price-row">
-              <span class="price-main">{{ formatPrice(p.price) }}</span>
-              <span class="price-old" *ngIf="p.oldPrice">{{ formatPrice(p.oldPrice) }}</span>
+          <div class="prod-card__info">
+            <div class="prod-card__brand">{{p.brand.toUpperCase()}} / {{p.model}}</div>
+            <div class="prod-card__name">{{p.name.toUpperCase()}}</div>
+            <div class="prod-card__price-row">
+              <div>
+                <span class="prod-card__price">฿{{p.price.toLocaleString()}}</span>
+                <span *ngIf="p.oldPrice" class="prod-card__old">฿{{p.oldPrice!.toLocaleString()}}</span>
+              </div>
+              <span class="prod-card__arrow">→</span>
             </div>
-            <div class="card-arrow">→</div>
           </div>
-        </div>
-      </div>
-
-      <!-- Empty -->
-      <div class="empty-state" *ngIf="filtered.length === 0">
-        <div class="empty-icon">&#9633;</div>
-        <div class="empty-title">NO RESULTS</div>
-        <p>ไม่พบสินค้าตามตัวกรองง ลองปรับตัวกรอง</p>
-        <button class="btn-court-primary" (click)="selectedBrand='all'; selectedSize=''; applyFilters()">CLEAR FILTERS</button>
+        </article>
       </div>
     </div>
   </div>
+
+  <footer class="c-footer">
+    <div class="footer__bottom">© 2025 SHOESBASKETBALL® · ALL RIGHTS RESERVED</div>
+  </footer>
 </div>
