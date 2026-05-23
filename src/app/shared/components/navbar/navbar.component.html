@@ -1,100 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-dark modern-navbar">
-  <div class="container">
-    <!-- Brand -->
-    <a class="navbar-brand brand-logo" href="home">
-      <i class="fas fa-basketball-ball me-2"></i>
-      <span>ShoesBasketball</span>
-    </a>
+<header class="c-nav">
+  <a routerLink="/home" class="c-brand">
+    <span class="c-brand__mark">SB</span>
+    SHOESBASKETBALL
+    <sup class="c-brand__sup">®</sup>
+  </a>
 
-    <!-- Toggler for mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <nav class="c-nav__links">
+    <a routerLink="/home"     class="c-tab" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">หน้าแรก</a>
+    <a routerLink="/shop"     class="c-tab" [class.active]="isShopActive()">Shop</a>
+    <a routerLink="/wishlist" class="c-tab" routerLinkActive="active">Wishlist</a>
+    <a routerLink="/tracking" class="c-tab" routerLinkActive="active">Tracking</a>
+  </nav>
 
-    <!-- Navbar content -->
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <!-- Main menu items -->
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item" *ngFor="let item of menuItems" [ngClass]="{'dropdown': item.children && item.children.length > 0}">
-
-          <!-- Regular menu item (no children) -->
-          <a *ngIf="!item.children && item.route"
-             class="nav-link"
-             [href]="item.route">
-            <i [class]="'fas ' + item.icon" *ngIf="item.icon"></i>
-            <span>{{ item.label }}</span>
-          </a>
-
-          <!-- Dropdown menu item (with children) -->
-          <ng-container *ngIf="item.children && item.children.length > 0">
-            <a class="nav-link dropdown-toggle"
-               href="#"
-               [id]="'dropdown-' + item.label"
-               role="button"
-               data-bs-toggle="dropdown"
-               aria-expanded="false">
-              <i [class]="'fas ' + item.icon" *ngIf="item.icon"></i>
-              <span>{{ item.label }}</span>
-            </a>
-            <ul class="dropdown-menu modern-dropdown" [attr.aria-labelledby]="'dropdown-' + item.label">
-              <li *ngFor="let child of item.children">
-                <a class="dropdown-item" [href]="child.route">
-                  <span>{{ child.label }}</span>
-                  <i class="fas fa-chevron-right"></i>
-                </a>
-              </li>
-            </ul>
-          </ng-container>
-        </li>
-      </ul>
-
-      <!-- Search form -->
-      <div class="search-wrapper position-relative me-3">
-        <form class="d-flex search-form" (submit)="$event.preventDefault()">
-          <div class="input-group modern-search">
-            <input class="form-control" type="search" placeholder="ค้นหารองเท้า..."
-                   aria-label="Search" id="search-item" (input)="search($event)" />
-            <button class="btn btn-search" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </form>
-
-        <!-- Search results dropdown -->
-        <ul *ngIf="searchResults.length > 0 && Onshow" class="search-dropdown modern-search-results">
-          <li *ngFor="let item of searchResults" (click)="goToDetail(item.product_id)" class="search-result-item">
-            <img [src]="item.img" alt="{{ item.nameproduct }}" class="result-img" />
-            <span class="result-name">{{ item.nameproduct }}</span>
-            <i class="fas fa-arrow-right result-arrow"></i>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Action icons -->
-      <ul class="navbar-nav action-icons">
-        <!-- Cart Icon - แสดงเฉพาะ Customer -->
-        <li class="nav-item" *ngIf="isCustomer()">
-          <a class="nav-link icon-link cart-icon" href="cart" title="ตะกร้าสินค้า">
-            <i class="fas fa-cart-plus"></i>
-            <span class="icon-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
-          </a>
-        </li>
-
-        <!-- Profile Icon - แสดงทุก role -->
-        <li class="nav-item">
-          <a class="nav-link icon-link user-icon" href="profile" title="โปรไฟล์">
-            <i class="fas fa-user-circle"></i>
-          </a>
-        </li>
-
-        <!-- Role Badge - แสดงเฉพาะ Admin และ Staff -->
-        <li class="nav-item align-self-center" *ngIf="isAdmin() || isStaff()">
-          <span class="badge role-badge" [ngClass]="{'admin-badge': isAdmin(), 'staff-badge': isStaff()}">
-            {{ roleName }}
-          </span>
-        </li>
-      </ul>
+  <div class="c-nav__actions">
+    <div class="c-search">
+      <span class="c-search__icon">⌕</span>
+      <input [(ngModel)]="searchQuery" placeholder="ค้นหารองเท้า..." class="c-search__input" />
+      <kbd class="c-search__kbd">⌘K</kbd>
     </div>
+    <a routerLink="/wishlist" class="c-icon-btn">
+      ♡
+      <em class="c-badge" *ngIf="wishlist.count > 0">{{ wishlist.count }}</em>
+    </a>
+    <a routerLink="/cart" class="c-icon-btn">
+      ⊞
+      <em class="c-badge" *ngIf="cart.count > 0">{{ cart.count }}</em>
+    </a>
+    <a routerLink="/profile" class="c-icon-btn">◉</a>
   </div>
-</nav>
+</header>

@@ -23,6 +23,11 @@ import { AdidasComponent } from './pages/brand/adidas/adidas.component';
 import { ConverseComponent } from './pages/brand/converse/converse.component';
 import { DetailpdComponent } from './pages/brand/detailpd/detailpd.component';
 
+// Feature Pages
+import { ShopComponent } from './shop/shop.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { TrackingComponent } from './tracking/tracking.component';
+
 // Admin Pages
 import { ProductManagementComponent } from './admin/product-management/product-management.component';
 
@@ -70,6 +75,21 @@ const routes: Routes = [
   {
     path: 'profile',
     component: UserProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'shop',
+    component: ShopComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'wishlist',
+    component: WishlistComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'tracking',
+    component: TrackingComponent,
     canActivate: [AuthGuard],
   },
   {

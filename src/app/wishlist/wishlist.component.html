@@ -1,0 +1,34 @@
+<div class="wish">
+  <section class="wish__header">
+    <div class="eyebrow-sm">SAVED / WISHLIST</div>
+    <h1 class="wish__title">MY <span class="orange">HEAT</span>LIST.</h1>
+  </section>
+
+  <section class="wish__body">
+    <div *ngIf="items.length === 0" class="wish__empty">
+      <div class="empty-heart">♡</div>
+      <div class="empty-title">NOTHING SAVED YET</div>
+      <p class="empty-sub">กดรูปหัวใจที่สินค้าเพื่อบันทึกไว้ที่นี่</p>
+      <button class="btn-primary" (click)="goShop()">เริ่มสำรวจ →</button>
+    </div>
+
+    <div *ngIf="items.length > 0" class="products-grid">
+      <article *ngFor="let p of items" class="prod-card" (click)="goDetail(p.id)">
+        <div class="prod-card__img-wrap">
+          <img [src]="p.img" [alt]="p.name" class="prod-card__img" />
+          <span *ngIf="p.tags.includes('Sale')" class="prod-badge sale">SALE</span>
+          <span *ngIf="!p.tags.includes('Sale') && p.tags.includes('New')" class="prod-badge new">NEW</span>
+          <button class="wish-btn active" (click)="$event.stopPropagation(); wishlist.toggle(p.id)">♥</button>
+        </div>
+        <div class="prod-card__info">
+          <div class="prod-card__brand">{{p.brand.toUpperCase()}} / {{p.model}}</div>
+          <div class="prod-card__name">{{p.name.toUpperCase()}}</div>
+          <div class="prod-card__price-row">
+            <span class="prod-card__price">฿{{p.price.toLocaleString()}}</span>
+            <span *ngIf="p.oldPrice" class="prod-card__old">฿{{p.oldPrice!.toLocaleString()}}</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>

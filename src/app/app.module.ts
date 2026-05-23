@@ -31,6 +31,11 @@ import { AntaComponent } from './pages/brand/anta/anta.component';
 import { ConverseComponent } from './pages/brand/converse/converse.component';
 import { DetailpdComponent } from './pages/brand/detailpd/detailpd.component';
 
+// Feature Pages
+import { ShopComponent } from './shop/shop.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { TrackingComponent } from './tracking/tracking.component';
+
 // Admin Pages
 import { ProductManagementComponent } from './admin/product-management/product-management.component';
 
@@ -57,6 +62,10 @@ import { ProductManagementComponent } from './admin/product-management/product-m
     AntaComponent,
     ConverseComponent,
     DetailpdComponent,
+    // Feature Pages
+    ShopComponent,
+    WishlistComponent,
+    TrackingComponent,
     // Admin Pages
     ProductManagementComponent,
   ],

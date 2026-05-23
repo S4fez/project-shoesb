@@ -1,1 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --court-bg:    #F4F1E8;
+  --court-surf:  #FBF8EF;
+  --court-surf2: #EAE5D5;
+  --court-line:  #D6CFBC;
+  --court-ink:   #1A1A1A;
+  --court-mute:  #6F665A;
+  --court-orange: #E84610;
+  --court-orange-deep: #B83400;
+  --court-yellow: #F2B100;
+  --font-display: 'Anton', Impact, sans-serif;
+  --font-body:    'Space Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+  --font-thai:    'IBM Plex Sans Thai', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--court-bg);
+  color: var(--court-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; }
+
+@keyframes court-ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+
+input[type="range"] { width: 100%; accent-color: var(--court-orange); }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--court-orange); cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--court-orange); border: 0; cursor: pointer;
+}
+
+.btn-primary {
+  all: unset; cursor: pointer;
+  padding: 14px 22px;
+  background: var(--court-orange); color: #000;
+  font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: .12em;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .15s;
+  &:hover { background: var(--court-orange-deep); }
+}
+.btn-ghost {
+  all: unset; cursor: pointer;
+  padding: 14px 22px;
+  color: var(--court-ink); border: 1px solid var(--court-line);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .15s;
+  &:hover { background: var(--court-surf); }
+}
+.btn-link {
+  all: unset; cursor: pointer;
+  color: var(--court-orange);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+}

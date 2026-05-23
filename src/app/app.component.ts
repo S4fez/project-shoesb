@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './core/services/account.service';
 
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-constructor(private accountService:AccountService) {
+  showNav = false;
 
-}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    this.accountService.getProduct().subscribe(data =>{
-      console.log(data)
-    })
-
+  ngOnInit() {
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((e: any) => {
+        this.showNav = !e.url.startsWith('/login') && e.url !== '/';
+      });
   }
-  title = 'my-Finallproject';
 }
