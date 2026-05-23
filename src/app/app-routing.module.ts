@@ -12,6 +12,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { UserProfileComponent } from './pages/userprofile/user-profile.component';
+import { PromotionComponent } from './pages/promotion/promotion.component';
 
 // Brand Pages
 import { BrandComponent } from './pages/brand/brand.component';
@@ -90,6 +91,11 @@ const routes: Routes = [
   {
     path: 'tracking',
     component: TrackingComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'promotion',
+    component: PromotionComponent,
     canActivate: [AuthGuard],
   },
   {

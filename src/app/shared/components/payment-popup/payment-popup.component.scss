@@ -296,3 +296,67 @@ hr {
   }
 }
 
+
+.payment-option {
+  cursor: pointer;
+  transition: all 0.2s;
+  &.selected {
+    border: 2px solid #667eea;
+    background: rgba(102, 126, 234, 0.05);
+  }
+}
+
+.promo-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  .promo-input { flex: 1; }
+}
+
+.promo-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  &:hover { opacity: 0.85; }
+}
+
+.promo-success {
+  color: #00b894;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.promo-error {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.discount-label { color: #00b894; font-weight: 600; }
+.discount-value { color: #00b894; font-weight: 700; }
+
+.qr-payment {
+  text-align: center;
+  p { margin-bottom: 16px; color: #636e72; }
+}
+
+.qr-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+  border: 2px dashed #dee2e6;
+  border-radius: 12px;
+  color: #b2bec3;
+  i { font-size: 3rem; }
+  span { font-size: 0.9rem; }
+}

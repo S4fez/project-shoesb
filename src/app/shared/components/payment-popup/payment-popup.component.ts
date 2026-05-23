@@ -15,12 +15,45 @@ export class PaymentPopupComponent implements OnChanges{
   @Input() Total!: number;
   @Output() popupClosed: EventEmitter<boolean> = new EventEmitter();
 
+  selectedPaymentMethod: string = 'card';
+  discountedTotal: number = 0;
+  promoCode: string = '';
+  promoApplied: boolean = false;
+  promoError: string = '';
+
+  private validPromoCodes: { [key: string]: number } = {
+    'SHOES10': 10,
+    'BASKET20': 20,
+    'WELCOME15': 15
+  };
+
   constructor(
     private shoppingCartService: ShoppingCartService,
    ) {}
+
    ngOnChanges(): void {
-    console.log("daTA",this.data)
-   } 
+    this.discountedTotal = this.Total;
+    this.promoApplied = false;
+    this.promoCode = '';
+    this.promoError = '';
+   }
+
+  selectPaymentMethod(method: string) {
+    this.selectedPaymentMethod = method;
+  }
+
+  applyPromoCode() {
+    const code = this.promoCode.trim().toUpperCase();
+    if (this.validPromoCodes[code]) {
+      const discount = this.validPromoCodes[code];
+      this.discountedTotal = this.Total * (1 - discount / 100);
+      this.promoApplied = true;
+      this.promoError = '';
+    } else {
+      this.promoApplied = false;
+      this.promoError = 'รหัสโปรโมชั่นไม่ถูกต้อง';
+    }
+  }
 
   closePopup() {
     this.popupClosed.emit(true); 
