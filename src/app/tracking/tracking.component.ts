@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductService } from '../service/product.service';
+import { ProductService } from '../core/services/product.service';
 
 @Component({
   selector: 'app-tracking',

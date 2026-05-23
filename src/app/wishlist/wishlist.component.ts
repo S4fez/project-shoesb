@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { WishlistService } from '../service/wishlist.service';
-import { ProductService, Product } from '../service/product.service';
+import { WishlistService } from '../core/services/wishlist.service';
+import { ProductService, Product } from '../core/services/product.service';
 
 @Component({
   selector: 'app-wishlist',
