@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../core/services/account.service';
-import { Products } from '../../core/models/product.model';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-brand',
@@ -8,14 +7,12 @@ import { Products } from '../../core/models/product.model';
   styleUrl: './brand.component.scss'
 })
 export class BrandComponent implements OnInit {
-  product: Products[] =[];
-  constructor(private accountService:AccountService) {
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  }
   ngOnInit(): void {
-    this.accountService.getDetail('12').subscribe((data: Products[]) =>{
-      console.log(data)
-    })
+    // Redirect /brand (without sub-brand) to shop
+    if (this.route.firstChild === null) {
+      this.router.navigate(['/shop'], { replaceUrl: true });
+    }
   }
-
 }

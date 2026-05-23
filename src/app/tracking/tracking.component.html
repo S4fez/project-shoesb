@@ -1,24 +1,20 @@
 <div class="track">
   <section class="track__header">
-    <div class="eyebrow-sm">ORDER #SB-2025-04217</div>
+    <div class="eyebrow-sm">{{ order ? 'ORDER #' + order.orderId : 'NO ACTIVE ORDER' }}</div>
     <h1 class="track__title">TRACKING <span class="orange">LIVE</span>.</h1>
   </section>
 
-  <section class="track__body">
+  <section class="track__body" *ngIf="order; else noOrder">
     <div class="track__main">
-      <!-- Steps -->
       <div class="steps">
         <div *ngFor="let s of steps; let i=index" class="step">
           <div *ngIf="i < steps.length-1" class="step__line" [style.background]="stepLineColor(i)"></div>
-          <span class="step__dot" [class.done]="s.done">
-            {{s.id}}
-          </span>
+          <span class="step__dot" [class.done]="s.done">{{s.id}}</span>
           <div class="step__label" [class.active]="s.active" [class.done]="s.done && !s.active">{{s.label}}</div>
           <div class="step__time">{{s.time}}</div>
         </div>
       </div>
 
-      <!-- Map -->
       <div class="track__map">
         <svg viewBox="0 0 800 450" width="100%">
           <defs>
@@ -43,15 +39,15 @@
     <aside class="track__sidebar">
       <div class="arrival-card">
         <div class="arrival-eyebrow">EST. ARRIVAL</div>
-        <div class="arrival-time">17:00</div>
-        <div class="arrival-date">WED · 16 MAY · 2025</div>
+        <div class="arrival-time">{{ estArrivalTime }}</div>
+        <div class="arrival-date">{{ estArrivalDate }}</div>
         <div class="items-section">
-          <div class="items-label">ITEMS IN BOX (2)</div>
-          <div *ngFor="let p of svc.products.slice(0,2)" class="track-item">
+          <div class="items-label">ITEMS IN BOX ({{ itemCount }})</div>
+          <div *ngFor="let p of order.items" class="track-item">
             <div class="track-item__img"><img [src]="p.img" [alt]="p.name" /></div>
             <div class="track-item__info">
               <div class="track-item__name">{{p.name.toUpperCase()}}</div>
-              <div class="track-item__meta">SIZE 10 · ฿{{p.price.toLocaleString()}}</div>
+              <div class="track-item__meta">SIZE {{ p.size }} · ฿{{p.price.toLocaleString()}} · ×{{ p.qty }}</div>
             </div>
           </div>
         </div>
@@ -62,4 +58,15 @@
       </div>
     </aside>
   </section>
+
+  <ng-template #noOrder>
+    <section class="track__body">
+      <div class="track__empty">
+        <div class="track__empty-icon">→</div>
+        <h2 class="track__empty-title">ยังไม่มีคำสั่งซื้อ</h2>
+        <p class="track__empty-text">เมื่อคุณสั่งซื้อสินค้าแล้ว สถานะการจัดส่งจะแสดงที่นี่</p>
+        <button class="btn-primary" (click)="goShop()">เริ่มช้อปปิ้ง →</button>
+      </div>
+    </section>
+  </ng-template>
 </div>

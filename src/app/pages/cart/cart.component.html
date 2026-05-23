@@ -43,10 +43,25 @@
       <h2 class="summary-title">SUMMARY.</h2>
       <div class="sum-row"><span>ราคาสินค้า</span><span>฿{{cart.subtotal.toLocaleString()}}</span></div>
       <div class="sum-row" [class.free]="cart.shipping === 0"><span>Shipping</span><span>{{cart.shipping === 0 ? 'FREE' : '฿' + cart.shipping}}</span></div>
+      <div class="sum-row discount" *ngIf="appliedCode"><span>ส่วนลด ({{ appliedCode }})</span><span>-฿{{ discountAmount.toLocaleString() }}</span></div>
       <div class="sum-row muted"><span>Tax</span><span>Included</span></div>
+
+      <div class="promo-section" *ngIf="cart.items.length > 0">
+        <div class="promo-label">รหัสโปรโมชั่น</div>
+        <div class="promo-row">
+          <input class="promo-input" [(ngModel)]="promoCode" placeholder="เช่น SHOES10" [disabled]="!!appliedCode" />
+          <button class="promo-apply" type="button" *ngIf="!appliedCode" (click)="applyPromo()">ใช้</button>
+          <button class="promo-apply remove" type="button" *ngIf="appliedCode" (click)="clearPromo()">ลบ</button>
+        </div>
+        <div class="promo-error" *ngIf="promoError">{{ promoError }}</div>
+        <div class="promo-applied" *ngIf="appliedCode">
+          ✓ ใช้โค้ด {{ appliedCode }} แล้ว — ลด {{ discountPct }}% (-฿{{ discountAmount.toLocaleString() }})
+        </div>
+      </div>
+
       <div class="sum-total">
         <span class="total-lbl">TOTAL</span>
-        <span class="total-val">฿{{cart.total.toLocaleString()}}</span>
+        <span class="total-val">฿{{finalTotal.toLocaleString()}}</span>
       </div>
       <button class="btn-primary checkout-btn" [disabled]="cart.items.length === 0" (click)="checkout()">
         ชำระเงิน · CHECKOUT →

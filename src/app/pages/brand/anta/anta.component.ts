@@ -1,35 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../core/services/account.service';
-import { Products, Shoes } from '../../../core/models/product.model';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-anta',
-  templateUrl: './anta.component.html',
-  styleUrl: './anta.component.scss'
+  template: '',
 })
-export class AntaComponent implements OnInit{
-  public shoes :Shoes[] = [];
-  public product?: Products;
-  public products: Products[] = [];
-
-
-  public brandid = 0
-  constructor(private accountService:AccountService,private router: Router) {
-    this.brandid = 2
-  }
+export class AntaComponent implements OnInit {
+  constructor(private router: Router) {}
   ngOnInit(): void {
-    this.accountService.getBrand(this.brandid).subscribe(
-      (data: Shoes[]) =>{
-      this.shoes = data;
-      console.log('Brand detail:4 ',this.shoes)
-    }) 
-
+    this.router.navigate(['/shop'], { queryParams: { brand: 'anta' }, replaceUrl: true });
   }
-
-  goToDetail(shoesId: number): void {
-    this.router.navigate(['/detailpd', shoesId]);
-  }
-
 }

@@ -1,36 +1,13 @@
-import { Component,OnInit } from '@angular/core';
-import { AccountService } from '../../../core/services/account.service';
-import { Products, Shoes } from '../../../core/models/product.model';
-import { ActivatedRoute,Router } from '@angular/router';
-
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-converse',
-  templateUrl: './converse.component.html',
-  styleUrl: './converse.component.scss'
+  template: '',
 })
 export class ConverseComponent implements OnInit {
-  public shoes :Shoes[] = [];
-  public product?: Products;
-  public products: Products[] = [];
-
-  public brandid = 0
-  // public productsizeid = '910'
-  public productid = '9'
-  constructor(private accountService:AccountService,private router: Router) {
-  this.brandid = 6
-  }
+  constructor(private router: Router) {}
   ngOnInit(): void {
-    this.accountService.getBrand(this.brandid).subscribe(
-      (data: Shoes[]) =>{
-      this.shoes = data;
-      console.log('Brand detail:4 ',this.shoes)
-    })  
-
+    this.router.navigate(['/shop'], { queryParams: { brand: 'converse' }, replaceUrl: true });
   }
-
-  goToDetail(shoesId: number): void {
-    this.router.navigate(['/detailpd', shoesId]);
-  }
-
 }

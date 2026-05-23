@@ -3,10 +3,10 @@
     <!-- Sidebar -->
     <aside class="profile__sidebar">
       <div class="user-card">
-        <div class="user-avatar">23</div>
+        <div class="user-avatar">{{ avatarInitials }}</div>
         <div>
-          <div class="user-name">SUPACHAI K.</div>
-          <div class="user-email">supachai&#64;court.com</div>
+          <div class="user-name">{{ displayName }}</div>
+          <div class="user-email">{{ email || '—' }}</div>
         </div>
       </div>
       <div class="user-stats">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <nav class="profile__nav">
-        <button *ngFor="let n of navItems" class="profile__nav-item" [class.active]="n[2]">
+        <button *ngFor="let n of navItems" class="profile__nav-item" [class.active]="n[2]" (click)="navClick(n[0])">
           <span class="nav-icon">{{n[1]}}</span> {{n[0]}}
         </button>
         <button class="profile__nav-item signout" (click)="logout()">← SIGN OUT</button>
@@ -30,16 +30,23 @@
 
       <div class="orders-section">
         <div class="orders-header">
-          <h3 class="orders-title">RECENT ORDERS</h3>
-          <button class="btn-link" (click)="goTracking()">ดูทั้งหมด →</button>
+          <h3 class="orders-title">RECENT ACTIVITY</h3>
+          <button class="btn-link" (click)="goTracking()">TRACKING →</button>
         </div>
         <div class="orders-table">
-          <div *ngFor="let o of orders; let i=index" class="order-row" [class.first]="i===0" (click)="goTracking()">
-            <span class="order-no">{{o.no}}</span>
-            <span class="order-qty">{{o.qty}}</span>
-            <span class="order-total">{{o.total}}</span>
-            <span class="order-status" [style.color]="o.color">● {{o.status}}</span>
-            <span class="order-arrow">&#x2192;</span>
+          <div class="order-row first">
+            <span class="order-no">WISHLIST</span>
+            <span class="order-qty">{{ wishlist.count }} ITEMS</span>
+            <span class="order-total">—</span>
+            <span class="order-status" [style.color]="'var(--court-orange)'">● SAVED</span>
+            <a routerLink="/wishlist" class="order-arrow">→</a>
+          </div>
+          <div class="order-row">
+            <span class="order-no">CART</span>
+            <span class="order-qty">{{ cart.count }} ITEMS</span>
+            <span class="order-total">฿{{ cart.total.toLocaleString() }}</span>
+            <span class="order-status" [style.color]="'var(--court-mute)'">● PENDING</span>
+            <a routerLink="/cart" class="order-arrow">→</a>
           </div>
         </div>
       </div>

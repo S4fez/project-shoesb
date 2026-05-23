@@ -1,8 +1,4 @@
-import { Component,OnInit  } from '@angular/core';
-import { Products, Shoes } from '../../../core/models/product.model';
-import { AccountService } from '../../../core/services/account.service';
-import { ShoppingCartService } from '../../../core/services/shopping-cart.service';
-
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService, Product } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
@@ -19,6 +15,7 @@ export class DetailpdComponent implements OnInit {
   qty = 1;
   activeImg = 0;
   gallery: string[] = [];
+  loading = true;
 
   specs = [
     ['Upper',   'Engineered Mesh + TPU Overlay'],
@@ -41,9 +38,13 @@ export class DetailpdComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(p => {
-      this.product = this.svc.getById(p['id']) || this.svc.products[0];
-      this.gallery = [this.product.img, ...this.svc.extraImgs];
-      this.activeImg = 0;
+      this.loading = true;
+      this.svc.getProductById(p['id']).subscribe(found => {
+        this.product = found ?? this.svc.products[0];
+        this.gallery = [this.product.img, ...this.svc.extraImgs];
+        this.activeImg = 0;
+        this.loading = false;
+      });
     });
   }
 

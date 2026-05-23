@@ -6,26 +6,63 @@
   </a>
 
   <nav class="c-nav__links">
-    <a routerLink="/home"     class="c-tab" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">หน้าแรก</a>
-    <a routerLink="/shop"     class="c-tab" [class.active]="isShopActive()">Shop</a>
-    <a routerLink="/wishlist" class="c-tab" routerLinkActive="active">Wishlist</a>
-    <a routerLink="/tracking" class="c-tab" routerLinkActive="active">Tracking</a>
+    <a routerLink="/home"      class="c-tab" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">หน้าแรก</a>
+    <a routerLink="/shop"      class="c-tab" [class.active]="isShopActive()">Shop</a>
+    <a routerLink="/wishlist"  class="c-tab" routerLinkActive="active">Wishlist</a>
+    <a routerLink="/tracking"  class="c-tab" routerLinkActive="active">Tracking</a>
+    <a routerLink="/promotion" class="c-tab" routerLinkActive="active">Promotion</a>
+    <a routerLink="/contact"   class="c-tab" routerLinkActive="active">Contact</a>
   </nav>
 
   <div class="c-nav__actions">
-    <div class="c-search">
+    <form class="c-search" (ngSubmit)="submitSearch()">
       <span class="c-search__icon">⌕</span>
-      <input [(ngModel)]="searchQuery" placeholder="ค้นหารองเท้า..." class="c-search__input" />
-      <kbd class="c-search__kbd">⌘K</kbd>
-    </div>
-    <a routerLink="/wishlist" class="c-icon-btn">
+      <input
+        [ngModel]="searchQuery"
+        (ngModelChange)="onQueryChange($event)"
+        (focus)="onSearchFocus()"
+        name="q"
+        placeholder="ค้นหารองเท้า..."
+        class="c-search__input"
+        autocomplete="off" />
+      <kbd class="c-search__kbd">↵</kbd>
+
+      <div class="c-suggest" *ngIf="suggestOpen">
+        <button type="button" class="c-suggest__item" *ngFor="let p of suggestions" (click)="pickSuggestion(p)">
+          <img [src]="p.img" [alt]="p.name" class="c-suggest__img" onerror="this.style.visibility='hidden'" />
+          <div class="c-suggest__info">
+            <div class="c-suggest__name">{{ p.name }}</div>
+            <div class="c-suggest__meta">{{ p.brand }} · ฿{{ p.price.toLocaleString() }}</div>
+          </div>
+        </button>
+        <button type="button" class="c-suggest__more" (click)="submitSearch()">
+          ดูผลทั้งหมดสำหรับ “{{ searchQuery }}” →
+        </button>
+      </div>
+    </form>
+
+    <a routerLink="/wishlist" class="c-icon-btn" title="Wishlist">
       ♡
       <em class="c-badge" *ngIf="wishlist.count > 0">{{ wishlist.count }}</em>
     </a>
-    <a routerLink="/cart" class="c-icon-btn">
+    <a routerLink="/cart" class="c-icon-btn" title="Cart">
       ⊞
       <em class="c-badge" *ngIf="cart.count > 0">{{ cart.count }}</em>
     </a>
-    <a routerLink="/profile" class="c-icon-btn">◉</a>
+    <div class="c-user">
+      <button type="button" class="c-icon-btn" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen" title="Account">◉</button>
+      <div class="c-user__menu" *ngIf="menuOpen">
+        <div class="c-user__head">
+          <div class="c-user__name">{{ userName || 'GUEST' }}</div>
+          <div class="c-user__role" *ngIf="roleLabel">{{ roleLabel }}</div>
+        </div>
+        <button type="button" class="c-user__item" (click)="goTo('/profile')">โปรไฟล์</button>
+        <button type="button" class="c-user__item" *ngFor="let item of userMenuItems" (click)="goTo(item.route!)">
+          {{ item.label }}
+        </button>
+        <div class="c-user__sep"></div>
+        <button type="button" class="c-user__item c-user__item--danger" (click)="logout()">ออกจากระบบ</button>
+      </div>
+    </div>
   </div>
 </header>

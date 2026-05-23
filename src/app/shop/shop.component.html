@@ -23,7 +23,7 @@
       </div>
       <div class="filter-group">
         <div class="filter-label">PRICE — UP TO ฿{{priceMax.toLocaleString()}}</div>
-        <input type="range" min="1000" max="6000" step="100" [value]="priceMax"
+        <input type="range" min="1000" max="8000" step="100" [value]="priceMax"
                (input)="setPriceMax(+$any($event.target).value)" />
       </div>
       <div class="filter-group">
@@ -37,10 +37,16 @@
     <!-- Grid -->
     <div class="shop__content">
       <div class="shop__toolbar">
-        <div class="shop__count">SHOWING {{filtered.length}} / {{svc.products.length}}</div>
+        <div class="shop__count">
+          SHOWING {{filtered.length}} / {{all.length}}
+          <span *ngIf="query" class="shop__query"> — “{{query}}” <button class="shop__clear" (click)="clearSearch()">✕</button></span>
+        </div>
         <div class="shop__sorts">
           <button *ngFor="let s of sorts" class="sort-btn" [class.active]="sortBy === s[0]" (click)="setSort(s[0])">{{s[1]}}</button>
         </div>
+      </div>
+      <div *ngIf="!loading && filtered.length === 0" class="shop__empty">
+        ไม่พบสินค้าที่ตรงกับเงื่อนไข
       </div>
       <div class="products-grid">
         <article *ngFor="let p of filtered" class="prod-card" (click)="goDetail(p.id)">

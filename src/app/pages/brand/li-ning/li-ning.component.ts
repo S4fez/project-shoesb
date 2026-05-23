@@ -1,35 +1,13 @@
-import { Component,OnInit } from '@angular/core';
-import { AccountService } from '../../../core/services/account.service';
-import { Products, Shoes } from '../../../core/models/product.model';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-li-ning',
-  templateUrl: './li-ning.component.html',
-  styleUrl: './li-ning.component.scss'
+  template: '',
 })
 export class LiNingComponent implements OnInit {
-  public shoes :Shoes[] = [];
-  public product?: Products;
-  public products: Products[] = [];
-
-
-  public brandid = 0
-  constructor(private accountService:AccountService, private router: Router) {
-  this.brandid = 3
-  }
+  constructor(private router: Router) {}
   ngOnInit(): void {
-    this.accountService.getBrand(this.brandid).subscribe(
-      (data: Shoes[]) =>{
-      this.shoes = data;
-      console.log('Brand detail:4 ',this.shoes)
-    }) 
-
-        
+    this.router.navigate(['/shop'], { queryParams: { brand: 'lining' }, replaceUrl: true });
   }
-  goToDetail(shoesId: number): void {
-    this.router.navigate(['/detailpd', shoesId]);
-  }
-
 }
-
