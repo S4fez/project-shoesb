@@ -77,7 +77,7 @@
         <li class="nav-item" *ngIf="isCustomer()">
           <a class="nav-link icon-link cart-icon" href="cart" title="ตะกร้าสินค้า">
             <i class="fas fa-cart-plus"></i>
-            <span class="icon-badge">0</span>
+            <span class="icon-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
           </a>
         </li>
 

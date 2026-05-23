@@ -18,10 +18,20 @@ $shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
 $shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
 $transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-$light-bg: #f8f9fa;
-$accent-color: #c9a961;
-$success-color: #28a745;
-$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+// $light-bg: #f8f9fa;
+// $accent-color: #c9a961;
+// $success-color: #28a745;
+// $primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+// aliases
+$light-bg: $luxury-cream;
+$shadow-sm: $subtle-shadow;
+$shadow-md: $medium-shadow;
+$shadow-lg: $large-shadow;
+$accent-color: $luxury-gold;
+$text-light: $luxury-white;
+$text-dark: $luxury-black;
+$primary-gradient: linear-gradient(135deg, $luxury-black 0%, $luxury-gray 100%);
+$success-color: #4caf50;
 
 // ==================== Main Wrapper ====================
 .product-detail-wrapper {

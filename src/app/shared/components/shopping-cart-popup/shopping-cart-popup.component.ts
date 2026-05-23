@@ -101,7 +101,8 @@ export class ShoppingCartPopupComponent implements OnInit {
         console.log("localStorage.getItem('SelectProduct') 22222",localStorage.getItem('SelectProduct'))
       }
 
-      this.closeCart(); // Optionally close the cart after adding
+      this.shoppingCartService.refreshCartCount();
+      this.closeCart();
     } else {
       alert('Please select a size.');
     }

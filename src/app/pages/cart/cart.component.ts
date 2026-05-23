@@ -123,6 +123,7 @@ export class CartComponent implements OnInit{
       // console.log('BinIndex',arraysizeId.splice(indexRemove,1))
       
       localStorage.setItem('SelectProduct',JSON.stringify(this.localStorageArray));
+      this.shoppingCartService.refreshCartCount();
     }}
     
     calTotal(stock:Stock[]) {
