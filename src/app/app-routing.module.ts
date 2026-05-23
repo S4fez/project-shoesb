@@ -23,12 +23,15 @@ import { AdidasComponent } from './pages/brand/adidas/adidas.component';
 import { ConverseComponent } from './pages/brand/converse/converse.component';
 import { DetailpdComponent } from './pages/brand/detailpd/detailpd.component';
 
+// Admin Pages
+import { ProductManagementComponent } from './admin/product-management/product-management.component';
+
 
 const routes: Routes = [
-
   {
     path: 'brand',
-    component: BrandComponent, canActivate: [AuthGuard],
+    component: BrandComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'nike', component: NikeComponent, canActivate: [AuthGuard] },
       { path: 'puma', component: PumaComponent, canActivate: [AuthGuard] },
@@ -40,64 +43,41 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent, canActivate: [AuthGuard],
+    component: HomeComponent,
+    canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-
   {
     path: 'login',
     component: LoginComponent,
   },
   {
     path: 'contact',
-    component: ContactComponent, canActivate: [AuthGuard],
+    component: ContactComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'cart',
     component: CartComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { roles: [UserRole.CUSTOMER] }  // เฉพาะ Customer เท่านั้น
+    data: { roles: [UserRole.CUSTOMER] }
   },
   {
     path: 'detailpd/:id',
-    component: DetailpdComponent, canActivate: [AuthGuard],
+    component: DetailpdComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'profile',
-    component: UserProfileComponent, canActivate: [AuthGuard],
+    component: UserProfileComponent,
+    canActivate: [AuthGuard],
   },
-
-  // Admin & Staff Routes (เพิ่มไว้สำหรับอนาคต - ต้องสร้าง component ก่อนใช้งาน)
-  // {
-  //   path: 'admin/orders',
-  //   component: OrdersManagementComponent,
-  //   canActivate: [AuthGuard, RoleGuard],
-  //   data: { roles: [UserRole.STAFF, UserRole.ADMIN] }
-  // },
-  // {
-  //   path: 'admin/inventory',
-  //   component: InventoryComponent,
-  //   canActivate: [AuthGuard, RoleGuard],
-  //   data: { roles: [UserRole.STAFF, UserRole.ADMIN] }
-  // },
-  // {
-  //   path: 'admin/reports',
-  //   component: ReportsComponent,
-  //   canActivate: [AuthGuard, RoleGuard],
-  //   data: { roles: [UserRole.STAFF, UserRole.ADMIN] }
-  // },
-  // {
-  //   path: 'admin/products',
-  //   component: ProductManagementComponent,
-  //   canActivate: [AuthGuard, RoleGuard],
-  //   data: { roles: [UserRole.ADMIN] }
-  // },
-  // {
-  //   path: 'admin/users',
-  //   component: UserManagementComponent,
-  //   canActivate: [AuthGuard, RoleGuard],
-  //   data: { roles: [UserRole.ADMIN] }
-  // },
+  {
+    path: 'admin/products',
+    component: ProductManagementComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [UserRole.SUPERADMIN, UserRole.ADMIN] }
+  },
 ];
 
 @NgModule({

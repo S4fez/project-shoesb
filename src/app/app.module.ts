@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 // Core
 import { AuthInterceptor } from './core/interceptors/token.interceptor';
@@ -32,6 +31,9 @@ import { AntaComponent } from './pages/brand/anta/anta.component';
 import { ConverseComponent } from './pages/brand/converse/converse.component';
 import { DetailpdComponent } from './pages/brand/detailpd/detailpd.component';
 
+// Admin Pages
+import { ProductManagementComponent } from './admin/product-management/product-management.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +56,9 @@ import { DetailpdComponent } from './pages/brand/detailpd/detailpd.component';
     LiNingComponent,
     AntaComponent,
     ConverseComponent,
-    DetailpdComponent
+    DetailpdComponent,
+    // Admin Pages
+    ProductManagementComponent,
   ],
   imports: [
     BrowserModule,
