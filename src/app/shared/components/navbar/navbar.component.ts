@@ -17,6 +17,7 @@ import { ProductService, Product } from '../../../core/services/product.service'
 export class NavbarComponent implements OnInit, OnDestroy {
   searchQuery = '';
   menuOpen = false;
+  cartOpen = false;
   suggestOpen = false;
   suggestions: Product[] = [];
   userMenuItems: MenuItem[] = [];
@@ -62,12 +63,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return this.router.url.startsWith('/shop') || this.router.url.startsWith('/detailpd');
   }
 
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+    if (this.menuOpen) this.cartOpen = false;
+  }
+  toggleCart() {
+    this.cartOpen = !this.cartOpen;
+    if (this.cartOpen) this.menuOpen = false;
+  }
 
   @HostListener('document:click', ['$event'])
   onDocClick(e: MouseEvent) {
     if (!this.host.nativeElement.contains(e.target)) {
       this.menuOpen = false;
+      this.cartOpen = false;
       this.suggestOpen = false;
     }
   }
@@ -95,7 +104,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   goTo(route: string) {
     this.menuOpen = false;
+    this.cartOpen = false;
     this.router.navigate([route]);
+  }
+
+  goCartPage() {
+    this.cartOpen = false;
+    this.router.navigate(['/cart']);
+  }
+
+  removeCartItem(index: number, event: MouseEvent) {
+    event.stopPropagation();
+    this.cart.remove(index);
+  }
+
+  changeQty(index: number, delta: number, event: MouseEvent) {
+    event.stopPropagation();
+    this.cart.updateQty(index, delta);
   }
 
   logout() {

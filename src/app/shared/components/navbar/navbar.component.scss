@@ -101,6 +101,117 @@
   padding: 1px 5px; border-radius: 999px;
 }
 
+.c-cart { position: relative; }
+.c-cart__popup {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 60;
+  width: 360px; max-width: 90vw;
+  background: var(--court-surf); border: 1px solid var(--court-line);
+  box-shadow: 0 16px 40px rgba(0,0,0,.12);
+  display: flex; flex-direction: column;
+  max-height: 540px;
+}
+.c-cart__head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 14px 16px; border-bottom: 1px solid var(--court-line);
+}
+.c-cart__title {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em;
+  color: var(--court-ink); text-transform: uppercase;
+}
+.c-cart__count {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em;
+  color: var(--court-mute); text-transform: uppercase;
+}
+.c-cart__empty {
+  padding: 36px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em;
+  color: var(--court-mute); text-transform: uppercase;
+}
+.c-cart__empty-icon {
+  width: 56px; height: 56px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--court-line);
+  font-size: 24px; color: var(--court-orange);
+  border-radius: 50%;
+}
+.c-cart__shop-btn {
+  all: unset; cursor: pointer; margin-top: 8px;
+  padding: 10px 16px; background: var(--court-orange); color: #000;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; font-weight: 700;
+}
+.c-cart__items {
+  flex: 1; overflow-y: auto; padding: 4px 0;
+}
+.c-cart__item {
+  position: relative;
+  display: flex; gap: 10px; padding: 12px 14px;
+  border-bottom: 1px solid var(--court-line);
+  &:last-of-type { border-bottom: none; }
+}
+.c-cart__item-img {
+  width: 56px; height: 56px; flex-shrink: 0; object-fit: cover;
+  border: 1px solid var(--court-line); background: #fff;
+}
+.c-cart__item-info { flex: 1; min-width: 0; }
+.c-cart__item-name {
+  font-family: var(--font-body); font-size: 13px; color: var(--court-ink);
+  line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+}
+.c-cart__item-meta {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .05em;
+  color: var(--court-mute); margin-top: 3px; text-transform: uppercase;
+}
+.c-cart__item-row {
+  display: flex; justify-content: space-between; align-items: center; margin-top: 6px;
+}
+.c-cart__qty {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 12px;
+  button {
+    all: unset; cursor: pointer;
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--court-line); color: var(--court-ink);
+    &:hover { border-color: var(--court-orange); color: var(--court-orange); }
+  }
+}
+.c-cart__item-price {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  color: var(--court-orange);
+}
+.c-cart__remove {
+  all: unset; cursor: pointer; position: absolute; top: 8px; right: 10px;
+  font-size: 12px; color: var(--court-mute);
+  width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  &:hover { color: #c0392b; }
+}
+.c-cart__footer {
+  border-top: 1px solid var(--court-line);
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 10px;
+  background: rgba(0,0,0,.02);
+}
+.c-cart__total {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em;
+  color: var(--court-ink); text-transform: uppercase;
+}
+.c-cart__total-val {
+  font-family: var(--font-display); font-size: 22px; color: var(--court-orange);
+  letter-spacing: 0;
+}
+.c-cart__view-btn {
+  all: unset; cursor: pointer; text-align: center;
+  padding: 12px;
+  background: var(--court-ink); color: var(--court-surf);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; font-weight: 700;
+  transition: background .15s, color .15s;
+  &:hover { background: var(--court-orange); color: #000; }
+}
+
 .c-user { position: relative; }
 .c-user__menu {
   position: absolute; top: calc(100% + 8px); right: 0; z-index: 60;

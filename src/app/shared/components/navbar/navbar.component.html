@@ -45,10 +45,53 @@
       ♡
       <em class="c-badge" *ngIf="wishlist.count > 0">{{ wishlist.count }}</em>
     </a>
-    <a routerLink="/cart" class="c-icon-btn" title="Cart">
-      ⊞
-      <em class="c-badge" *ngIf="cart.count > 0">{{ cart.count }}</em>
-    </a>
+
+    <div class="c-cart">
+      <button type="button" class="c-icon-btn" (click)="toggleCart()" [attr.aria-expanded]="cartOpen" title="ตะกร้าสินค้า">
+        ⊞
+        <em class="c-badge" *ngIf="cart.count > 0">{{ cart.count }}</em>
+      </button>
+      <div class="c-cart__popup" *ngIf="cartOpen">
+        <div class="c-cart__head">
+          <span class="c-cart__title">ตะกร้าสินค้า</span>
+          <span class="c-cart__count" *ngIf="cart.items.length">{{ cart.items.length }} รายการ</span>
+        </div>
+
+        <div class="c-cart__empty" *ngIf="cart.items.length === 0">
+          <div class="c-cart__empty-icon">⊞</div>
+          <div>ตะกร้าว่างเปล่า</div>
+          <button type="button" class="c-cart__shop-btn" (click)="goTo('/shop')">ไปเลือกซื้อ →</button>
+        </div>
+
+        <div class="c-cart__items" *ngIf="cart.items.length > 0">
+          <div class="c-cart__item" *ngFor="let item of cart.items; let i=index">
+            <img [src]="item.img" [alt]="item.name" class="c-cart__item-img" onerror="this.style.visibility='hidden'" />
+            <div class="c-cart__item-info">
+              <div class="c-cart__item-name">{{ item.name }}</div>
+              <div class="c-cart__item-meta">{{ item.brand }} · SIZE {{ item.size }}</div>
+              <div class="c-cart__item-row">
+                <div class="c-cart__qty">
+                  <button type="button" (click)="changeQty(i, -1, $event)">−</button>
+                  <span>{{ item.qty }}</span>
+                  <button type="button" (click)="changeQty(i, +1, $event)">+</button>
+                </div>
+                <div class="c-cart__item-price">฿{{ (item.price * item.qty).toLocaleString() }}</div>
+              </div>
+            </div>
+            <button type="button" class="c-cart__remove" (click)="removeCartItem(i, $event)" title="ลบ">✕</button>
+          </div>
+        </div>
+
+        <div class="c-cart__footer" *ngIf="cart.items.length > 0">
+          <div class="c-cart__total">
+            <span>รวม</span>
+            <span class="c-cart__total-val">฿{{ cart.total.toLocaleString() }}</span>
+          </div>
+          <button type="button" class="c-cart__view-btn" (click)="goCartPage()">ดูตะกร้า / ชำระเงิน →</button>
+        </div>
+      </div>
+    </div>
+
     <div class="c-user">
       <button type="button" class="c-icon-btn" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen" title="Account">◉</button>
       <div class="c-user__menu" *ngIf="menuOpen">
